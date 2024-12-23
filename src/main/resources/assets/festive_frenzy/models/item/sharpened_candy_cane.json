@@ -1,0 +1,43 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "festive_frenzy:item/sharpened_candy_cane_model"
+	},
+	"gui_light": "front",
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, 90, 45],
+			"translation": [0, 9.5, 1.75],
+			"scale": [1.5, 1.5, 0.8]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, -90, -45],
+			"translation": [0, 9.5, 1.75],
+			"scale": [1.5, 1.5, 0.8]
+		},
+		"firstperson_righthand": {
+			"rotation": [-37.5, 90, 95],
+			"translation": [1, 5.5, 1.75],
+			"scale": [1.2, 1.2, 0.44]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-37.5, -90, -95],
+			"translation": [1, 6, 1.75],
+			"scale": [1.2, 1.2, 0.44]
+		},
+		"ground": {
+			"translation": [1.25, 7, 0]
+		},
+		"head": {
+			"rotation": [0, 90, 45],
+			"translation": [0, 21.25, 0],
+			"scale": [2, 2, 2]
+		},
+		"fixed": {
+			"rotation": [0, 180, 0],
+			"translation": [-0.25, 0, 0],
+			"scale": [1.25, 1.25, 1.25]
+		}
+	}
+}

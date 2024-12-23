@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "festive_frenzy:block/blue_ice_brick_slab"
+    },
+    "type=double": {
+      "model": "festive_frenzy:block/blue_ice_bricks"
+    },
+    "type=top": {
+      "model": "festive_frenzy:block/blue_ice_brick_slab_top"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "present",
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "W": {
+      "item": "minecraft:orange_wool"
+    }
+  },
+  "pattern": [
+    " S ",
+    "W W",
+    " W "
+  ],
+  "result": {
+    "item": "festive_frenzy:orange_present"
+  },
+  "show_notification": true
+}

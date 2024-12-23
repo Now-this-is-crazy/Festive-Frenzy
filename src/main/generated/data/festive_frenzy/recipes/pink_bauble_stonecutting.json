@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "tag": "festive_frenzy:baubles"
+  },
+  "result": "festive_frenzy:pink_bauble"
+}

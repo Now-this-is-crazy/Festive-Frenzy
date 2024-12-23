@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "tinsel",
+  "key": {
+    "W": {
+      "item": "minecraft:brown_wool"
+    }
+  },
+  "pattern": [
+    "WW"
+  ],
+  "result": {
+    "count": 4,
+    "item": "festive_frenzy:brown_tinsel"
+  },
+  "show_notification": true
+}

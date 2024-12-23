@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "bauble_recolor",
+  "ingredients": [
+    {
+      "tag": "festive_frenzy:baubles"
+    },
+    {
+      "item": "minecraft:blue_dye"
+    }
+  ],
+  "result": {
+    "item": "festive_frenzy:blue_bauble"
+  }
+}

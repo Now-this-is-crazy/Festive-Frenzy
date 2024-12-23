@@ -1,0 +1,50 @@
+{
+  "present_insert": {
+    "subtitle": "subtitles.festive_frenzy.present_insert",
+    "sounds": [
+      "minecraft:item/bundle/insert1",
+      "minecraft:item/bundle/insert2",
+      "minecraft:item/bundle/insert3"
+    ]
+  },
+  "present_remove": {
+    "subtitle": "subtitles.festive_frenzy.present_remove",
+    "sounds": [
+      "minecraft:item/bundle/remove_one1",
+      "minecraft:item/bundle/remove_one2",
+      "minecraft:item/bundle/remove_one3"
+    ]
+  },
+  "present_open": {
+    "subtitle": "subtitles.festive_frenzy.present_open",
+    "sounds": [
+      "festive_frenzy:present_open"
+    ]
+  },
+  "fairy_lights_switch": {
+    "subtitle": "subtitles.festive_frenzy.fairy_lights_switch",
+    "sounds": [
+      "minecraft:item/spyglass/use"
+    ]
+  },
+  "frostflake_cannon_shoot": {
+    "subtitle": "subtitles.festive_frenzy.frostflake_cannon_shoot",
+    "sounds": [
+      "festive_frenzy:frostflake_cannon_shoot"
+    ]
+  },
+  "bauble_throw": {
+    "subtitle": "subtitles.festive_frenzy.bauble_throw",
+    "sounds": [
+      "festive_frenzy:bauble_throw"
+    ]
+  },
+  "bauble_break": {
+    "subtitle": "subtitles.festive_frenzy.bauble_break",
+    "sounds": [
+      "minecraft:random/glass1",
+      "minecraft:random/glass2",
+      "minecraft:random/glass3"
+    ]
+  }
+}

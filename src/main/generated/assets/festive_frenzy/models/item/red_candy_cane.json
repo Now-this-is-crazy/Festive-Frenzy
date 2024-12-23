@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "festive_frenzy:item/red_candy_cane"
+  }
+}

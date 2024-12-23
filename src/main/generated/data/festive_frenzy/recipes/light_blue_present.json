@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "present",
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "W": {
+      "item": "minecraft:light_blue_wool"
+    }
+  },
+  "pattern": [
+    " S ",
+    "W W",
+    " W "
+  ],
+  "result": {
+    "item": "festive_frenzy:light_blue_present"
+  },
+  "show_notification": true
+}

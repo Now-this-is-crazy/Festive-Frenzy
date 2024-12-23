@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_candy_cane": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "festive_frenzy:candy_canes"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "festive_frenzy:mixed_candy_cane_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_candy_cane",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "festive_frenzy:mixed_candy_cane_block"
+    ]
+  },
+  "sends_telemetry_event": false
+}

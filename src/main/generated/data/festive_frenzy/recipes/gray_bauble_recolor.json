@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "bauble_recolor",
+  "ingredients": [
+    {
+      "tag": "festive_frenzy:baubles"
+    },
+    {
+      "item": "minecraft:gray_dye"
+    }
+  ],
+  "result": {
+    "item": "festive_frenzy:gray_bauble"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "tinsel",
+  "key": {
+    "W": {
+      "item": "minecraft:lime_wool"
+    }
+  },
+  "pattern": [
+    "WW"
+  ],
+  "result": {
+    "count": 4,
+    "item": "festive_frenzy:lime_tinsel"
+  },
+  "show_notification": true
+}

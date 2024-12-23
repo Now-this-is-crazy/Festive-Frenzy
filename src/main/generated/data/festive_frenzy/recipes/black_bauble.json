@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "bauble",
+  "key": {
+    "D": {
+      "item": "minecraft:black_dye"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "N": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "N",
+    "G",
+    "D"
+  ],
+  "result": {
+    "count": 2,
+    "item": "festive_frenzy:black_bauble"
+  },
+  "show_notification": true
+}

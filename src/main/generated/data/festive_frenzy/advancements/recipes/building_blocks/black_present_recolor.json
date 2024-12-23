@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_present": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "festive_frenzy:presents"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "festive_frenzy:black_present_recolor"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_present",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "festive_frenzy:black_present_recolor"
+    ]
+  },
+  "sends_telemetry_event": false
+}

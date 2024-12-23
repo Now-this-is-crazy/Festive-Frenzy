@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "mixed_candy_cane_block",
+  "key": {
+    "G": {
+      "item": "festive_frenzy:green_candy_cane_block"
+    },
+    "R": {
+      "item": "festive_frenzy:red_candy_cane_block"
+    }
+  },
+  "pattern": [
+    "RG"
+  ],
+  "result": {
+    "count": 2,
+    "item": "festive_frenzy:mixed_candy_cane_block"
+  },
+  "show_notification": true
+}

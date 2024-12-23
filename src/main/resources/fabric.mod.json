@@ -1,0 +1,49 @@
+{
+	"schemaVersion": 1,
+	"id": "festive_frenzy",
+	"version": "${version}",
+	"name": "Festive Frenzy",
+	"description": "Festive Frenzy is a mod that adds various festive decorations and items.",
+	"authors": [
+		"Powercyphe",
+		"oPixeel"
+	],
+	"custom": {
+		"modmenu": {
+			"links": {
+				"modmenu.discord": "https://discord.gg/Dmp2dbyNrs"
+			}
+		}
+	},
+	"contact": {
+		"homepage": "https://modrinth.com/project/festive-frenzy",
+		"sources": "https://github.com/Now-this-is-crazy/Festive-Frenzy"
+	},
+	"license": "MIT",
+	"icon": "assets/festive_frenzy/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"powercyphe.festive_frenzy.FestiveFrenzy"
+		],
+		"client": [
+			"powercyphe.festive_frenzy.FestiveFrenzyClient"
+		],
+		"fabric-datagen": [
+			"powercyphe.festive_frenzy.datagen.FestiveFrenzyDatagen"
+		]
+	},
+	"mixins": [
+		"festive_frenzy.mixins.json",
+		{
+			"config": "festive_frenzy.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": "*",
+		"minecraft": "~1.20",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}

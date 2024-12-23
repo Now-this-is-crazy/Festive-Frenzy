@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "festive_frenzy:item/light_blue_bauble"
+  }
+}

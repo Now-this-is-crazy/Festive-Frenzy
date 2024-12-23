@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_polished_blue_ice_slab": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "festive_frenzy:polished_blue_ice_slab"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "festive_frenzy:chiseled_blue_ice"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_polished_blue_ice_slab",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "festive_frenzy:chiseled_blue_ice"
+    ]
+  },
+  "sends_telemetry_event": false
+}

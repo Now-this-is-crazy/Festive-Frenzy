@@ -1,0 +1,27 @@
+{
+  "replace": false,
+  "values": [
+    "festive_frenzy:white_present",
+    "festive_frenzy:light_gray_present",
+    "festive_frenzy:gray_present",
+    "festive_frenzy:black_present",
+    "festive_frenzy:brown_present",
+    "festive_frenzy:red_present",
+    "festive_frenzy:orange_present",
+    "festive_frenzy:yellow_present",
+    "festive_frenzy:lime_present",
+    "festive_frenzy:green_present",
+    "festive_frenzy:cyan_present",
+    "festive_frenzy:light_blue_present",
+    "festive_frenzy:blue_present",
+    "festive_frenzy:purple_present",
+    "festive_frenzy:magenta_present",
+    "festive_frenzy:pink_present",
+    "festive_frenzy:kelp_present",
+    "festive_frenzy:folly_present",
+    "festive_frenzy:golden_present",
+    "festive_frenzy:sand_present",
+    "festive_frenzy:blood_present",
+    "festive_frenzy:sculk_present"
+  ]
+}

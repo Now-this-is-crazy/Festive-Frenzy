@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side",
+  "textures": {
+    "wall": "festive_frenzy:block/packed_snow_bricks"
+  }
+}

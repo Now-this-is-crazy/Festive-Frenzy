@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "tag": "festive_frenzy:candy_cane_blocks"
+    },
+    "C": {
+      "tag": "festive_frenzy:candy_canes"
+    },
+    "P": {
+      "item": "festive_frenzy:peppermint"
+    },
+    "S": {
+      "item": "minecraft:iron_sword"
+    }
+  },
+  "pattern": [
+    " CB",
+    "PBC",
+    "SP "
+  ],
+  "result": {
+    "item": "festive_frenzy:sharpened_candy_cane"
+  },
+  "show_notification": true
+}

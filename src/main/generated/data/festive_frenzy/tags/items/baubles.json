@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "festive_frenzy:white_bauble",
+    "festive_frenzy:light_gray_bauble",
+    "festive_frenzy:gray_bauble",
+    "festive_frenzy:black_bauble",
+    "festive_frenzy:brown_bauble",
+    "festive_frenzy:red_bauble",
+    "festive_frenzy:orange_bauble",
+    "festive_frenzy:yellow_bauble",
+    "festive_frenzy:lime_bauble",
+    "festive_frenzy:green_bauble",
+    "festive_frenzy:cyan_bauble",
+    "festive_frenzy:light_blue_bauble",
+    "festive_frenzy:blue_bauble",
+    "festive_frenzy:purple_bauble",
+    "festive_frenzy:magenta_bauble",
+    "festive_frenzy:pink_bauble"
+  ]
+}

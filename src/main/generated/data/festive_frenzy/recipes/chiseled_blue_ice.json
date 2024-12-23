@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "festive_frenzy:polished_blue_ice_slab"
+    }
+  },
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "result": {
+    "item": "festive_frenzy:chiseled_blue_ice"
+  },
+  "show_notification": true
+}
