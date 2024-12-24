@@ -51,7 +51,7 @@ public abstract class HeadFeatureRendererMixin<T extends LivingEntity, M extends
                 q += 25.0F;
             }
 
-            matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(6.0F + r / 8.0F + q));
+            matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(MathHelper.clamp(6.0F + r / 32.0F + q, -25.0F, 25.0F)));
             matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(s / 8.0F * -1));
             matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(s / 8.0F));
         }
