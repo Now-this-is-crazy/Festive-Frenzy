@@ -19,11 +19,11 @@ import java.util.Objects;
 
 public class FrostflakeProjectileEntity extends PersistentProjectileEntity {
     public FrostflakeProjectileEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
-        super(entityType, world);
+        super(entityType, world, ItemStack.EMPTY);
     }
 
     public FrostflakeProjectileEntity(World world, LivingEntity owner) {
-        super(ModEntities.FROSTFLAKE_PROJECTILE, owner, world);
+        super(ModEntities.FROSTFLAKE_PROJECTILE, owner, world, ItemStack.EMPTY);
         this.setOwner(owner);
     }
 

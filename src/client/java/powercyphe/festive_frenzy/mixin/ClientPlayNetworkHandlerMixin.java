@@ -1,10 +1,15 @@
 package powercyphe.festive_frenzy.mixin;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientCommonNetworkHandler;
+import net.minecraft.client.network.ClientConnectionState;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.ClientConnection;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.listener.TickablePacketListener;
 import net.minecraft.network.packet.s2c.play.EntityAnimationS2CPacket;
 import net.minecraft.particle.ParticleTypes;
 import org.spongepowered.asm.mixin.Final;
@@ -18,11 +23,13 @@ import powercyphe.festive_frenzy.registry.ModItems;
 import powercyphe.festive_frenzy.registry.ModParticles;
 
 @Mixin(ClientPlayNetworkHandler.class)
-public abstract class ClientPlayNetworkHandlerMixin {
+public abstract class ClientPlayNetworkHandlerMixin extends ClientCommonNetworkHandler implements TickablePacketListener, ClientPlayPacketListener {
 
     @Shadow private ClientWorld world;
 
-    @Shadow @Final private MinecraftClient client;
+    protected ClientPlayNetworkHandlerMixin(MinecraftClient client, ClientConnection connection, ClientConnectionState connectionState) {
+        super(client, connection, connectionState);
+    }
 
     @Inject(method = "onEntityAnimation", at = @At(value = "TAIL"))
     private void festive_frenzy$candyCrit(EntityAnimationS2CPacket packet, CallbackInfo ci) {

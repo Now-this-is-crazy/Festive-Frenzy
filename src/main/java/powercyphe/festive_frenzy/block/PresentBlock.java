@@ -1,5 +1,6 @@
 package powercyphe.festive_frenzy.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -37,6 +38,11 @@ import java.util.List;
 public class PresentBlock extends BlockWithEntity {
     public PresentBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return createCodec(PresentBlock::new);
     }
 
     @Override
