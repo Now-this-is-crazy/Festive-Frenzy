@@ -38,7 +38,7 @@ public abstract class LivingEntityMixin {
 	private void festive_frenzy$dropPresents(DamageSource damageSource, boolean causedByPlayer, CallbackInfo ci) {
 		LivingEntity entity = (LivingEntity) (Object) this;
 		if (causedByPlayer && entity instanceof HostileEntity) {
-			if (entity.getRandom().nextInt(100) <= entity.getWorld().getGameRules().getInt(FestiveFrenzy.PRESENT_DROP_CHANCE)) {
+			if (entity.getRandom().nextInt(100) <= entity.getWorld().getGameRules().getInt(FestiveFrenzy.POUCH_DROP_CHANCE)) {
 				World world = entity.getWorld();
 
 				ItemEntity item = new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), ModItems.CANDY_POUCH.getDefaultStack());

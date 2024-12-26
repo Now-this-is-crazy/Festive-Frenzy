@@ -14,7 +14,7 @@ public class FestiveFrenzy implements ModInitializer {
 	public static final String MOD_ID = "festive_frenzy";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	public static GameRules.Key<GameRules.IntRule> PRESENT_DROP_CHANCE = GameRuleRegistry.register("presentDropChance", GameRules.Category.MOBS, GameRuleFactory.createIntRule(9, 0, 100));
+	public static GameRules.Key<GameRules.IntRule> POUCH_DROP_CHANCE = GameRuleRegistry.register("candyPouchDropChance", GameRules.Category.MOBS, GameRuleFactory.createIntRule(9, 0, 100));
 
 	@Override
 	public void onInitialize() {
