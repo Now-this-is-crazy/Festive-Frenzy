@@ -2,6 +2,7 @@
   "itemGroup.festive_frenzy": "Festive Frenzy",
 
   "item.festive_frenzy.festive_hat": "Festive Hat",
+  "item.festive_frenzy.candy_pouch": "Candy Pouch",
   "item.festive_frenzy.frostflake_cannon": "Frostflake Cannon",
 
   "item.festive_frenzy.red_candy_cane": "Red Candy Cane",
@@ -105,6 +106,8 @@
 
   "subtitles.festive_frenzy.bauble_throw": "Bauble thrown",
   "subtitles.festive_frenzy.bauble_break": "Bauble breaks",
+
+  "subtitles.festive_frenzy.pouch_open": "Pouch unpacked",
 
   "subtitles.festive_frenzy.fairy_lights_switch": "Fairy Lights switch"
 }

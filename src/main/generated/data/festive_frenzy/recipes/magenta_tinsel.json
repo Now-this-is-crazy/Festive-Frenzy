@@ -8,11 +8,10 @@
     }
   },
   "pattern": [
-    "WW"
+    "WWW"
   ],
   "result": {
-    "count": 4,
+    "count": 6,
     "item": "festive_frenzy:magenta_tinsel"
-  },
-  "show_notification": true
+  }
 }

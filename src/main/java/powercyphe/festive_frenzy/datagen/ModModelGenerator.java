@@ -92,6 +92,7 @@ public class ModModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.GREEN_CANDY_CANE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.PEPPERMINT, Models.GENERATED);
 
+        itemModelGenerator.register(ModItems.CANDY_POUCH, Models.GENERATED);
         itemModelGenerator.register(ModItems.FROSTFLAKE_CANNON, Models.HANDHELD);
 
         for (Block block : ModBlocks.PRESENTS) {

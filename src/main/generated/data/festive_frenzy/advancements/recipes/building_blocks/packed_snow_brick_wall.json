@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_packed_snow_bricks",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_packed_snow_bricks"
     ]
   ],
   "rewards": {
     "recipes": [
       "festive_frenzy:packed_snow_brick_wall"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

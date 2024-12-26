@@ -20,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_present",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_present"
     ]
   ],
   "rewards": {
     "recipes": [
       "festive_frenzy:brown_present_recolor"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

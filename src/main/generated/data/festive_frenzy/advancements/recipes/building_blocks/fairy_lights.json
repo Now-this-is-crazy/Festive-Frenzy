@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_amethyst",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_amethyst"
     ]
   ],
   "rewards": {
     "recipes": [
       "festive_frenzy:fairy_lights"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

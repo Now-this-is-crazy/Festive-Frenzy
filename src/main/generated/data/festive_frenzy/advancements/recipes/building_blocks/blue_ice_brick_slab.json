@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_blue_ice_bricks",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_blue_ice_bricks"
     ]
   ],
   "rewards": {
     "recipes": [
       "festive_frenzy:blue_ice_brick_slab"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

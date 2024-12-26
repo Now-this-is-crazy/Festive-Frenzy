@@ -20,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_candy_cane",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_candy_cane"
     ]
   ],
   "rewards": {
     "recipes": [
       "festive_frenzy:sharpened_candy_cane"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

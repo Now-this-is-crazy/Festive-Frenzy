@@ -1,5 +1,6 @@
 package powercyphe.festive_frenzy.mixin;
 
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
@@ -7,6 +8,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextParameterSet;
@@ -15,6 +17,7 @@ import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -36,31 +39,10 @@ public abstract class LivingEntityMixin {
 		LivingEntity entity = (LivingEntity) (Object) this;
 		if (causedByPlayer && entity instanceof HostileEntity) {
 			if (entity.getRandom().nextInt(100) <= entity.getWorld().getGameRules().getInt(FestiveFrenzy.PRESENT_DROP_CHANCE)) {
-				Identifier presentLootTable = FestiveFrenzy.id("mob_present");
-				LootTable lootTable = entity.getWorld().getServer().getLootManager().getLootTable(presentLootTable);
-				LootContextParameterSet.Builder builder = (new LootContextParameterSet.Builder((ServerWorld) entity.getWorld())).add(LootContextParameters.THIS_ENTITY, entity).add(LootContextParameters.ORIGIN, entity.getPos()).add(LootContextParameters.DAMAGE_SOURCE, damageSource).addOptional(LootContextParameters.KILLER_ENTITY, damageSource.getAttacker()).addOptional(LootContextParameters.DIRECT_KILLER_ENTITY, damageSource.getSource());
+				World world = entity.getWorld();
 
-				SimpleInventory inventory = new SimpleInventory(PresentBlockItem.MAX_STORAGE);
-				lootTable.supplyInventory(inventory, builder.build(LootContextTypes.ENTITY), entity.getLootTableSeed());
-				ItemStack present = ModBlocks.RED_PRESENT.asItem().getDefaultStack();
-
-				SimpleInventory compressedInv = new SimpleInventory(inventory.size());
-				for (int i = 0; i < inventory.size(); i++) {
-					if (!inventory.getStack(i).isEmpty()) {
-						compressedInv.addStack(inventory.getStack(i));
-					}
-				}
-
-				DefaultedList<ItemStack> items = DefaultedList.ofSize(PresentBlockItem.MAX_STORAGE);
-				for (int i = 0; i < compressedInv.size(); i++) {
-					if (!compressedInv.getStack(i).isEmpty()) {
-						items.add(0, compressedInv.getStack(i));
-					}
-				}
-				if (!items.isEmpty()) {
-					PresentBlockItem.setStoredItems(present, items);
-					entity.dropStack(present);
-				}
+				ItemEntity item = new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), ModItems.CANDY_POUCH.getDefaultStack());
+				entity.getWorld().spawnEntity(item);
 			}
 		}
 	}

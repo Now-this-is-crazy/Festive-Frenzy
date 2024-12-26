@@ -44,10 +44,10 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, ModItems.SHARPENED_CANDY_CANE, 1)
                 .pattern(" CB")
-                .pattern("PBC")
-                .pattern("SP ")
+                .pattern("FBC")
+                .pattern("SF ")
                 .input('S', Items.IRON_SWORD)
-                .input('P', ModItems.PEPPERMINT)
+                .input('F', ModBlocks.FAIRY_LIGHTS)
                 .input('C', ModTags.CANDY_CANES_TAG)
                 .input('B', ModTags.CANDY_CANE_BLOCKS_TAG)
                 .criterion("has_candy_cane", conditionsFromTag(ModTags.CANDY_CANES_TAG))
@@ -209,11 +209,11 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                     .criterion("has_bauble", conditionsFromTag(ModTags.BAUBLES_TAG))
                     .offerTo(consumer, FestiveFrenzy.id(Registries.ITEM.getId(bauble).getPath() + "_recolor"));
 
-            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, tinsel, 4)
-                    .pattern("WW")
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, tinsel, 6)
+                    .pattern("WWW")
                     .input('W', wool)
                     .group("tinsel")
-                    .criterion("has_glass", conditionsFromItem(Items.GLASS))
+                    .criterion("has_wool", conditionsFromTag(ItemTags.WOOL))
                     .criterion("has_tinsel", conditionsFromTag(ModTags.TINSELS_TAG))
                     .offerTo(consumer);
             ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, tinsel, 1)

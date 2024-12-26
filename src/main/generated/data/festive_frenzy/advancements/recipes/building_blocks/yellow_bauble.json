@@ -32,15 +32,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_glass",
-      "has_bauble",
-      "has_the_recipe"
+      "has_bauble"
     ]
   ],
   "rewards": {
     "recipes": [
       "festive_frenzy:yellow_bauble"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

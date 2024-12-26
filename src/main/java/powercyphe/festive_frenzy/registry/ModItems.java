@@ -12,10 +12,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import powercyphe.festive_frenzy.FestiveFrenzy;
-import powercyphe.festive_frenzy.item.FestiveHatItem;
-import powercyphe.festive_frenzy.item.FrostflakeCannonItem;
-import powercyphe.festive_frenzy.item.PresentBlockItem;
-import powercyphe.festive_frenzy.item.SharpenedCandyCaneItem;
+import powercyphe.festive_frenzy.item.*;
 
 public class ModItems {
 
@@ -25,7 +22,9 @@ public class ModItems {
             .displayName(Text.translatable("itemGroup.festive_frenzy"))
             .build();
 
-    public static Item FESTIVE_HAT = register("festive_hat", new FestiveHatItem(new Item.Settings()));
+    public static Item FESTIVE_HAT = register("festive_hat", new FestiveHatItem(new Item.Settings().maxCount(1)));
+    public static Item CANDY_POUCH = register("candy_pouch", new CandyPouchItem(new Item.Settings()));
+
 
     public static Item RED_CANDY_CANE = register("red_candy_cane", new Item(new Item.Settings()
             .food(new FoodComponent.Builder().hunger(3).saturationModifier(0.4f).snack().build())));

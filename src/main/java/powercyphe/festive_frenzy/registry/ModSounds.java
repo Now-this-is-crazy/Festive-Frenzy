@@ -16,6 +16,8 @@ public class ModSounds {
     public static final SoundEvent BAUBLE_THROW = register("bauble_throw");
     public static final SoundEvent BAUBLE_BREAK = register("bauble_break");
 
+    public static final SoundEvent POUCH_OPEN = register("pouch_open");
+
     public static void init() {}
 
     public static SoundEvent register(String path) {

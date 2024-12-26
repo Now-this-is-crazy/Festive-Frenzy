@@ -20,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_present",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_present"
     ]
   ],
   "rewards": {
     "recipes": [
       "festive_frenzy:pink_present_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

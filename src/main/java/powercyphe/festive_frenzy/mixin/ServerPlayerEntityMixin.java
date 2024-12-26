@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntityAnimationS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -17,7 +18,7 @@ public abstract class ServerPlayerEntityMixin {
     private Packet<?> festive_frenzy$candyCrit(Packet<?> packet) {
         ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
         if (packet instanceof EntityAnimationS2CPacket entityAnimationS2CPacket && player.getMainHandStack().isOf(ModItems.SHARPENED_CANDY_CANE)) {
-            Entity entity = player.getServerWorld().getEntityById(entityAnimationS2CPacket.getId());
+            Entity entity = player.getWorld().getEntityById(entityAnimationS2CPacket.getId());
             if (entity != null) {
                 return new EntityAnimationS2CPacket(entity, ModNetworking.CANDY_CRIT_ANIMATION_ID);
             }

@@ -30,15 +30,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_wool",
-      "has_present",
-      "has_the_recipe"
+      "has_present"
     ]
   ],
   "rewards": {
     "recipes": [
       "festive_frenzy:yellow_present"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

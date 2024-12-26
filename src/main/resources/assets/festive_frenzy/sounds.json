@@ -46,5 +46,13 @@
       "minecraft:random/glass2",
       "minecraft:random/glass3"
     ]
+  },
+  "pouch_open": {
+    "subtitle": "subtitles.festive_frenzy.pouch_open",
+    "sounds": [
+      "minecraft:item/bundle/drop_contents1",
+      "minecraft:item/bundle/drop_contents2",
+      "minecraft:item/bundle/drop_contents3"
+    ]
   }
 }

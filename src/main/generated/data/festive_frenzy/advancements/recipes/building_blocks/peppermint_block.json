@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_peppermint",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_peppermint"
     ]
   ],
   "rewards": {
     "recipes": [
       "festive_frenzy:peppermint_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

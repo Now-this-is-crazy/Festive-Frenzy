@@ -8,8 +8,8 @@
     "C": {
       "tag": "festive_frenzy:candy_canes"
     },
-    "P": {
-      "item": "festive_frenzy:peppermint"
+    "F": {
+      "item": "festive_frenzy:fairy_lights"
     },
     "S": {
       "item": "minecraft:iron_sword"
@@ -17,11 +17,10 @@
   },
   "pattern": [
     " CB",
-    "PBC",
-    "SP "
+    "FBC",
+    "SF "
   ],
   "result": {
     "item": "festive_frenzy:sharpened_candy_cane"
-  },
-  "show_notification": true
+  }
 }

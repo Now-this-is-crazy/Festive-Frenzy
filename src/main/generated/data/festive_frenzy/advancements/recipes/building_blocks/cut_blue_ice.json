@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_blue_ice",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_blue_ice"
     ]
   ],
   "rewards": {
     "recipes": [
       "festive_frenzy:cut_blue_ice"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

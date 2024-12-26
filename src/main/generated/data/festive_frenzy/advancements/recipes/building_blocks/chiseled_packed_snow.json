@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_polished_packed_snow_slab",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_polished_packed_snow_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "festive_frenzy:chiseled_packed_snow"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }
