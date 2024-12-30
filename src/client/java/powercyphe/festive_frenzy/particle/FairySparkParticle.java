@@ -6,8 +6,8 @@ import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 
-public class CandyCritParticle extends SpriteBillboardParticle {
-    CandyCritParticle(ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+public class FairySparkParticle extends SpriteBillboardParticle {
+    FairySparkParticle(ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
         super(clientWorld, d, e, f, 0.0, 0.0, 0.0);
         this.velocityMultiplier = 0.7F;
         this.gravityStrength = 0.5F;
@@ -41,9 +41,9 @@ public class CandyCritParticle extends SpriteBillboardParticle {
         }
 
         public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
-            CandyCritParticle candyCritParticle = new CandyCritParticle(clientWorld, d, e, f, g, h, i);
-            candyCritParticle.setSprite(this.spriteProvider);
-            return candyCritParticle;
+            FairySparkParticle fairySparkParticle = new FairySparkParticle(clientWorld, d, e, f, g, h, i);
+            fairySparkParticle.setSprite(this.spriteProvider);
+            return fairySparkParticle;
         }
     }
 }

@@ -13,6 +13,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import powercyphe.festive_frenzy.FestiveFrenzy;
 import powercyphe.festive_frenzy.item.*;
+import powercyphe.festive_frenzy.item.material.CandyToolMaterial;
 
 public class ModItems {
 
@@ -35,7 +36,7 @@ public class ModItems {
 
     public static Item FROSTFLAKE_CANNON = register("frostflake_cannon", new FrostflakeCannonItem(new Item.Settings()));
 
-    public static Item SHARPENED_CANDY_CANE = register("sharpened_candy_cane", new SharpenedCandyCaneItem(ToolMaterials.DIAMOND, 4, -2.7F, new Item.Settings()));
+    public static Item SHARPENED_CANDY_CANE = register("sharpened_candy_cane", new SharpenedCandyCaneItem(new CandyToolMaterial(), 3, -2.7F, 0.5f, new Item.Settings()));
 
 
 

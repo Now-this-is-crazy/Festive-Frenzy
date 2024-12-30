@@ -7,13 +7,13 @@
 	"gui_light": "front",
 	"display": {
 		"thirdperson_righthand": {
-			"rotation": [0, 90, 45],
-			"translation": [0, 9.5, 1.75],
+			"rotation": [35.75, 90, 0],
+			"translation": [0, 5.25, 0.75],
 			"scale": [1.5, 1.5, 0.8]
 		},
 		"thirdperson_lefthand": {
-			"rotation": [0, -90, -45],
-			"translation": [0, 9.5, 1.75],
+			"rotation": [35.75, -90, 0],
+			"translation": [0, 5.25, 0.75],
 			"scale": [1.5, 1.5, 0.8]
 		},
 		"firstperson_righthand": {

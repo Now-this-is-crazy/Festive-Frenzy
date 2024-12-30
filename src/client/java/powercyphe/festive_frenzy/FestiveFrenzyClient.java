@@ -10,15 +10,14 @@ import net.minecraft.client.particle.SweepAttackParticle;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.EmptyEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
-import net.minecraft.client.render.entity.ItemEntityRenderer;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.collection.DefaultedList;
 import powercyphe.festive_frenzy.particle.CandyCritParticle;
+import powercyphe.festive_frenzy.particle.FairySparkParticle;
 import powercyphe.festive_frenzy.particle.FrostflakeParticle;
 import powercyphe.festive_frenzy.particle.FrostflakeTrailParticle;
 import powercyphe.festive_frenzy.registry.ModBlocks;
@@ -50,6 +49,7 @@ public class FestiveFrenzyClient implements ClientModInitializer {
 
 		ParticleFactoryRegistry.getInstance().register(ModParticles.CANDY_SWEEP, SweepAttackParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(ModParticles.CANDY_CRIT, CandyCritParticle.Factory::new);
+		ParticleFactoryRegistry.getInstance().register(ModParticles.FAIRY_SPARK, FairySparkParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(ModParticles.FROSTFLAKE, FrostflakeParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(ModParticles.FROSTFLAKE_TRAIL, FrostflakeTrailParticle.Factory::new);
 

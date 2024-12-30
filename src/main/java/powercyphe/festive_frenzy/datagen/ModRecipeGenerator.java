@@ -46,7 +46,7 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                 .pattern(" CB")
                 .pattern("FBC")
                 .pattern("SF ")
-                .input('S', Items.IRON_SWORD)
+                .input('S', Items.DIAMOND_SWORD)
                 .input('F', ModBlocks.FAIRY_LIGHTS)
                 .input('C', ModTags.CANDY_CANES_TAG)
                 .input('B', ModTags.CANDY_CANE_BLOCKS_TAG)

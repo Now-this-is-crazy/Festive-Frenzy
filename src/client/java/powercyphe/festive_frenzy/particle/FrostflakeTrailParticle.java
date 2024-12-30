@@ -16,7 +16,7 @@ public class FrostflakeTrailParticle extends SpriteBillboardParticle {
         this.velocityZ = velocityZ;
         this.gravityStrength = 0.135F;
         this.scale = 0.3F * (this.random.nextFloat() * this.random.nextFloat() * 1.0F + 1.0F);
-        this.maxAge = (int)(27.0 / ((double)this.random.nextFloat() * 0.8 + 0.2)) + 2;
+        this.maxAge = (int)(11.0 / ((double)this.random.nextFloat() * 0.8 + 0.2)) + 2;
         this.spriteProvider = spriteProvider;
     }
 

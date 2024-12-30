@@ -34,7 +34,7 @@ public class FrostflakeCannonItem extends Item {
 
         user.incrementStat(Stats.USED.getOrCreateStat(this));
         if (!user.isCreative()) {
-            user.getItemCooldownManager().set(ModItems.FROSTFLAKE_CANNON, 30);
+            user.getItemCooldownManager().set(ModItems.FROSTFLAKE_CANNON, 35);
             stack.decrement(1);
         }
         return TypedActionResult.consume(stack);

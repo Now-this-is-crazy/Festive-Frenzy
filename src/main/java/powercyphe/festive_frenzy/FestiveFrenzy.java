@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import powercyphe.festive_frenzy.network.ModNetworking;
 import powercyphe.festive_frenzy.registry.*;
+import powercyphe.festive_frenzy.util.ModLootTableModifier;
 
 public class FestiveFrenzy implements ModInitializer {
 	public static final String MOD_ID = "festive_frenzy";
@@ -26,6 +27,8 @@ public class FestiveFrenzy implements ModInitializer {
 		ModSounds.init();
 		ModNetworking.init();
 		ModTags.init();
+
+		ModLootTableModifier.modify();
 	}
 
 	public static Identifier id(String path) {
