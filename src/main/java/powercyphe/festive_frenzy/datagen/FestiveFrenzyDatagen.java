@@ -13,5 +13,6 @@ public class FestiveFrenzyDatagen implements DataGeneratorEntrypoint {
 		pack.addProvider(ModModelGenerator::new);
 		pack.addProvider(ModBlockLootTableGenerator::new);
 		pack.addProvider(ModRecipeGenerator::new);
+		pack.addProvider(ModDamageTypeTagGenerator::new);
 	}
 }

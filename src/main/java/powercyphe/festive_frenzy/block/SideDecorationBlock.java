@@ -175,7 +175,7 @@ public class SideDecorationBlock extends Block {
     }
 
     public boolean isSideSolid(WorldView world, BlockPos blockPos, Direction direction) {
-        return world.getBlockState(blockPos.offset(direction.getOpposite())).isSideSolid(world, blockPos.offset(direction.getOpposite()), direction.getOpposite(), SideShapeType.FULL) || world.getBlockState(blockPos.offset(direction.getOpposite())).isIn(ModTags.SIDE_DECO_PLACEABLE);
+        return world.getBlockState(blockPos.offset(direction.getOpposite())).isSideSolid(world, blockPos.offset(direction.getOpposite()), direction, SideShapeType.RIGID) || world.getBlockState(blockPos.offset(direction.getOpposite())).isIn(ModTags.Blocks.SIDE_DECO_PLACEABLE);
     }
 
     @Override

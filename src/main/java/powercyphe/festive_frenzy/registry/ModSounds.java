@@ -7,9 +7,8 @@ import net.minecraft.util.Identifier;
 import powercyphe.festive_frenzy.FestiveFrenzy;
 
 public class ModSounds {
-    public static final SoundEvent PRESENT_INSERT = register("present_insert");
-    public static final SoundEvent PRESENT_REMOVE = register("present_remove");
     public static final SoundEvent PRESENT_OPEN = register("present_open");
+    public static final SoundEvent PRESENT_UNBOX = register("present_unbox");
 
     public static final SoundEvent FROSTFLAKE_CANNON_SHOOT = register("frostflake_cannon_shoot");
 

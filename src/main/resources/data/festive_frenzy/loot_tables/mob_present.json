@@ -27,17 +27,19 @@
       ]
     },
     {
-      "rolls": 0,
+      "rolls": 1,
+      "bonus_rolls": 0,
       "entries": [
         {
-          "type": "minecraft:item",
-          "name": "festive_frenzy:sharpened_candy_cane"
+          "type": "minecraft:tag",
+          "name": "festive_frenzy:sharpened_candy_canes",
+          "expand": true
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:random_chance",
-          "chance": 0.02
+          "chance": 0.005
         }
       ]
     },

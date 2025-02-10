@@ -21,6 +21,6 @@ public class FestiveHatItem extends Item implements DyeableItem, Equipment {
 
     @Override
     public int getColor(ItemStack stack) {
-        return DyeableItem.super.getColor(stack) != DEFAULT_COLOR ? DyeableItem.super.getColor(stack) : ColorHelper.Argb.getArgb(0,246,85,60); // 0xd41c1c
+        return DyeableItem.super.getColor(stack) != DEFAULT_COLOR ? DyeableItem.super.getColor(stack) : ColorHelper.Argb.getArgb(0,246,85,60);
     }
 }

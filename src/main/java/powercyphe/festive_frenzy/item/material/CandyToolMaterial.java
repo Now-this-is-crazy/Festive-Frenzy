@@ -17,7 +17,7 @@ public class CandyToolMaterial implements ToolMaterial {
 
     @Override
     public float getAttackDamage() {
-        return 4;
+        return 3;
     }
 
     @Override

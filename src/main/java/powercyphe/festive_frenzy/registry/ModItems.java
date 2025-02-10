@@ -36,10 +36,10 @@ public class ModItems {
 
     public static Item FROSTFLAKE_CANNON = register("frostflake_cannon", new FrostflakeCannonItem(new Item.Settings()));
 
-    public static Item SHARPENED_CANDY_CANE = register("sharpened_candy_cane", new SharpenedCandyCaneItem(new CandyToolMaterial(), 3, -2.7F, 0.5f, new Item.Settings()));
+    // Sharpened Candy Canes
+    public static DefaultedList<Item> SHARPENED_CANDY_CANES = DefaultedList.of();
 
-
-
+    public static Item SHARPENED_CANDY_CANE = registerSharpendCandyCane("sharpened_candy_cane");
 
     public static void init() {
         Registry.register(Registries.ITEM_GROUP, FESTIVE_FRENZY_GROUP_KEY, FESTIVE_FRENZY_GROUP);
@@ -60,6 +60,13 @@ public class ModItems {
             itemGroup.add(returnItem.getDefaultStack());
         });
         return returnItem;
+    }
+
+    // Unique Item Registries
+    public static Item registerSharpendCandyCane(String id) {
+        Item item = register(FestiveFrenzy.id(id), new SharpenedCandyCaneItem(new CandyToolMaterial(), 3, -2.7F, 0.5f, new Item.Settings()));
+        SHARPENED_CANDY_CANES.add(item);
+        return item;
     }
 
 }

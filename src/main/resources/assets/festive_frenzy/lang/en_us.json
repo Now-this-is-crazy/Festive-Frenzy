@@ -1,6 +1,14 @@
 {
   "itemGroup.festive_frenzy": "Festive Frenzy",
 
+  "festive_frenzy.present_tooltip": "Contains %s Item(s)",
+  "festive_frenzy.explosion_strength": "Explosion Strength: %s",
+  "festive_frenzy.explosion_modification_none": "No Explosion Modifier",
+  "festive_frenzy.explosion_modification_fire": "Fire Explosion Modifier",
+  "festive_frenzy.explosion_modification_ice": "Ice Explosion Modifier",
+
+  "container.festive_frenzy.present.close": "Close Present",
+
   "item.festive_frenzy.festive_hat": "Festive Hat",
   "item.festive_frenzy.candy_pouch": "Candy Pouch",
   "item.festive_frenzy.frostflake_cannon": "Frostflake Cannon",
@@ -14,6 +22,8 @@
   "block.festive_frenzy.green_candy_cane_block": "Green Candy Cane Block",
   "block.festive_frenzy.mixed_candy_cane_block": "Mixed Candy Cane Block",
   "block.festive_frenzy.peppermint_block": "Peppermint Block",
+
+  "block.festive_frenzy.snow_globe": "Snow Globe",
 
   "block.festive_frenzy.packed_snow": "Packed Snow",
   "block.festive_frenzy.chiseled_packed_snow": "Chiseled Packed Snow",
@@ -102,9 +112,8 @@
 
   "subtitles.festive_frenzy.frostflake_cannon_shoot": "Frostflake Cannon used",
 
-  "subtitles.festive_frenzy.present_insert": "Item packed",
-  "subtitles.festive_frenzy.present_remove": "Item unpacked",
-  "subtitles.festive_frenzy.present_open": "Present opened",
+  "subtitles.festive_frenzy.present_unbox": "Present unboxed",
+  "subtitles.festive_frenzy.present_open": "Present opens",
 
   "subtitles.festive_frenzy.bauble_throw": "Bauble thrown",
   "subtitles.festive_frenzy.bauble_break": "Bauble breaks",

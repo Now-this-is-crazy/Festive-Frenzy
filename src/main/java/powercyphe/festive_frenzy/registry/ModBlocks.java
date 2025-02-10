@@ -2,17 +2,16 @@ package powercyphe.festive_frenzy.registry;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.resource.featuretoggle.FeatureFlag;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Pair;
 import net.minecraft.util.collection.DefaultedList;
 import powercyphe.festive_frenzy.FestiveFrenzy;
-import powercyphe.festive_frenzy.block.BaubleBlock;
-import powercyphe.festive_frenzy.block.FairyLightBlock;
-import powercyphe.festive_frenzy.block.PresentBlock;
-import powercyphe.festive_frenzy.block.SideDecorationBlock;
+import powercyphe.festive_frenzy.block.*;
 import powercyphe.festive_frenzy.item.BaubleBlockItem;
 import powercyphe.festive_frenzy.item.PresentBlockItem;
 
@@ -26,6 +25,7 @@ public class ModBlocks {
     public static Block MIXED_CANDY_CANE_BLOCK = register("mixed_candy_cane_block", new Block(FabricBlockSettings.create().sounds(BlockSoundGroup.PACKED_MUD)));
     public static Block PEPPERMINT_BLOCK = register("peppermint_block", new Block(FabricBlockSettings.create().sounds(BlockSoundGroup.PACKED_MUD)));
 
+    public static Block SNOW_GLOBE = register("snow_globe", new SnowGlobeBlock(FabricBlockSettings.create().sounds(BlockSoundGroup.GLASS).nonOpaque().breakInstantly().ticksRandomly()));
 
     // Snow Blocks
     public static Block PACKED_SNOW = register("packed_snow", new Block(FabricBlockSettings.copyOf(Blocks.SNOW_BLOCK).strength(0.6f)));
@@ -141,29 +141,27 @@ public class ModBlocks {
 
     // Unique Block Registries
     public static Block registerPresent(String id) {
-        Block block = new PresentBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL).nonOpaque());
-        block = registerWithoutItem(id, block);
+        Block block = registerWithoutItem(id, new PresentBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL).nonOpaque()));
         ModItems.register(id, new PresentBlockItem(block, new Item.Settings().maxCount(1)));
         PRESENTS.add(block);
         return block;
     }
 
     public static Block registerBauble(String id) {
-        Block block = new BaubleBlock(FabricBlockSettings.create().nonOpaque().sounds(BlockSoundGroup.GLASS)
-                .luminance(createBaubleLuminance(11)));
-        block = registerWithoutItem(id, block);
+        Block block = registerWithoutItem(id, new BaubleBlock(FabricBlockSettings.create().nonOpaque().sounds(BlockSoundGroup.GLASS)
+                .luminance(createBaubleLuminance(11))));
         ModItems.register(id, new BaubleBlockItem(block, new Item.Settings().maxCount(16)));
         BAUBLES.add(block);
         return block;
     }
 
     public static Block registerTinsel(String id) {
-        Block block = new SideDecorationBlock(FabricBlockSettings.create().nonOpaque().sounds(BlockSoundGroup.WOOL).collidable(false));
-        block = register(id, block);
+        Block block = register(id, new SideDecorationBlock(FabricBlockSettings.create().nonOpaque().sounds(BlockSoundGroup.WOOL).collidable(false)));
         TINSELS.add(block);
         return block;
     }
 
+    // Functions
     public static ToIntFunction<BlockState> createBaubleLuminance(int litLevel) {
         return (state) -> {
             return (Boolean)state.get(BaubleBlock.GLOWING) ? litLevel : 0;

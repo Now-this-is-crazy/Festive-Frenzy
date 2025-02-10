@@ -1,11 +1,14 @@
 package powercyphe.festive_frenzy.datagen;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
@@ -15,7 +18,10 @@ import powercyphe.festive_frenzy.registry.ModItems;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static net.minecraft.data.client.BlockStateModelGenerator.CONNECTION_VARIANT_FUNCTIONS;
 
@@ -84,6 +90,8 @@ public class ModModelGenerator extends FabricModelProvider {
         for (Block block : ModBlocks.TINSELS) {
             registerSideDecoration(blockStateModelGenerator, block);
         }
+
+        blockStateModelGenerator.registerSimpleState(ModBlocks.SNOW_GLOBE);
     }
 
     @Override
@@ -94,6 +102,10 @@ public class ModModelGenerator extends FabricModelProvider {
 
         itemModelGenerator.register(ModItems.CANDY_POUCH, Models.GENERATED);
         itemModelGenerator.register(ModItems.FROSTFLAKE_CANNON, Models.HANDHELD);
+
+        for (Item item : ModItems.SHARPENED_CANDY_CANES) {
+            register2dModel(itemModelGenerator, item, Models.GENERATED);
+        }
 
         for (Block block : ModBlocks.PRESENTS) {
             itemModelGenerator.register(block.asItem(), Models.GENERATED);
@@ -131,4 +143,9 @@ public class ModModelGenerator extends FabricModelProvider {
 
         blockStateModelGenerator.blockStateCollector.accept(multipartBlockStateSupplier);
     }
+
+    public final void register2dModel(ItemModelGenerator itemModelGenerator, Item item, Model model) {
+        model.upload(Registries.ITEM.getId(item).withPrefixedPath("item/").withSuffixedPath("_2d"), TextureMap.layer0(item), itemModelGenerator.writer);
+    }
+
 }

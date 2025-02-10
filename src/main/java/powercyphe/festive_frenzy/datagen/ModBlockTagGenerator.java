@@ -17,16 +17,15 @@ public class ModBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
 
     @Override
     public void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        getOrCreateTagBuilder(ModTags.BAUBLE_PLACEABLE)
+        getOrCreateTagBuilder(ModTags.Blocks.BAUBLE_PLACEABLE)
                 .forceAddTag(BlockTags.LEAVES)
                 .forceAddTag(BlockTags.FENCES)
                 .forceAddTag(BlockTags.WALLS)
                 .add(Blocks.CHAIN)
                 .add(Blocks.IRON_BARS);
 
-        getOrCreateTagBuilder(ModTags.SIDE_DECO_PLACEABLE)
+        getOrCreateTagBuilder(ModTags.Blocks.SIDE_DECO_PLACEABLE)
                 .forceAddTag(BlockTags.LEAVES);
-
 
         getOrCreateTagBuilder(BlockTags.SNOW)
                 .add(ModBlocks.PACKED_SNOW)
@@ -87,6 +86,24 @@ public class ModBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
                 .add(ModBlocks.BLUE_ICE_BRICKS)
                 .add(ModBlocks.BLUE_ICE_BRICK_STAIRS)
                 .add(ModBlocks.BLUE_ICE_BRICK_SLAB)
+                .add(ModBlocks.BLUE_ICE_BRICK_WALL);
+
+        getOrCreateTagBuilder(BlockTags.STAIRS)
+                .add(ModBlocks.POLISHED_PACKED_SNOW_STAIRS)
+                .add(ModBlocks.PACKED_SNOW_BRICK_STAIRS)
+                .add(ModBlocks.POLISHED_BLUE_ICE_STAIRS)
+                .add(ModBlocks.BLUE_ICE_BRICK_STAIRS);
+
+        getOrCreateTagBuilder(BlockTags.SLABS)
+                .add(ModBlocks.POLISHED_PACKED_SNOW_SLAB)
+                .add(ModBlocks.PACKED_SNOW_BRICK_SLAB)
+                .add(ModBlocks.POLISHED_BLUE_ICE_SLAB)
+                .add(ModBlocks.BLUE_ICE_BRICK_SLAB);
+
+        getOrCreateTagBuilder(BlockTags.WALLS)
+                .add(ModBlocks.POLISHED_PACKED_SNOW_WALL)
+                .add(ModBlocks.PACKED_SNOW_BRICK_WALL)
+                .add(ModBlocks.POLISHED_BLUE_ICE_WALL)
                 .add(ModBlocks.BLUE_ICE_BRICK_WALL);
     }
 }

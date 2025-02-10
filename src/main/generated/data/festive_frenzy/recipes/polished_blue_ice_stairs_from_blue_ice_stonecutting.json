@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "minecraft:blue_ice"
+  },
+  "result": "festive_frenzy:polished_blue_ice_stairs"
+}

@@ -1,24 +1,16 @@
 {
-  "present_insert": {
-    "subtitle": "subtitles.festive_frenzy.present_insert",
+  "present_open": {
+    "subtitle": "subtitles.festive_frenzy.present_open",
     "sounds": [
       "minecraft:item/bundle/insert1",
       "minecraft:item/bundle/insert2",
       "minecraft:item/bundle/insert3"
     ]
   },
-  "present_remove": {
-    "subtitle": "subtitles.festive_frenzy.present_remove",
+  "present_unbox": {
+    "subtitle": "subtitles.festive_frenzy.present_unbox",
     "sounds": [
-      "minecraft:item/bundle/remove_one1",
-      "minecraft:item/bundle/remove_one2",
-      "minecraft:item/bundle/remove_one3"
-    ]
-  },
-  "present_open": {
-    "subtitle": "subtitles.festive_frenzy.present_open",
-    "sounds": [
-      "festive_frenzy:present_open"
+      "festive_frenzy:present_unbox"
     ]
   },
   "fairy_lights_switch": {

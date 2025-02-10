@@ -69,6 +69,7 @@ public class ModBlockLootTableGenerator extends FabricBlockLootTableProvider {
         }
 
         addDrop(ModBlocks.FAIRY_LIGHTS, sideDecoBlockDrops(ModBlocks.FAIRY_LIGHTS));
+        addDrop(ModBlocks.SNOW_GLOBE);
     }
 
     public LootTable.Builder sideDecoBlockDrops(Block drop) {

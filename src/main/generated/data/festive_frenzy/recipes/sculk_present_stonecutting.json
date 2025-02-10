@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:stonecutting",
+  "type": "festive_frenzy:present_stonecutting",
   "count": 1,
   "ingredient": {
     "tag": "festive_frenzy:presents"

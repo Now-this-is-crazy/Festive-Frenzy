@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "building",
-  "group": "present",
+  "group": "colored",
   "key": {
     "S": {
       "item": "minecraft:string"

@@ -21,6 +21,13 @@ public class ModItemTagGenerator extends FabricTagProvider.ItemTagProvider {
     public void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
         int index;
 
+        Item[] sharpened_candy_canes = new Item[ModItems.SHARPENED_CANDY_CANES.size()];
+        index = 0;
+        for (Item sharpened_candy_cane : ModItems.SHARPENED_CANDY_CANES) {
+            sharpened_candy_canes[index] = sharpened_candy_cane;
+            index++;
+        }
+
         Item[] presents = new Item[ModBlocks.PRESENTS.size()];
         index = 0;
         for (Block present : ModBlocks.PRESENTS) {
@@ -42,17 +49,20 @@ public class ModItemTagGenerator extends FabricTagProvider.ItemTagProvider {
             index++;
         }
 
-        getOrCreateTagBuilder(ModTags.PRESENTS_TAG)
+        getOrCreateTagBuilder(ModTags.Items.SHARPENED_CANDY_CANES_TAG)
+                .add(sharpened_candy_canes);
+
+        getOrCreateTagBuilder(ModTags.Items.PRESENTS_TAG)
                 .add(presents);
-        getOrCreateTagBuilder(ModTags.BAUBLES_TAG)
+        getOrCreateTagBuilder(ModTags.Items.BAUBLES_TAG)
                 .add(baubles);
-        getOrCreateTagBuilder(ModTags.TINSELS_TAG)
+        getOrCreateTagBuilder(ModTags.Items.TINSELS_TAG)
                 .add(tinsels);
 
-        getOrCreateTagBuilder(ModTags.CANDY_CANES_TAG)
+        getOrCreateTagBuilder(ModTags.Items.CANDY_CANES_TAG)
                 .add(ModItems.RED_CANDY_CANE)
                 .add(ModItems.GREEN_CANDY_CANE);
-        getOrCreateTagBuilder(ModTags.CANDY_CANE_BLOCKS_TAG)
+        getOrCreateTagBuilder(ModTags.Items.CANDY_CANE_BLOCKS_TAG)
                 .add(ModBlocks.RED_CANDY_CANE_BLOCK.asItem())
                 .add(ModBlocks.GREEN_CANDY_CANE_BLOCK.asItem())
                 .add(ModBlocks.MIXED_CANDY_CANE_BLOCK.asItem());

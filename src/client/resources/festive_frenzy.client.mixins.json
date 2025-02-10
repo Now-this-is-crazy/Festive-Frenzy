@@ -3,10 +3,12 @@
   "package": "powercyphe.festive_frenzy.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "ClientPlayerEntityMixin",
     "ClientPlayNetworkHandlerMixin",
     "HeadFeatureRendererMixin",
     "ItemRendererMixin",
-    "ModelLoaderMixin"
+    "ModelLoaderMixin",
+    "accessor.ItemRendererAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

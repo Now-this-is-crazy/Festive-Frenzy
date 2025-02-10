@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import powercyphe.festive_frenzy.network.ModNetworking;
+import powercyphe.festive_frenzy.registry.ModNetworking;
 import powercyphe.festive_frenzy.registry.ModItems;
 import powercyphe.festive_frenzy.registry.ModParticles;
 
@@ -35,8 +35,11 @@ public abstract class ClientPlayNetworkHandlerMixin extends ClientCommonNetworkH
     @Inject(method = "onEntityAnimation", at = @At(value = "TAIL"))
     private void festive_frenzy$candyCrit(EntityAnimationS2CPacket packet, CallbackInfo ci) {
         Entity entity = this.world.getEntityById(packet.getId());
-        if (packet.getAnimationId() == ModNetworking.CANDY_CRIT_ANIMATION_ID) {
+        if (packet.getAnimationId() == ModNetworking.SPARK_CRIT_ANIMATION_ID) {
             this.client.particleManager.addEmitter(entity, ModParticles.FAIRY_SPARK);
+        }
+        if (packet.getAnimationId() == ModNetworking.ENCHANTED_CANDY_ANIMATION_ID) {
+            this.client.particleManager.addEmitter(entity, ModParticles.CANDY_CRIT);
         }
     }
 }
