@@ -13,7 +13,7 @@ public class ModScreenHandlers {
 
     public static void init() {
         PRESENT_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER,
-                new Identifier(FestiveFrenzy.MOD_ID, "present"),
+                FestiveFrenzy.id("present"),
                 new ScreenHandlerType<>(PresentScreenHandler::new, FeatureSet.empty()));
     }
 }

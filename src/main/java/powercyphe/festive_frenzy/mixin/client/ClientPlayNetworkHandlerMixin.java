@@ -29,7 +29,7 @@ public abstract class ClientPlayNetworkHandlerMixin extends ClientCommonNetworkH
 
     @Inject(method = "onEntityAnimation", at = @At(value = "TAIL"))
     private void festive_frenzy$candyCrit(EntityAnimationS2CPacket packet, CallbackInfo ci) {
-        Entity entity = this.world.getEntityById(packet.getId());
+        Entity entity = this.world.getEntityById(packet.getEntityId());
         if (packet.getAnimationId() == ModNetworking.SPARK_CRIT_ANIMATION_ID) {
             this.client.particleManager.addEmitter(entity, ModParticles.FAIRY_SPARK);
         }

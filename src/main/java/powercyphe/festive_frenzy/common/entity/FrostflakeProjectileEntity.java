@@ -19,13 +19,13 @@ import powercyphe.festive_frenzy.common.registry.ModParticles;
 
 public class FrostflakeProjectileEntity extends PersistentProjectileEntity {
     public FrostflakeProjectileEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
-        super(entityType, world, ItemStack.EMPTY);
+        super(entityType, world);
         this.setDamage(0.1f);
         this.pickupType = PickupPermission.DISALLOWED;
     }
 
     public FrostflakeProjectileEntity(World world, LivingEntity owner) {
-        super(ModEntities.FROSTFLAKE_PROJECTILE, owner, world, ItemStack.EMPTY);
+        super(ModEntities.FROSTFLAKE_PROJECTILE, owner, world, ItemStack.EMPTY, null);
         this.setOwner(owner);
         this.setDamage(0.05f);
         this.pickupType = PickupPermission.DISALLOWED;

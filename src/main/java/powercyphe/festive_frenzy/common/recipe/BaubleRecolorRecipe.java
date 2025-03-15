@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 import powercyphe.festive_frenzy.common.item.BaubleBlockItem;
@@ -19,12 +20,12 @@ public class BaubleRecolorRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
+    public boolean matches(CraftingRecipeInput recipeInputInventory, World world) {
         boolean baubleBl = false;
         boolean dyeBl = false;
         boolean bl = true;
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
-            ItemStack input = recipeInputInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.getSize(); ++i) {
+            ItemStack input = recipeInputInventory.getStackInSlot(i);
             if (!input.isEmpty()) {
                 if (input.isIn(ModTags.Items.BAUBLES_TAG) && !baubleBl) {
                     baubleBl = true;
@@ -39,11 +40,11 @@ public class BaubleRecolorRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup registryLookup) {
+    public ItemStack craft(CraftingRecipeInput recipeInputInventory, RegistryWrapper.WrapperLookup registryLookup) {
         ItemStack baubleStack = ItemStack.EMPTY;
         ItemStack dyeStack = ItemStack.EMPTY;
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
-            ItemStack input = recipeInputInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.getSize(); ++i) {
+            ItemStack input = recipeInputInventory.getStackInSlot(i);
             if (input.isIn(ModTags.Items.BAUBLES_TAG)) {
                 baubleStack = input;
             } else if (input.getItem() instanceof DyeItem) {

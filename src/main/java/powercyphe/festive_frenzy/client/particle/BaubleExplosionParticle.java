@@ -45,7 +45,10 @@ public class BaubleExplosionParticle extends ExplosionLargeParticle {
 
         if (baubleDyePairs.containsKey(stack.getItem())) {
             DyeItem dyeItem = baubleDyePairs.get(stack.getItem());
-            float[] color = dyeItem.getColor().getColorComponents();
+            int j = (dyeItem.getColor().getEntityColor() & 16711680) >> 16;
+            int k = (dyeItem.getColor().getEntityColor() & '\uff00') >> 8;
+            int l = (dyeItem.getColor().getEntityColor() & 255) >> 0;
+            float[] color = new float[]{(float)j / 255.0F, (float)k / 255.0F, (float)l / 255.0F};
 
             this.red = dyeItem.getColor() == DyeColor.BLACK ? 0 : Math.max(Math.min(color[0] + (Random.create().nextBetween(-10, 10) / 255f), 1), 0);
             this.green = dyeItem.getColor() == DyeColor.BLACK ? 0 : Math.max(Math.min(color[1] + (Random.create().nextBetween(-10, 10) / 255f), 1), 0);

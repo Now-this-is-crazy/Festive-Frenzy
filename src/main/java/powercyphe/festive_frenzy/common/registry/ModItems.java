@@ -3,7 +3,7 @@ package powercyphe.festive_frenzy.common.registry;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Block;
-import net.minecraft.component.DataComponentType;
+import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.*;
 import net.minecraft.network.codec.PacketCodecs;
@@ -30,25 +30,25 @@ import java.util.function.UnaryOperator;
 public class ModItems {
 
     public static class Components {
-        public static final DataComponentType<PresentContentComponent> PRESENT_CONTENT = register("present_content",
+        public static final ComponentType<PresentContentComponent> PRESENT_CONTENT = register("present_content",
                 (builder) -> { return builder.codec(PresentContentComponent.CODEC).packetCodec(PresentContentComponent.PACKET_CODEC).cache();
                 });
 
         public static String EXPLOSION_STRENGTH_KEY = "explosion_strength";
-        public static final DataComponentType<Integer> EXPLOSION_STRENGTH = register(EXPLOSION_STRENGTH_KEY,
+        public static final ComponentType<Integer> EXPLOSION_STRENGTH = register(EXPLOSION_STRENGTH_KEY,
                 (builder) -> { return builder.codec(Codecs.NONNEGATIVE_INT).packetCodec(PacketCodecs.VAR_INT).cache();
                 });
 
         public static String EXPLOSION_MODIFICATION_KEY = "explosion_modification";
-        public static final DataComponentType<BaubleExplosion.ExplosionModification> EXPLOSION_MODIFICATION = register(EXPLOSION_MODIFICATION_KEY,
+        public static final ComponentType<BaubleExplosion.ExplosionModification> EXPLOSION_MODIFICATION = register(EXPLOSION_MODIFICATION_KEY,
                 (builder) -> { return builder.codec(BaubleExplosion.ExplosionModification.CODEC).packetCodec(BaubleExplosion.ExplosionModification.PACKET_CODEC).cache();
                 });
 
 
         public static void init() {}
 
-        public static <T> DataComponentType<T> register(String path, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
-            return Registry.register(Registries.DATA_COMPONENT_TYPE, FestiveFrenzy.id(path), builderOperator.apply(DataComponentType.builder()).build());
+        public static <T> ComponentType<T> register(String path, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
+            return Registry.register(Registries.DATA_COMPONENT_TYPE, FestiveFrenzy.id(path), builderOperator.apply(ComponentType.builder()).build());
         }
     }
 

@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 import powercyphe.festive_frenzy.common.item.PresentBlockItem;
@@ -19,12 +20,12 @@ public class PresentRecolorRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
+    public boolean matches(CraftingRecipeInput recipeInputInventory, World world) {
         boolean presentBl = false;
         boolean dyeBl = false;
         boolean bl = true;
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
-            ItemStack input = recipeInputInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.getSize(); ++i) {
+            ItemStack input = recipeInputInventory.getStackInSlot(i);
             if (!input.isEmpty()) {
                 if (input.isIn(ModTags.Items.PRESENTS_TAG) && !presentBl) {
                     presentBl = true;
@@ -39,11 +40,11 @@ public class PresentRecolorRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup registryLookup) {
+    public ItemStack craft(CraftingRecipeInput recipeInputInventory, RegistryWrapper.WrapperLookup registryLookup) {
         ItemStack presentStack = ItemStack.EMPTY;
         ItemStack dyeStack = ItemStack.EMPTY;
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
-            ItemStack input = recipeInputInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.getSize(); ++i) {
+            ItemStack input = recipeInputInventory.getStackInSlot(i);
             if (input.isIn(ModTags.Items.PRESENTS_TAG)) {
                 presentStack = input;
             } else if (input.getItem() instanceof DyeItem) {

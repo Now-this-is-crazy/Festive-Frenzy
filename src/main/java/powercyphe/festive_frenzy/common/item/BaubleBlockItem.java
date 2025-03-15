@@ -1,24 +1,19 @@
 package powercyphe.festive_frenzy.common.item;
 
-import com.mojang.serialization.Codec;
-import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.item.TooltipType;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.Ingredient;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.*;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import powercyphe.festive_frenzy.common.entity.BaubleProjectileEntity;
 import powercyphe.festive_frenzy.common.registry.ModBlocks;
@@ -55,7 +50,6 @@ public class BaubleBlockItem extends BlockItem {
         }
         return TypedActionResult.success(stack, world.isClient());
     }
-
 
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {

@@ -7,7 +7,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.SingleItemRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.StonecuttingRecipeJsonBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
@@ -261,19 +261,19 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
         }
         for (Block presentBlock : ModBlocks.PRESENTS) {
             Item present = presentBlock.asItem();
-            new SingleItemRecipeJsonBuilder(RecipeCategory.BUILDING_BLOCKS, PresentStonecuttingRecipe::new, Ingredient.fromTag(ModTags.Items.PRESENTS_TAG), present, 1)
+            new StonecuttingRecipeJsonBuilder(RecipeCategory.BUILDING_BLOCKS, PresentStonecuttingRecipe::new, Ingredient.fromTag(ModTags.Items.PRESENTS_TAG), present, 1)
                     .criterion("has_present", conditionsFromTag(ModTags.Items.PRESENTS_TAG))
                     .offerTo(consumer, FestiveFrenzy.id(Registries.ITEM.getId(present).getPath() + "_stonecutting"));
         }
         for (Block baubleBlock : ModBlocks.BAUBLES) {
             Item bauble = baubleBlock.asItem();
-            new SingleItemRecipeJsonBuilder(RecipeCategory.BUILDING_BLOCKS, BaubleStonecuttingRecipe::new, Ingredient.fromTag(ModTags.Items.BAUBLES_TAG), bauble, 1)
+            new StonecuttingRecipeJsonBuilder(RecipeCategory.BUILDING_BLOCKS, BaubleStonecuttingRecipe::new, Ingredient.fromTag(ModTags.Items.BAUBLES_TAG), bauble, 1)
                     .criterion("has_bauble", conditionsFromTag(ModTags.Items.BAUBLES_TAG))
                     .offerTo(consumer, FestiveFrenzy.id(Registries.ITEM.getId(bauble).getPath() + "_stonecutting"));
         }
         for (Block tinselBlock : ModBlocks.TINSELS) {
             Item tinsel = tinselBlock.asItem();
-            SingleItemRecipeJsonBuilder.createStonecutting(Ingredient.fromTag(ModTags.Items.TINSELS_TAG), RecipeCategory.BUILDING_BLOCKS, tinsel)
+            StonecuttingRecipeJsonBuilder.createStonecutting(Ingredient.fromTag(ModTags.Items.TINSELS_TAG), RecipeCategory.BUILDING_BLOCKS, tinsel)
                     .criterion("has_tinsel", conditionsFromTag(ModTags.Items.TINSELS_TAG))
                     .offerTo(consumer, FestiveFrenzy.id(Registries.ITEM.getId(tinsel).getPath() + "_stonecutting"));
         }

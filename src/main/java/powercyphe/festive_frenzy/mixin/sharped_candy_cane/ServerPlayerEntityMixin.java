@@ -17,7 +17,7 @@ public abstract class ServerPlayerEntityMixin {
     private Packet<?> festive_frenzy$sparkCrit(Packet<?> packet) {
         ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
         if (packet instanceof EntityAnimationS2CPacket entityAnimationS2CPacket && player.getMainHandStack().isOf(ModItems.SHARPENED_CANDY_CANE)) {
-            Entity entity = player.getWorld().getEntityById(entityAnimationS2CPacket.getId());
+            Entity entity = player.getWorld().getEntityById(entityAnimationS2CPacket.getEntityId());
             if (entity != null) {
                 return new EntityAnimationS2CPacket(entity, ModNetworking.SPARK_CRIT_ANIMATION_ID);
             }
@@ -29,7 +29,7 @@ public abstract class ServerPlayerEntityMixin {
     private Packet<?> festive_frenzy$enchantedCandy(Packet<?> packet) {
         ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
         if (packet instanceof EntityAnimationS2CPacket entityAnimationS2CPacket && player.getMainHandStack().isOf(ModItems.SHARPENED_CANDY_CANE)) {
-            Entity entity = player.getWorld().getEntityById(entityAnimationS2CPacket.getId());
+            Entity entity = player.getWorld().getEntityById(entityAnimationS2CPacket.getEntityId());
             if (entity != null) {
                 return new EntityAnimationS2CPacket(entity, ModNetworking.ENCHANTED_CANDY_ANIMATION_ID);
             }

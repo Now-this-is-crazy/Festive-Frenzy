@@ -1,14 +1,13 @@
 package powercyphe.festive_frenzy.common.recipe;
 
-import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
-import powercyphe.festive_frenzy.common.item.BaubleBlockItem;
 import powercyphe.festive_frenzy.common.registry.ModItems;
 import powercyphe.festive_frenzy.common.registry.ModRecipes;
 import powercyphe.festive_frenzy.common.registry.ModTags;
@@ -20,13 +19,13 @@ public class ExplosiveBaubleRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
+    public boolean matches(CraftingRecipeInput recipeInputInventory, World world) {
         boolean baubleBl = false;
         boolean gunpowderBl = false;
         boolean modificationBl = false;
         boolean bl = true;
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
-            ItemStack input = recipeInputInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.getSize(); ++i) {
+            ItemStack input = recipeInputInventory.getStackInSlot(i);
             if (!input.isEmpty()) {
                 if (input.isIn(ModTags.Items.BAUBLES_TAG) && !baubleBl && !input.contains(ModItems.Components.EXPLOSION_STRENGTH)) {
                     baubleBl = true;
@@ -43,12 +42,12 @@ public class ExplosiveBaubleRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup registryLookup) {
+    public ItemStack craft(CraftingRecipeInput recipeInputInventory, RegistryWrapper.WrapperLookup registryLookup) {
         ItemStack baubleStack = ItemStack.EMPTY;
         BaubleExplosion.ExplosionModification modification = BaubleExplosion.ExplosionModification.NONE;
         int gunpowder = 0;
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
-            ItemStack input = recipeInputInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.getSize(); ++i) {
+            ItemStack input = recipeInputInventory.getStackInSlot(i);
             if (input.isIn(ModTags.Items.BAUBLES_TAG)) {
                 baubleStack = input.getItem().getDefaultStack();
             } else if (input.isOf(Items.GUNPOWDER)) {
