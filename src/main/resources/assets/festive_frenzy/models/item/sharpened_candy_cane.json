@@ -2,7 +2,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "festive_frenzy:item/sharpened_candy_cane_model"
+		"layer0": "festive_frenzy:item/sharpened_candy_cane_model",
+		"particle": "festive_frenzy:item/sharpened_candy_cane_model"
 	},
 	"gui_light": "front",
 	"display": {

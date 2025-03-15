@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "festive_frenzy:tinsels"
+            "items": "#festive_frenzy:tinsels"
           }
         ]
       },

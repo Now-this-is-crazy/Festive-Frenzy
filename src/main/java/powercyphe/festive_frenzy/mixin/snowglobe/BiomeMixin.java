@@ -1,15 +1,10 @@
 package powercyphe.festive_frenzy.mixin.snowglobe;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
 import net.minecraft.world.biome.Biome;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import powercyphe.festive_frenzy.registry.ModComponents;
-import powercyphe.festive_frenzy.util.BiomeWorldAccessor;
+import powercyphe.festive_frenzy.common.util.BiomeWorldAccessor;
 
 @Mixin(Biome.class)
 public class BiomeMixin implements BiomeWorldAccessor {

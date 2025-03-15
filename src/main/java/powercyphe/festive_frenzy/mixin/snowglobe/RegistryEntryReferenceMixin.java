@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import powercyphe.festive_frenzy.util.BiomeWorldAccessor;
+import powercyphe.festive_frenzy.common.util.BiomeWorldAccessor;
 
 @Mixin(RegistryEntry.Reference.class)
 public class RegistryEntryReferenceMixin implements BiomeWorldAccessor {

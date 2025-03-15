@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "festive_frenzy:packed_snow_bricks"
-            ]
+            "items": "festive_frenzy:packed_snow_bricks"
           }
         ]
       },

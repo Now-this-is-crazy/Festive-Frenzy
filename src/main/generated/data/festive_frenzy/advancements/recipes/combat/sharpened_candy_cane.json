@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "festive_frenzy:candy_canes"
+            "items": "#festive_frenzy:candy_canes"
           }
         ]
       },

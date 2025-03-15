@@ -27,22 +27,18 @@
 			"powercyphe.festive_frenzy.FestiveFrenzy"
 		],
 		"client": [
-			"powercyphe.festive_frenzy.FestiveFrenzyClient"
+          "powercyphe.festive_frenzy.client.FestiveFrenzyClient"
 		],
 		"fabric-datagen": [
-			"powercyphe.festive_frenzy.datagen.FestiveFrenzyDatagen"
+          "powercyphe.festive_frenzy.common.datagen.FestiveFrenzyDatagen"
 		]
 	},
 	"mixins": [
-		"festive_frenzy.mixins.json",
-		{
-			"config": "festive_frenzy.client.mixins.json",
-			"environment": "client"
-		}
+		"festive_frenzy.mixins.json"
 	],
 	"depends": {
 		"fabricloader": "*",
-		"minecraft": "~1.20",
+		"minecraft": ">=1.20.5",
 		"java": ">=17",
 		"fabric-api": "*"
 	}

@@ -3,11 +3,10 @@ package powercyphe.festive_frenzy.mixin.frostflake;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.sound.SoundEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import powercyphe.festive_frenzy.registry.ModDamageTypes;
+import powercyphe.festive_frenzy.common.registry.ModDamageTypes;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {

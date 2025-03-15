@@ -5,8 +5,8 @@ import net.minecraft.particle.ParticleEffect;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import powercyphe.festive_frenzy.registry.ModItems;
-import powercyphe.festive_frenzy.registry.ModParticles;
+import powercyphe.festive_frenzy.common.registry.ModItems;
+import powercyphe.festive_frenzy.common.registry.ModParticles;
 
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {

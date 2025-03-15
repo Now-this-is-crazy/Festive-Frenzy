@@ -4,12 +4,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntityAnimationS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import powercyphe.festive_frenzy.registry.ModNetworking;
-import powercyphe.festive_frenzy.registry.ModItems;
+import powercyphe.festive_frenzy.common.registry.ModNetworking;
+import powercyphe.festive_frenzy.common.registry.ModItems;
 
 @Mixin(net.minecraft.server.network.ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin {

@@ -1,8 +1,10 @@
 {
   "type": "festive_frenzy:present_stonecutting",
-  "count": 1,
   "ingredient": {
     "tag": "festive_frenzy:presents"
   },
-  "result": "festive_frenzy:cyan_present"
+  "result": {
+    "count": 1,
+    "id": "festive_frenzy:cyan_present"
+  }
 }

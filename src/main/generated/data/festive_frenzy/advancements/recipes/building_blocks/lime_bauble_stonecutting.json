@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "festive_frenzy:baubles"
+            "items": "#festive_frenzy:baubles"
           }
         ]
       },

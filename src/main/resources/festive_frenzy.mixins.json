@@ -18,6 +18,14 @@
     "snowglobe.RegistryEntryReferenceMixin",
     "snowglobe.WorldViewMixin"
   ],
+  "client": [
+    "client.ClientPlayerEntityMixin",
+    "client.ClientPlayNetworkHandlerMixin",
+    "client.HeadFeatureRendererMixin",
+    "client.ItemRendererMixin",
+    "client.ModelLoaderMixin",
+    "accessor.ItemRendererAccessor"
+  ],
   "injectors": {
     "defaultRequire": 1
 	}

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "festive_frenzy:peppermint"
-            ]
+            "items": "festive_frenzy:peppermint"
           }
         ]
       },

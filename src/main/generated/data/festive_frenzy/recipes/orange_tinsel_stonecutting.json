@@ -1,8 +1,10 @@
 {
   "type": "minecraft:stonecutting",
-  "count": 1,
   "ingredient": {
     "tag": "festive_frenzy:tinsels"
   },
-  "result": "festive_frenzy:orange_tinsel"
+  "result": {
+    "count": 1,
+    "id": "festive_frenzy:orange_tinsel"
+  }
 }

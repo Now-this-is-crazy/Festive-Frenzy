@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "festive_frenzy:chiseled_blue_ice"
-            ]
+            "items": "festive_frenzy:chiseled_blue_ice"
           }
         ]
       },

@@ -7,7 +7,7 @@ import net.minecraft.world.WorldView;
 import net.minecraft.world.biome.Biome;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import powercyphe.festive_frenzy.util.BiomeWorldAccessor;
+import powercyphe.festive_frenzy.common.util.BiomeWorldAccessor;
 
 @Mixin(WorldView.class)
 public interface WorldViewMixin {

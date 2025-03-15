@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "festive_frenzy:presents"
+            "items": "#festive_frenzy:presents"
           }
         ]
       },
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:wool"
+            "items": "#minecraft:wool"
           }
         ]
       },
