@@ -1,7 +1,10 @@
 {
   "values": [
-    "festive_frenzy:cut_blue_ice",
     "festive_frenzy:chiseled_blue_ice",
+    "festive_frenzy:cut_blue_ice",
+    "festive_frenzy:cut_blue_ice_stairs",
+    "festive_frenzy:cut_blue_ice_slab",
+    "festive_frenzy:cut_blue_ice_wall",
     "festive_frenzy:polished_blue_ice",
     "festive_frenzy:polished_blue_ice_stairs",
     "festive_frenzy:polished_blue_ice_slab",

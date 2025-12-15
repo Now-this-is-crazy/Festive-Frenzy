@@ -1,135 +1,162 @@
 package powercyphe.festive_frenzy.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.loot.context.LootContextParameterSet;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
-import powercyphe.festive_frenzy.common.block.property.ExplosionModificationProperty;
-import powercyphe.festive_frenzy.common.entity.FallingBaubleBlockEntity;
-import powercyphe.festive_frenzy.common.item.BaubleBlockItem;
-import powercyphe.festive_frenzy.common.registry.ModItems;
-import powercyphe.festive_frenzy.common.registry.ModTags;
+import powercyphe.festive_frenzy.common.entity.ThrownBaubleProjectileEntity;
+import powercyphe.festive_frenzy.common.item.component.ExplosiveBaubleComponent;
+import powercyphe.festive_frenzy.common.registry.FFBlocks;
+import powercyphe.festive_frenzy.common.registry.FFItems;
+import powercyphe.festive_frenzy.common.registry.FFTags;
 import powercyphe.festive_frenzy.common.world.BaubleExplosion;
 
-import java.util.List;
+public class BaubleBlock extends Block implements SimpleWaterloggedBlock {
+    public static final BooleanProperty IS_GLOWING = BooleanProperty.create("is_glowing");
+    public static final EnumProperty<BaubleExplosion.ExplosionModification> EXPLOSION_MODIFICATION =
+            EnumProperty.create("explosion_modification", BaubleExplosion.ExplosionModification.class);
+    public static final IntegerProperty EXPLOSION_POWER = IntegerProperty.create("explosion_power", 0, 8);
 
-public class BaubleBlock extends Block {
-    public static BooleanProperty GLOWING = BooleanProperty.of("glowing");
-    public static IntProperty EXPLOSION_STRENGTH = IntProperty.of("explosion_strength", 0, 8);
-    public static ExplosionModificationProperty EXPLOSION_MODIFICATION = ExplosionModificationProperty.of("explosion_modification");
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    public BaubleBlock(Settings settings) {
-        super(settings);
-        this.setDefaultState(this.getDefaultState().with(GLOWING, false).with(EXPLOSION_STRENGTH, 0).with(EXPLOSION_MODIFICATION, BaubleExplosion.ExplosionModification.NONE));
+    private final int explosionColor;
+
+    public BaubleBlock(int explosionColor, Properties properties) {
+        super(properties);
+        this.explosionColor = explosionColor;
+        this.registerDefaultState(this.defaultBlockState().setValue(IS_GLOWING, false)
+                .setValue(EXPLOSION_MODIFICATION, BaubleExplosion.ExplosionModification.NONE)
+                .setValue(EXPLOSION_POWER, 0).setValue(WATERLOGGED, false));
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(GLOWING, EXPLOSION_STRENGTH, EXPLOSION_MODIFICATION);
-        super.appendProperties(builder);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(WATERLOGGED, IS_GLOWING, EXPLOSION_MODIFICATION, EXPLOSION_POWER);
+        super.createBlockStateDefinition(builder);
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos blockPos, BlockPos neighborPos) {
-        world.scheduleBlockTick(blockPos, this, 2);
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, blockPos, neighborPos);
+    protected VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
+        return Shapes.or(Shapes.box(0.3, 0.35, 0.3, 0.7, 0.8, 0.7), Shapes.box(0.4, 0.8, 0.4, 0.6, 1, 0.6));
     }
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos blockPos, Random random) {
-        if (!canPlaceAt(state, world, blockPos)) {
-            Vec3d pos = blockPos.toCenterPos();
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
+        ItemStack stack = player.getMainHandItem().isEmpty() ? player.getOffhandItem() : player.getMainHandItem();
 
-            FallingBaubleBlockEntity bauble = new FallingBaubleBlockEntity(world, pos.getX(), pos.getY() - 0.5, pos.getZ(), state, state.get(EXPLOSION_STRENGTH), state.get(EXPLOSION_MODIFICATION));
-            world.spawnEntity(bauble);
-            world.setBlockState(blockPos, Blocks.AIR.getDefaultState());
-        }
-        super.scheduledTick(state, world, blockPos, random);
-    }
-
-
-    @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return world.getBlockState(pos.up()).isSideSolidFullSquare(world, pos.up(), Direction.DOWN) || world.getBlockState(pos.up()).isIn(ModTags.Blocks.BAUBLE_PLACEABLE);
-    }
-
-    @Override
-    public void onProjectileHit(World world, BlockState state, BlockHitResult hit, ProjectileEntity projectile) {
-        Vec3d pos = hit.getBlockPos().toCenterPos();
-
-        world.setBlockState(hit.getBlockPos(), Blocks.AIR.getDefaultState());
-        FallingBaubleBlockEntity bauble = new FallingBaubleBlockEntity(world, pos.getX(), pos.getY() - 0.5, pos.getZ(), state, state.get(EXPLOSION_STRENGTH), state.get(EXPLOSION_MODIFICATION));
-        world.spawnEntity(bauble);
-
-        super.onProjectileHit(world, state, hit, projectile);
-    }
-
-    @Override
-    public List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
-        List<ItemStack> stacks = super.getDroppedStacks(state, builder);
-        int explosionStrength = state.get(EXPLOSION_STRENGTH);
-        BaubleExplosion.ExplosionModification modification = state.get(EXPLOSION_MODIFICATION);
-
-        if (explosionStrength > 0)
-        for (int i = 0; i < stacks.size(); i++) {
-            ItemStack stack = stacks.get(i);
-            if (stack.isIn(ModTags.Items.BAUBLES_TAG)) {
-                stack.set(ModItems.Components.EXPLOSION_STRENGTH, explosionStrength);
-                stack.set(ModItems.Components.EXPLOSION_MODIFICATION, modification);
-                stacks.set(0, stack);
+        if (stack.is(Items.GLOW_INK_SAC)) {
+            if (!level.isClientSide()) {
+                level.setBlockAndUpdate(blockPos, state.setValue(IS_GLOWING, true));
             }
+
+            level.playSound(player, blockPos, SoundEvents.GLOW_INK_SAC_USE, SoundSource.BLOCKS);
+            return InteractionResult.SUCCESS;
         }
-        return stacks;
+
+        return super.useWithoutItem(state, level, blockPos, player, blockHitResult);
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return VoxelShapes.union(VoxelShapes.cuboid(0.3, 0.35, 0.3, 0.7, 0.8, 0.7), VoxelShapes.cuboid(0.4, 0.8, 0.4, 0.6, 1, 0.6));
+    protected boolean canSurvive(BlockState state, LevelReader levelReader, BlockPos blockPos) {
+        return this.hasStableSupport(levelReader, state, blockPos);
     }
 
     @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        world.setBlockState(pos, state.with(EXPLOSION_STRENGTH, itemStack.getOrDefault(ModItems.Components.EXPLOSION_STRENGTH, 0))
-                .with(EXPLOSION_MODIFICATION, itemStack.getOrDefault(ModItems.Components.EXPLOSION_MODIFICATION, BaubleExplosion.ExplosionModification.NONE)));
-        super.onPlaced(world, pos, state, placer, itemStack);
+    public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
+        Level level = context.getLevel();
+        BlockPos blockPos = context.getClickedPos();
+
+        return super.getStateForPlacement(context).setValue(WATERLOGGED, level.getFluidState(blockPos).is(Fluids.WATER));
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos blockPos, PlayerEntity player, BlockHitResult hit) {
-        if (!world.isClient()) {
-            ItemStack stack = player.getMainHandStack();
-            if (stack.isOf(Items.GLOW_INK_SAC) && !state.get(GLOWING)) {
-                world.setBlockState(blockPos, state.with(GLOWING, true));
-                world.playSound(null, blockPos, SoundEvents.ITEM_GLOW_INK_SAC_USE, SoundCategory.BLOCKS, 1f, 1f);
-                player.swingHand(Hand.MAIN_HAND, true);
-            }
+    protected void neighborChanged(BlockState state, Level level, BlockPos blockPos, Block block, @Nullable Orientation orientation, boolean bl) {
+        super.neighborChanged(state, level, blockPos, block, orientation, bl);
+        if (!this.hasStableSupport(level, state, blockPos)) {
+            ThrownBaubleProjectileEntity.fromBlock(level, state, blockPos);
+            level.destroyBlock(blockPos, false);
         }
-        return super.onUse(state, world, blockPos, player, hit);
+    }
+
+    @Override
+    protected BlockState updateShape(BlockState blockState, LevelReader levelReader, ScheduledTickAccess scheduledTickAccess, BlockPos blockPos, Direction direction, BlockPos blockPos2, BlockState blockState2, RandomSource randomSource) {
+        if (blockState.getValue(WATERLOGGED)) {
+            scheduledTickAccess.scheduleTick(blockPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelReader));
+        }
+        return super.updateShape(blockState, levelReader, scheduledTickAccess, blockPos, direction, blockPos2, blockState2, randomSource);
+    }
+
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+    }
+
+    @Override
+    protected boolean propagatesSkylightDown(BlockState state) {
+        return !state.getValue(WATERLOGGED);
+    }
+
+    public boolean hasStableSupport(BlockGetter blockGetter, BlockState state, BlockPos blockPos) {
+        BlockPos supportingBlockPos = blockPos.above();
+        BlockState supportingState = blockGetter.getBlockState(supportingBlockPos);
+
+        return supportingState.isFaceSturdy(blockGetter, supportingBlockPos, Direction.DOWN, SupportType.FULL) ||
+                supportingState.is(FFTags.Blocks.SUPPORTS_BAUBLES);
+    }
+
+    public ItemStack getBaubleStack(BlockState state) {
+        ItemStack stack = this.asItem().getDefaultInstance();
+        stack.set(FFItems.Components.EXPLOSIVE_BAUBLE_COMPONENT, new ExplosiveBaubleComponent(
+                state.getValue(EXPLOSION_MODIFICATION), state.getValue(EXPLOSION_POWER)));
+
+        return stack;
+    }
+
+    public int getExplosionColor() {
+        return this.explosionColor;
+    }
+
+    public static ItemLike fromColor(DyeColor color) {
+        return switch (color) {
+            case LIGHT_GRAY -> FFBlocks.LIGHT_GRAY_BAUBLE;
+            case GRAY -> FFBlocks.GRAY_BAUBLE;
+            case BLACK -> FFBlocks.BLACK_BAUBLE;
+            case BROWN -> FFBlocks.BROWN_BAUBLE;
+            case RED -> FFBlocks.RED_BAUBLE;
+            case ORANGE -> FFBlocks.ORANGE_BAUBLE;
+            case YELLOW -> FFBlocks.YELLOW_BAUBLE;
+            case LIME -> FFBlocks.LIME_BAUBLE;
+            case GREEN -> FFBlocks.GREEN_BAUBLE;
+            case CYAN -> FFBlocks.CYAN_BAUBLE;
+            case LIGHT_BLUE -> FFBlocks.LIGHT_BLUE_BAUBLE;
+            case BLUE -> FFBlocks.BLUE_BAUBLE;
+            case PURPLE -> FFBlocks.PURPLE_BAUBLE;
+            case MAGENTA -> FFBlocks.MAGENTA_BAUBLE;
+            case PINK -> FFBlocks.PINK_BAUBLE;
+            case null, default -> FFBlocks.WHITE_BAUBLE;
+        };
     }
 }

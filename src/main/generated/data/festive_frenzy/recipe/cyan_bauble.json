@@ -3,20 +3,12 @@
   "category": "building",
   "group": "bauble",
   "key": {
-    "D": {
-      "item": "minecraft:cyan_dye"
-    },
-    "G": {
-      "item": "minecraft:glass"
-    },
-    "N": {
-      "item": "minecraft:iron_nugget"
-    }
+    "G": "minecraft:cyan_stained_glass",
+    "I": "minecraft:iron_nugget"
   },
   "pattern": [
-    "N",
-    "G",
-    "D"
+    "I",
+    "G"
   ],
   "result": {
     "count": 2,

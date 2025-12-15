@@ -3,15 +3,13 @@
   "category": "building",
   "group": "tinsel",
   "key": {
-    "W": {
-      "item": "minecraft:blue_wool"
-    }
+    "W": "minecraft:blue_wool"
   },
   "pattern": [
     "WWW"
   ],
   "result": {
-    "count": 6,
+    "count": 8,
     "id": "festive_frenzy:blue_tinsel"
   }
 }

@@ -1,12 +1,12 @@
 {
   "textures": [
-    "festive_frenzy:candy_sweep_1",
-    "festive_frenzy:candy_sweep_2",
-    "festive_frenzy:candy_sweep_3",
-    "festive_frenzy:candy_sweep_4",
-    "festive_frenzy:candy_sweep_5",
-    "festive_frenzy:candy_sweep_6",
-    "festive_frenzy:candy_sweep_7",
-    "festive_frenzy:candy_sweep_8"
+    "festive_frenzy:candy/candy_sweep_1",
+    "festive_frenzy:candy/candy_sweep_2",
+    "festive_frenzy:candy/candy_sweep_3",
+    "festive_frenzy:candy/candy_sweep_4",
+    "festive_frenzy:candy/candy_sweep_5",
+    "festive_frenzy:candy/candy_sweep_6",
+    "festive_frenzy:candy/candy_sweep_7",
+    "festive_frenzy:candy/candy_sweep_8"
   ]
 }

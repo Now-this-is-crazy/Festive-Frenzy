@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "festive_frenzy:block/cut_blue_ice",
+    "side": "festive_frenzy:block/cut_blue_ice",
+    "top": "festive_frenzy:block/cut_blue_ice"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "festive_frenzy:item/blue_tinsel"
+    "layer0": "festive_frenzy:item/tinsel/blue_tinsel"
   }
 }

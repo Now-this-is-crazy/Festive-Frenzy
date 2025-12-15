@@ -1,0 +1,6 @@
+{
+  "parent": "festive_frenzy:block/multi_wall_deco",
+  "textures": {
+    "texture": "festive_frenzy:block/tinsel/white_tinsel"
+  }
+}

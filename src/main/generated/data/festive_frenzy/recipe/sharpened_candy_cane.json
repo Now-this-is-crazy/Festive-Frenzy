@@ -2,22 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "B": {
-      "tag": "festive_frenzy:candy_cane_blocks"
-    },
-    "C": {
-      "tag": "festive_frenzy:candy_canes"
-    },
-    "F": {
-      "item": "festive_frenzy:fairy_lights"
-    },
-    "S": {
-      "item": "minecraft:diamond_sword"
-    }
+    "B": "#festive_frenzy:candy_cane_blocks",
+    "F": "festive_frenzy:fairy_lights",
+    "S": "minecraft:diamond_sword"
   },
   "pattern": [
-    " CB",
-    "FBC",
+    "  B",
+    "FB ",
     "SF "
   ],
   "result": {

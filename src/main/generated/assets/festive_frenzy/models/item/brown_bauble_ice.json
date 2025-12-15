@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "festive_frenzy:item/bauble/brown_bauble",
+    "layer1": "festive_frenzy:item/bauble/ring_trigger_ice"
+  }
+}

@@ -1,32 +1,35 @@
 {
   "required": true,
   "package": "powercyphe.festive_frenzy.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
+  "mixinextras": {
+    "minVersion": "0.5.0"
+  },
   "mixins": [
-    "ExplosionMixin",
-    "LivingEntityMixin",
-    "SnowyBlockMixin",
-    "accessor.ExplosionAccessor",
-    "accessor.FallingBlockEntityAccessor",
-    "accessor.WorldAccessor",
-    "frostflake.LivingEntityMixin",
-    "frostflake.PersistentProjectileEntityMixin",
-    "sharped_candy_cane.PlayerEntityMixin",
-    "sharped_candy_cane.ServerPlayerEntityMixin",
-    "snowglobe.BiomeMixin",
-    "snowglobe.RegistryEntryDirectMixin",
-    "snowglobe.RegistryEntryReferenceMixin",
-    "snowglobe.WorldViewMixin"
+    "bauble_explosion.ServerExplosionMixin",
+    "compat.sodium.BlockRendererMixin",
+    "gamerules.SnowLayerBlockMixin",
+    "sharpened_candy_cane.PlayerMixin",
+    "sharpened_candy_cane.ServerPlayerMixin",
+    "snowloggable.BiomeMixin",
+    "snowloggable.BlockBehavior$BlockStateBaseMixin",
+    "snowloggable.DoublePlantBlockMixin",
+    "snowloggable.ServerLevelMixin",
+    "snowloggable.SnowLayerBlockMixin",
+    "snowloggable.snowy.SnowAndFreezeFeatureMixin",
+    "snowloggable.snowy.SnowyDirtBlockMixin",
+    "snowloggable.snowy.SpreadingSnowyDirtBlockMixin"
   ],
   "client": [
-    "client.ClientPlayerEntityMixin",
-    "client.ClientPlayNetworkHandlerMixin",
-    "client.HeadFeatureRendererMixin",
-    "client.ItemRendererMixin",
-    "client.ModelLoaderMixin",
-    "accessor.ItemRendererAccessor"
+    "accessor.ItemPropertiesAccessor",
+    "accessor.ModelLayersAccessor",
+    "sharpened_candy_cane.client.ItemRendererMixin",
+    "snowloggable.client.SectionCompilerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-	}
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
 }

@@ -2,13 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "S": {
-      "item": "minecraft:blue_ice"
-    }
+    "R": "minecraft:blue_ice"
   },
   "pattern": [
-    "SS",
-    "SS"
+    "RR",
+    "RR"
   ],
   "result": {
     "count": 4,

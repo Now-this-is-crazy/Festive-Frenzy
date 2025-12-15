@@ -1,7 +1,23 @@
 {
   "values": [
-    "festive_frenzy:cut_blue_ice",
+    "festive_frenzy:gingerbread_block",
+    "festive_frenzy:gingerbread_stairs",
+    "festive_frenzy:gingerbread_slab",
+    "festive_frenzy:gingerbread_wall",
+    "festive_frenzy:gingerbread_bricks",
+    "festive_frenzy:gingerbread_brick_stairs",
+    "festive_frenzy:gingerbread_brick_slab",
+    "festive_frenzy:gingerbread_brick_wall",
+    "festive_frenzy:chiseled_gingerbread_block",
+    "festive_frenzy:gingerbread_door",
+    "festive_frenzy:gingerbread_trapdoor",
+    "festive_frenzy:gingerbread_button",
+    "festive_frenzy:gingerbread_pressure_plate",
     "festive_frenzy:chiseled_blue_ice",
+    "festive_frenzy:cut_blue_ice",
+    "festive_frenzy:cut_blue_ice_stairs",
+    "festive_frenzy:cut_blue_ice_slab",
+    "festive_frenzy:cut_blue_ice_wall",
     "festive_frenzy:polished_blue_ice",
     "festive_frenzy:polished_blue_ice_stairs",
     "festive_frenzy:polished_blue_ice_slab",
@@ -9,6 +25,10 @@
     "festive_frenzy:blue_ice_bricks",
     "festive_frenzy:blue_ice_brick_stairs",
     "festive_frenzy:blue_ice_brick_slab",
-    "festive_frenzy:blue_ice_brick_wall"
+    "festive_frenzy:blue_ice_brick_wall",
+    "festive_frenzy:red_candy_cane_block",
+    "festive_frenzy:green_candy_cane_block",
+    "festive_frenzy:mixed_candy_cane_block",
+    "festive_frenzy:peppermint_block"
   ]
 }

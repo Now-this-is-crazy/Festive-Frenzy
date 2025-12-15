@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "festive_frenzy:block/gingerbread_block"
+  }
+}

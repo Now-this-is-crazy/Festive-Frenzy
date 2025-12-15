@@ -2,13 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "S": {
-      "item": "minecraft:snow_block"
-    }
+    "R": "minecraft:snow_block"
   },
   "pattern": [
-    "SS",
-    "SS"
+    "RR",
+    "RR"
   ],
   "result": {
     "count": 4,

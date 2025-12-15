@@ -2,13 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "S": {
-      "item": "festive_frenzy:polished_blue_ice"
-    }
+    "R": "festive_frenzy:polished_blue_ice"
   },
   "pattern": [
-    "SS",
-    "SS"
+    "RR",
+    "RR"
   ],
   "result": {
     "count": 4,

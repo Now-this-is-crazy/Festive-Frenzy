@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button_pressed",
+  "textures": {
+    "texture": "festive_frenzy:block/gingerbread_block"
+  }
+}

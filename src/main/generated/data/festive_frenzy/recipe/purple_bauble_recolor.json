@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_transmute",
+  "category": "building",
+  "group": "bauble_recolor",
+  "input": "#festive_frenzy:baubles",
+  "material": "minecraft:purple_dye",
+  "result": "festive_frenzy:purple_bauble"
+}

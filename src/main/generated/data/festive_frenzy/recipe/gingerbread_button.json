@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "festive_frenzy:gingerbread_block"
+  ],
+  "result": {
+    "count": 1,
+    "id": "festive_frenzy:gingerbread_button"
+  }
+}

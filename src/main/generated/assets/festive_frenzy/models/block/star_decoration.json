@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "festive_frenzy:block/star_decoration"
+  }
+}

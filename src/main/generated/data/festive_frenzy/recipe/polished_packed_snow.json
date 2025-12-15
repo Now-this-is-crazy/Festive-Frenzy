@@ -2,13 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "S": {
-      "item": "festive_frenzy:packed_snow"
-    }
+    "R": "festive_frenzy:packed_snow"
   },
   "pattern": [
-    "SS",
-    "SS"
+    "RR",
+    "RR"
   ],
   "result": {
     "count": 4,

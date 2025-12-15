@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/pressure_plate_up",
+  "textures": {
+    "texture": "festive_frenzy:block/gingerbread_block"
+  }
+}

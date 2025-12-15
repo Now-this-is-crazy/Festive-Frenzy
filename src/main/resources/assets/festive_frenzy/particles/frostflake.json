@@ -1,7 +1,7 @@
 {
   "textures": [
-    "festive_frenzy:frostflake_1",
-    "festive_frenzy:frostflake_2",
-    "festive_frenzy:frostflake_3"
+    "festive_frenzy:frostflake/frostflake_1",
+    "festive_frenzy:frostflake/frostflake_2",
+    "festive_frenzy:frostflake/frostflake_3"
   ]
 }

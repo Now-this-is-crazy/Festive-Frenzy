@@ -1,21 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bauble": {
-      "conditions": {
-        "items": [
-          {
-            "items": "#festive_frenzy:baubles"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_glass": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:glass"
+            "items": "minecraft:purple_stained_glass"
           }
         ]
       },
@@ -31,8 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_glass",
-      "has_bauble"
+      "has_glass"
     ]
   ],
   "rewards": {

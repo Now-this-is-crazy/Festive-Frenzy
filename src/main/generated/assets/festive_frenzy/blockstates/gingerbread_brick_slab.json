@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "festive_frenzy:block/gingerbread_brick_slab"
+    },
+    "type=double": {
+      "model": "festive_frenzy:block/gingerbread_bricks"
+    },
+    "type=top": {
+      "model": "festive_frenzy:block/gingerbread_brick_slab_top"
+    }
+  }
+}

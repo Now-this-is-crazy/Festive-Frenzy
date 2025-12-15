@@ -1,42 +1,46 @@
 package powercyphe.festive_frenzy.common.item;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.context.LootContextParameterSet;
-import net.minecraft.loot.context.LootContextTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.world.World;
-import powercyphe.festive_frenzy.FestiveFrenzy;
-import powercyphe.festive_frenzy.common.registry.ModSounds;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import powercyphe.festive_frenzy.common.registry.FFLootTables;
+import powercyphe.festive_frenzy.common.registry.FFSounds;
 
 public class CandyPouchItem extends Item {
-    public CandyPouchItem(Settings settings) {
-        super(settings);
+    public CandyPouchItem(Properties properties) {
+        super(properties);
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
-        world.playSound(null, user.getX(), user.getY(), user.getZ(), ModSounds.POUCH_OPEN, SoundCategory.NEUTRAL, 0.5F, 0.9F + (world.getRandom().nextFloat() * 0.2F));
-        if (!world.isClient() && world.getServer() != null) {
-            LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable(FestiveFrenzy.CANDY_POUCH);
-            LootContextParameterSet.Builder builder = (new LootContextParameterSet.Builder((ServerWorld) world));
+    public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
+        ItemStack stack = player.getItemInHand(interactionHand);
 
-            SimpleInventory inventory = new SimpleInventory(27);
-            lootTable.supplyInventory(inventory, builder.build(LootContextTypes.EMPTY), user.getLootTableSeed());
+        if (level instanceof ServerLevel serverLevel) {
+            LootTable lootTable = serverLevel.getServer().reloadableRegistries()
+                    .getLootTable(FFLootTables.CANDY_POUCH);
 
-            ItemScatterer.spawn(world, user, inventory);
-            stack.decrementUnlessCreative(1, user);
-            return TypedActionResult.consume(stack);
+            for (ItemStack drop : lootTable.getRandomItems(
+                    new LootParams.Builder(serverLevel).create(LootContextParamSets.EMPTY))) {
+                if (!stack.isEmpty()) {
+                    player.getInventory().placeItemBackInInventory(drop);
+                }
+            }
+
+            stack.consume(1, player);
+            return InteractionResult.CONSUME;
         }
-        return TypedActionResult.success(stack);
+
+        level.playSound(player, player.getX(), player.getY(), player.getZ(), FFSounds.POUCH_OPEN, SoundSource.PLAYERS,
+                1F, 0.9F + RandomSource.create().nextFloat() * 0.2F);
+        return InteractionResult.SUCCESS;
     }
 }

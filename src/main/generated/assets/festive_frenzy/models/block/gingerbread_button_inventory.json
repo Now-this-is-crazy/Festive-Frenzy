@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button_inventory",
+  "textures": {
+    "texture": "festive_frenzy:block/gingerbread_block"
+  }
+}

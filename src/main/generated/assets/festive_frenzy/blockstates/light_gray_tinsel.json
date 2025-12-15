@@ -2,44 +2,12 @@
   "multipart": [
     {
       "apply": {
-        "model": "festive_frenzy:block/light_gray_tinsel"
-      },
-      "when": {
-        "north": "true"
-      }
-    },
-    {
-      "apply": {
-        "model": "festive_frenzy:block/light_gray_tinsel"
-      },
-      "when": {
-        "east": "false",
-        "north": "false",
-        "south": "false",
-        "west": "false"
-      }
-    },
-    {
-      "apply": {
         "model": "festive_frenzy:block/light_gray_tinsel",
         "uvlock": true,
         "y": 90
       },
       "when": {
         "east": "true"
-      }
-    },
-    {
-      "apply": {
-        "model": "festive_frenzy:block/light_gray_tinsel",
-        "uvlock": true,
-        "y": 90
-      },
-      "when": {
-        "east": "false",
-        "north": "false",
-        "south": "false",
-        "west": "false"
       }
     },
     {
@@ -56,13 +24,10 @@
       "apply": {
         "model": "festive_frenzy:block/light_gray_tinsel",
         "uvlock": true,
-        "y": 180
+        "y": 0
       },
       "when": {
-        "east": "false",
-        "north": "false",
-        "south": "false",
-        "west": "false"
+        "north": "true"
       }
     },
     {
@@ -73,19 +38,6 @@
       },
       "when": {
         "west": "true"
-      }
-    },
-    {
-      "apply": {
-        "model": "festive_frenzy:block/light_gray_tinsel",
-        "uvlock": true,
-        "y": 270
-      },
-      "when": {
-        "east": "false",
-        "north": "false",
-        "south": "false",
-        "west": "false"
       }
     }
   ]

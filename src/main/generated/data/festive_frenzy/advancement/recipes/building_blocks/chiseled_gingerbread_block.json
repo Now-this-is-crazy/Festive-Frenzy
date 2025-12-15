@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gingerbread_slab": {
+      "conditions": {
+        "items": [
+          {
+            "items": "festive_frenzy:gingerbread_slab"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "festive_frenzy:chiseled_gingerbread_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gingerbread_slab"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "festive_frenzy:chiseled_gingerbread_block"
+    ]
+  }
+}
