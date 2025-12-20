@@ -22,10 +22,12 @@ public class FestiveFrenzy implements ModInitializer {
     @Override
     public void onInitialize() {
         FFItems.init();
+        FFItems.Tabs.init();
         FFItems.Components.init();
         FFBlocks.init();
         FFBlocks.Entities.init();
         FFEntities.init();
+        FFEffects.init();
         FFMenus.init();
         FFGamerules.init();
         FFParticles.init();

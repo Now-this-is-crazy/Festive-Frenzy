@@ -11,6 +11,7 @@ import powercyphe.festive_frenzy.common.FestiveFrenzy;
 
 public class FFDamageTypes {
 
+    public static final ResourceKey<DamageType> BAUBLE = register("bauble");
     public static final ResourceKey<DamageType> FROSTFLAKE = register("frostflake");
 
     public static DamageSource createSource(RegistryAccess registryAccess, ResourceKey<DamageType> damageType, @Nullable Entity source, @Nullable Entity attacker) {

@@ -4,72 +4,6 @@
       "apply": {
         "model": "festive_frenzy:block/fairy_lights_0",
         "uvlock": true,
-        "y": 90
-      },
-      "when": {
-        "east": "true",
-        "variant": "0"
-      }
-    },
-    {
-      "apply": {
-        "model": "festive_frenzy:block/fairy_lights_1",
-        "uvlock": true,
-        "y": 90
-      },
-      "when": {
-        "east": "true",
-        "variant": "1"
-      }
-    },
-    {
-      "apply": {
-        "model": "festive_frenzy:block/fairy_lights_2",
-        "uvlock": true,
-        "y": 90
-      },
-      "when": {
-        "east": "true",
-        "variant": "2"
-      }
-    },
-    {
-      "apply": {
-        "model": "festive_frenzy:block/fairy_lights_3",
-        "uvlock": true,
-        "y": 90
-      },
-      "when": {
-        "east": "true",
-        "variant": "3"
-      }
-    },
-    {
-      "apply": {
-        "model": "festive_frenzy:block/fairy_lights_4",
-        "uvlock": true,
-        "y": 90
-      },
-      "when": {
-        "east": "true",
-        "variant": "4"
-      }
-    },
-    {
-      "apply": {
-        "model": "festive_frenzy:block/fairy_lights_5",
-        "uvlock": true,
-        "y": 90
-      },
-      "when": {
-        "east": "true",
-        "variant": "5"
-      }
-    },
-    {
-      "apply": {
-        "model": "festive_frenzy:block/fairy_lights_0",
-        "uvlock": true,
         "y": 180
       },
       "when": {
@@ -136,10 +70,10 @@
       "apply": {
         "model": "festive_frenzy:block/fairy_lights_0",
         "uvlock": true,
-        "y": 0
+        "y": 90
       },
       "when": {
-        "north": "true",
+        "east": "true",
         "variant": "0"
       }
     },
@@ -147,10 +81,10 @@
       "apply": {
         "model": "festive_frenzy:block/fairy_lights_1",
         "uvlock": true,
-        "y": 0
+        "y": 90
       },
       "when": {
-        "north": "true",
+        "east": "true",
         "variant": "1"
       }
     },
@@ -158,10 +92,10 @@
       "apply": {
         "model": "festive_frenzy:block/fairy_lights_2",
         "uvlock": true,
-        "y": 0
+        "y": 90
       },
       "when": {
-        "north": "true",
+        "east": "true",
         "variant": "2"
       }
     },
@@ -169,10 +103,10 @@
       "apply": {
         "model": "festive_frenzy:block/fairy_lights_3",
         "uvlock": true,
-        "y": 0
+        "y": 90
       },
       "when": {
-        "north": "true",
+        "east": "true",
         "variant": "3"
       }
     },
@@ -180,10 +114,10 @@
       "apply": {
         "model": "festive_frenzy:block/fairy_lights_4",
         "uvlock": true,
-        "y": 0
+        "y": 90
       },
       "when": {
-        "north": "true",
+        "east": "true",
         "variant": "4"
       }
     },
@@ -191,10 +125,10 @@
       "apply": {
         "model": "festive_frenzy:block/fairy_lights_5",
         "uvlock": true,
-        "y": 0
+        "y": 90
       },
       "when": {
-        "north": "true",
+        "east": "true",
         "variant": "5"
       }
     },
@@ -262,6 +196,72 @@
       "when": {
         "variant": "5",
         "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "festive_frenzy:block/fairy_lights_0",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "north": "true",
+        "variant": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "festive_frenzy:block/fairy_lights_1",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "north": "true",
+        "variant": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "festive_frenzy:block/fairy_lights_2",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "north": "true",
+        "variant": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "festive_frenzy:block/fairy_lights_3",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "north": "true",
+        "variant": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "festive_frenzy:block/fairy_lights_4",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "north": "true",
+        "variant": "4"
+      }
+    },
+    {
+      "apply": {
+        "model": "festive_frenzy:block/fairy_lights_5",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "north": "true",
+        "variant": "5"
       }
     }
   ]

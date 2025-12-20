@@ -15,6 +15,7 @@ public class FFParticles {
     public static final ParticleType<SimpleParticleType> CANDY_SWEEP = register("candy_sweep", FabricParticleTypes.simple());
     public static final ParticleType<SimpleParticleType> FAIRY_SPARK = register("fairy_spark", FabricParticleTypes.simple());
 
+    public static final ParticleType<SimpleParticleType> FROSTBURN = register("frostburn", FabricParticleTypes.simple());
     public static final ParticleType<SimpleParticleType> FROSTFLAKE = register("frostflake", FabricParticleTypes.simple());
     public static final ParticleType<SimpleParticleType> FROSTFLAKE_TRAIL = register("frostflake_trail", FabricParticleTypes.simple());
 

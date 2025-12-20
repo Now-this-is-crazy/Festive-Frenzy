@@ -38,23 +38,8 @@ public class TallFrozenGrassBlock extends DoublePlantBlock implements SnowLoggab
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
-        return super.getShape(state, blockGetter, blockPos, collisionContext);
-    }
-
-    @Override
-    protected VoxelShape getCollisionShape(BlockState state, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
-        return Shapes.empty();
-    }
-
-    @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
-        Level level = context.getLevel();
-
-        BlockPos blockPos = context.getClickedPos();
-        BlockState state = level.getBlockState(blockPos);
-
-        return super.getStateForPlacement(context).setValue(SNOW_LAYERS, state.is(Blocks.SNOW) ? state.getValue(SnowLayerBlock.LAYERS) : 0);
+        return this.applyPlacementProperty(context, super.getStateForPlacement(context));
     }
 
     @Override

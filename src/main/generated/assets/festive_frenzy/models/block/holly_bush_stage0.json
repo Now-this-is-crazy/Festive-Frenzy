@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "festive_frenzy:block/holly_bush_stage0"
+  }
+}

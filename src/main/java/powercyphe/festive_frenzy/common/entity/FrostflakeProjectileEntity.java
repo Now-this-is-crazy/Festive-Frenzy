@@ -4,8 +4,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,11 +18,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import powercyphe.festive_frenzy.common.registry.FFDamageTypes;
-import powercyphe.festive_frenzy.common.registry.FFEntities;
-import powercyphe.festive_frenzy.common.registry.FFParticles;
-import powercyphe.festive_frenzy.common.registry.FFSounds;
-import powercyphe.festive_frenzy.common.util.VelocityBasedRotationImpl;
+import powercyphe.festive_frenzy.common.registry.*;
 
 public class FrostflakeProjectileEntity extends Projectile {
     private int nextParticleTick = 0;
@@ -85,6 +82,13 @@ public class FrostflakeProjectileEntity extends Projectile {
 
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.hurt(FFDamageTypes.createSource(this.level().registryAccess(), FFDamageTypes.FROSTFLAKE, this, this.getOwner()), 0.5F);
+
+            MobEffectInstance currentInstance = livingEntity.getEffect(FFEffects.FROSTBURN);
+            livingEntity.addEffect(new MobEffectInstance(
+                    FFEffects.FROSTBURN,
+                    currentInstance != null ? Math.min(currentInstance.getDuration() + 30, 600) : 30,
+                    currentInstance != null ? currentInstance.getAmplifier() : 1
+            ));
         }
     }
 

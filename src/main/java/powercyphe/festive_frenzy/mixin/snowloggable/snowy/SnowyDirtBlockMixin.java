@@ -3,6 +3,7 @@ package powercyphe.festive_frenzy.mixin.snowloggable.snowy;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.world.level.block.SnowyDirtBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import powercyphe.festive_frenzy.common.util.SnowLoggable;

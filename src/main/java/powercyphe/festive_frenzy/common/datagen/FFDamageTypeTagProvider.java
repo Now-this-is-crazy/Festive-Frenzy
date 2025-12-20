@@ -20,6 +20,7 @@ public class FFDamageTypeTagProvider extends FabricTagProvider<DamageType> {
         getOrCreateTagBuilder(DamageTypeTags.IS_FREEZING)
                 .addOptional(FFDamageTypes.FROSTFLAKE);
         getOrCreateTagBuilder(DamageTypeTags.IS_PROJECTILE)
+                .addOptional(FFDamageTypes.BAUBLE)
                 .addOptional(FFDamageTypes.FROSTFLAKE);
 
         getOrCreateTagBuilder(DamageTypeTags.NO_KNOCKBACK)

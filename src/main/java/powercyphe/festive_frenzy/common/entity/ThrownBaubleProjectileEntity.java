@@ -25,10 +25,7 @@ import net.minecraft.world.phys.Vec3;
 import powercyphe.festive_frenzy.common.block.BaubleBlock;
 import powercyphe.festive_frenzy.common.item.BaubleItem;
 import powercyphe.festive_frenzy.common.item.component.ExplosiveBaubleComponent;
-import powercyphe.festive_frenzy.common.registry.FFBlocks;
-import powercyphe.festive_frenzy.common.registry.FFEntities;
-import powercyphe.festive_frenzy.common.registry.FFItems;
-import powercyphe.festive_frenzy.common.registry.FFSounds;
+import powercyphe.festive_frenzy.common.registry.*;
 import powercyphe.festive_frenzy.common.util.VelocityBasedRotationImpl;
 import powercyphe.festive_frenzy.common.world.BaubleExplosion;
 
@@ -110,8 +107,7 @@ public class ThrownBaubleProjectileEntity extends ThrowableItemProjectile implem
     protected void onHitEntity(EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        entity.hurt(entity.damageSources().mobProjectile(this,
-                this.getOwner() instanceof LivingEntity owner ? owner : null), 2F);
+        entity.hurt(FFDamageTypes.createSource(this.registryAccess(), FFDamageTypes.BAUBLE, this, this.getOwner()), 2F);
     }
 
     @Override

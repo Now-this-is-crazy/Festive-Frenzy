@@ -56,6 +56,33 @@ public class FrostflakeTrailParticle extends TextureSheetParticle {
         public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel clientLevel, double x, double y, double z,
                                        double velocityX, double velocityY, double velocityZ) {
                 return new FrostflakeTrailParticle(clientLevel, x, y, z, velocityX, velocityY, velocityZ, this.sprites);
-            }
         }
+    }
+
+    public static class FrostburnProvider implements ParticleProvider<SimpleParticleType> {
+        private final SpriteSet sprites;
+
+        public FrostburnProvider(SpriteSet sprites) {
+            this.sprites = sprites;
+        }
+
+        public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel clientLevel, double x, double y, double z,
+                                       double velocityX, double velocityY, double velocityZ) {
+            FrostflakeTrailParticle particle = new FrostflakeTrailParticle(clientLevel, x, y, z, velocityX, velocityY, velocityZ, this.sprites);
+            RandomSource random = RandomSource.create();
+
+            particle.xd = 0F;
+            particle.yd = 0F;
+            particle.zd = 0F;
+
+            particle.friction = 0.96F;
+            particle.gravity = -0.17F;
+            particle.speedUpWhenYMotionIsBlocked = true;
+
+            particle.quadSize = 0.4F;
+            particle.lifetime = 11 + random.nextInt(14);
+
+            return particle;
+        }
+    }
 }

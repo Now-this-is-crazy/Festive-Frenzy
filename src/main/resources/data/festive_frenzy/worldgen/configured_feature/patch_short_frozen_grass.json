@@ -8,10 +8,7 @@
           "to_place": {
             "type": "minecraft:simple_state_provider",
             "state": {
-              "Name": "festive_frenzy:short_frozen_grass",
-              "Properties": {
-                "snow_layers": "1"
-              }
+              "Name": "festive_frenzy:short_frozen_grass"
             }
           }
         }

@@ -38,6 +38,10 @@ public class FFItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .add(Items.GUNPOWDER);
 
 
+
+        getOrCreateTagBuilder(ItemTags.FOX_FOOD)
+                .add(FFItems.HOLLY);
+
         getOrCreateTagBuilder(ItemTags.SWORDS)
                 .add(FFItems.SHARPENED_CANDY_CANE);
 

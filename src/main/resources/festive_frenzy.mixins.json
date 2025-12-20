@@ -8,6 +8,7 @@
   "mixins": [
     "bauble_explosion.ServerExplosionMixin",
     "compat.sodium.BlockRendererMixin",
+    "frostburn.EntityMixin",
     "gamerules.SnowLayerBlockMixin",
     "sharpened_candy_cane.PlayerMixin",
     "sharpened_candy_cane.ServerPlayerMixin",

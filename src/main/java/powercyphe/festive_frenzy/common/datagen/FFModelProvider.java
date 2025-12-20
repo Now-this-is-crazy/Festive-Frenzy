@@ -11,8 +11,11 @@ import net.minecraft.data.models.ItemModelGenerators;
 import net.minecraft.data.models.blockstates.*;
 import net.minecraft.data.models.model.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import powercyphe.festive_frenzy.client.render.item.BaubleExplosionModificationProperty;
 import powercyphe.festive_frenzy.client.render.item.BaubleExplosionProperty;
@@ -31,7 +34,9 @@ public class FFModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockModelGenerators generator) {
         generator.createCrossBlockWithDefaultItem(FFBlocks.SHORT_FROZEN_GRASS, BlockModelGenerators.TintState.NOT_TINTED);
-        generateDoublePlantBlock(generator, FFBlocks.TALL_FROZEN_GRASS, BlockModelGenerators.TintState.NOT_TINTED);
+        createDoublePlantBlock(generator, FFBlocks.TALL_FROZEN_GRASS, BlockModelGenerators.TintState.NOT_TINTED);
+
+        createHollyBush(generator, FFBlocks.HOLLY_BUSH);
 
         generator.createTrivialCube(FFBlocks.RED_CANDY_CANE_BLOCK);
         generator.createTrivialCube(FFBlocks.GREEN_CANDY_CANE_BLOCK);
@@ -67,24 +72,32 @@ public class FFModelProvider extends FabricModelProvider {
                 .stairs(FFBlocks.BLUE_ICE_BRICK_STAIRS).slab(FFBlocks.BLUE_ICE_BRICK_SLAB).wall(FFBlocks.BLUE_ICE_BRICK_WALL);
 
         for (Block present : FFBlocks.PRESENTS) {
-            generateCategorized(generator, present, "present");
+            createCategorized(generator, present, "present");
         }
 
         for (Block bauble : FFBlocks.BAUBLES) {
-            generateCategorized(generator, bauble, "bauble");
+            createCategorized(generator, bauble, "bauble");
         }
 
         for (Block tinsel : FFBlocks.TINSEL) {
-            generateTinsel(generator, tinsel);
+            createTinsel(generator, tinsel);
         }
 
-        generateFairyLights(generator, FFBlocks.FAIRY_LIGHTS);
+        createFairyLights(generator, FFBlocks.FAIRY_LIGHTS);
         generator.createCrossBlock(FFBlocks.STAR_DECORATION, BlockModelGenerators.TintState.NOT_TINTED);
         generator.skipAutoItemBlock(FFBlocks.STAR_DECORATION);
 
     }
 
-    public void generateFairyLights(BlockModelGenerators generator, Block block) {
+    private void createHollyBush(BlockModelGenerators generator, Block block) {
+        generator.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
+                .with(PropertyDispatch.property(BlockStateProperties.AGE_2)
+                        .generate((integer) -> Variant.variant().with(VariantProperties.MODEL,
+                                        generator.createSuffixedVariant(block, "_stage" + integer, ModelTemplates.CROSS, TextureMapping::cross)))));
+        generator.skipAutoItemBlock(block);
+    }
+
+    private void createFairyLights(BlockModelGenerators generator, Block block) {
         ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
 
         MultiPartGenerator multiPart = MultiPartGenerator.multiPart(block);
@@ -118,7 +131,7 @@ public class FFModelProvider extends FabricModelProvider {
         }
     }
 
-    public void generateTinsel(BlockModelGenerators generator, Block block) {
+    public void createTinsel(BlockModelGenerators generator, Block block) {
         ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
 
         MultiPartGenerator multiPart = MultiPartGenerator.multiPart(block);
@@ -147,7 +160,7 @@ public class FFModelProvider extends FabricModelProvider {
         });
     }
 
-    public void generateCategorized(BlockModelGenerators generator, Block block, String type) {
+    private void createCategorized(BlockModelGenerators generator, Block block, String type) {
         ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
 
         generator.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, id.withPrefix("block/")));
@@ -164,7 +177,7 @@ public class FFModelProvider extends FabricModelProvider {
         });
     }
 
-    public void generateDoublePlantBlock(BlockModelGenerators generator, Block block, BlockModelGenerators.TintState tintState) {
+    private void createDoublePlantBlock(BlockModelGenerators generator, Block block, BlockModelGenerators.TintState tintState) {
             generator.createSimpleFlatItemModel(block, "_bottom");
             ResourceLocation resourceLocation = generator.createSuffixedVariant(block, "_top", tintState.getCross(), TextureMapping::cross);
             ResourceLocation resourceLocation2 = generator.createSuffixedVariant(block, "_bottom", tintState.getCross(), TextureMapping::cross);
@@ -189,7 +202,7 @@ public class FFModelProvider extends FabricModelProvider {
         generator.generateFlatItem(FFItems.FROSTFLAKE_CANNON, ModelTemplates.FLAT_HANDHELD_ITEM);
 
         for (Block present : FFBlocks.PRESENTS) {
-            generateCategorized(generator, present, "present");
+            createCategorized(generator, present, "present");
         }
 
         for (ItemLike bauble : FFBlocks.BAUBLES) {
@@ -197,13 +210,13 @@ public class FFModelProvider extends FabricModelProvider {
         }
 
         for (ItemLike tinsel : FFBlocks.TINSEL) {
-            generateCategorized(generator, tinsel, "tinsel");
+            createCategorized(generator, tinsel, "tinsel");
         }
 
         generator.generateFlatItem(FFBlocks.FAIRY_LIGHTS.asItem(), ModelTemplates.FLAT_ITEM);
     }
 
-    public void generateCategorized(ItemModelGenerators generator, ItemLike item, String type) {
+    private void createCategorized(ItemModelGenerators generator, ItemLike item, String type) {
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(item.asItem());
 
         ModelTemplates.FLAT_ITEM.create(id.withPrefix("item/"), new TextureMapping()

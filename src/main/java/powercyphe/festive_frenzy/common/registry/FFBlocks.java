@@ -1,5 +1,6 @@
 package powercyphe.festive_frenzy.common.registry;
 
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -7,13 +8,13 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import powercyphe.festive_frenzy.common.FestiveFrenzy;
 import powercyphe.festive_frenzy.common.block.*;
@@ -47,6 +48,10 @@ public class FFBlocks {
             .randomTicks());
     public static final Block TALL_FROZEN_GRASS = register("tall_frozen_grass", TallFrozenGrassBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
             .isViewBlocking((state, blockGetter, blockPos) -> state.getValue(TallFrozenGrassBlock.SNOW_LAYERS) >= 8)
+            .randomTicks());
+
+    public static final Block HOLLY_BUSH = registerWithoutItem("holly_bush", HollyBushBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.SWEET_BERRY_BUSH)
+            .isViewBlocking((state, blockGetter, blockPos) -> state.getValue(HollyBushBlock.SNOW_LAYERS) >= 8)
             .randomTicks());
 
 
@@ -205,7 +210,9 @@ public class FFBlocks {
 
     public static Block registerWithoutItem(String id, Function<BlockBehaviour.Properties, Block> blockFunction, BlockBehaviour.Properties properties) {
         ResourceKey<Block> blockKey = ResourceKey.create(Registries.BLOCK, FestiveFrenzy.id(id));
-        return Registry.register(BuiltInRegistries.BLOCK, blockKey, blockFunction.apply(properties.setId(blockKey)));
+        Block block = Registry.register(BuiltInRegistries.BLOCK, blockKey, blockFunction.apply(properties.setId(blockKey)));
+
+        return block;
     }
 
     public static Block registerPresent(String type) {

@@ -48,6 +48,19 @@ public class FFRecipeProvider extends FabricRecipeProvider {
             @Override
             public void buildRecipes() {
 
+                // Frozen Grass
+                this.shapeless(RecipeCategory.BUILDING_BLOCKS, FFBlocks.SHORT_FROZEN_GRASS)
+                        .requires(Items.SHORT_GRASS)
+                        .requires(Items.SNOWBALL)
+                        .unlockedBy("has_short_grass", has(Items.SHORT_GRASS))
+                        .save(exporter);
+
+                this.shapeless(RecipeCategory.BUILDING_BLOCKS, FFBlocks.TALL_FROZEN_GRASS)
+                        .requires(Items.TALL_GRASS)
+                        .requires(Items.SNOWBALL)
+                        .unlockedBy("has_tall_grass", has(Items.TALL_GRASS))
+                        .save(exporter);
+
                 // Sharpened Candy Cane
                 this.shaped(RecipeCategory.COMBAT, FFItems.SHARPENED_CANDY_CANE)
                         .pattern("  B")

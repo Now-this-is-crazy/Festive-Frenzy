@@ -1,0 +1,369 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "items": "minecraft:shears"
+                  }
+                }
+              ],
+              "name": "festive_frenzy:short_frozen_grass"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "chance": 0.125,
+                  "condition": "minecraft:random_chance"
+                }
+              ],
+              "functions": [
+                {
+                  "enchantment": "minecraft:fortune",
+                  "formula": "minecraft:uniform_bonus_count",
+                  "function": "minecraft:apply_bonus",
+                  "parameters": {
+                    "bonusMultiplier": 2
+                  }
+                },
+                {
+                  "function": "minecraft:explosion_decay"
+                }
+              ],
+              "name": "minecraft:wheat_seeds"
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:all_of",
+              "terms": [
+                {
+                  "condition": "minecraft:inverted",
+                  "term": {
+                    "condition": "minecraft:match_tool",
+                    "predicate": {
+                      "predicates": {
+                        "minecraft:enchantments": [
+                          {
+                            "enchantments": "minecraft:silk_touch",
+                            "levels": {
+                              "min": 1
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "items": "#minecraft:shovels"
+                  }
+                }
+              ]
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "0"
+                  }
+                }
+              ],
+              "count": 0.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "1"
+                  }
+                }
+              ],
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "2"
+                  }
+                }
+              ],
+              "count": 2.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "3"
+                  }
+                }
+              ],
+              "count": 3.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "4"
+                  }
+                }
+              ],
+              "count": 4.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "5"
+                  }
+                }
+              ],
+              "count": 5.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "6"
+                  }
+                }
+              ],
+              "count": 6.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "7"
+                  }
+                }
+              ],
+              "count": 7.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "8"
+                  }
+                }
+              ],
+              "count": 8.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:snowball"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:match_tool",
+              "predicate": {
+                "predicates": {
+                  "minecraft:enchantments": [
+                    {
+                      "enchantments": "minecraft:silk_touch",
+                      "levels": {
+                        "min": 1
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "0"
+                  }
+                }
+              ],
+              "count": 0.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "1"
+                  }
+                }
+              ],
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "2"
+                  }
+                }
+              ],
+              "count": 2.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "3"
+                  }
+                }
+              ],
+              "count": 3.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "4"
+                  }
+                }
+              ],
+              "count": 4.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "5"
+                  }
+                }
+              ],
+              "count": 5.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "6"
+                  }
+                }
+              ],
+              "count": 6.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "7"
+                  }
+                }
+              ],
+              "count": 7.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:short_frozen_grass",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "snow_layers": "8"
+                  }
+                }
+              ],
+              "count": 8.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:snow"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

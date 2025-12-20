@@ -2,11 +2,14 @@ package powercyphe.festive_frenzy.common.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -34,6 +37,16 @@ public interface SnowLoggable {
 
     default int getSnowLayers(BlockState state) {
         return state.getValue(SNOW_LAYERS);
+    }
+
+    default BlockState applyPlacementProperty(BlockPlaceContext context, BlockState defaultState) {
+        Level level = context.getLevel();
+        BlockPos blockPos = context.getClickedPos();
+
+        BlockState state = level.getBlockState(blockPos);
+
+        return defaultState == null ? null : defaultState.setValue(SNOW_LAYERS, state.is(Blocks.SNOW)
+                ? state.getValue(SnowLayerBlock.LAYERS) : 0);
     }
 
     default void tryMelt(ServerLevel level, BlockState state, BlockPos blockPos) {

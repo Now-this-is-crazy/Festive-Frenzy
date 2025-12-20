@@ -10,7 +10,6 @@
             "state": {
               "Name": "festive_frenzy:tall_frozen_grass",
               "Properties": {
-                "snow_layers": "1",
                 "half": "lower"
               }
             }

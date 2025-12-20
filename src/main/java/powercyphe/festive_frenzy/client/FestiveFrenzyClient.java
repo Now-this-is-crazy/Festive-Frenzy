@@ -7,7 +7,6 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.RenderType;
@@ -39,7 +38,7 @@ public class FestiveFrenzyClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.SHORT_FROZEN_GRASS, FFBlocks.TALL_FROZEN_GRASS);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.SHORT_FROZEN_GRASS, FFBlocks.TALL_FROZEN_GRASS, FFBlocks.HOLLY_BUSH);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.GINGERBREAD_DOOR, FFBlocks.GINGERBREAD_TRAPDOOR);
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.PRESENTS);
@@ -59,6 +58,7 @@ public class FestiveFrenzyClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(FFParticles.CANDY_SWEEP, CandySweepParticle.Provider::new);
         ParticleFactoryRegistry.getInstance().register(FFParticles.FAIRY_SPARK, FairySparkParticle.Provider::new);
 
+        ParticleFactoryRegistry.getInstance().register(FFParticles.FROSTBURN, FrostflakeTrailParticle.FrostburnProvider::new);
         ParticleFactoryRegistry.getInstance().register(FFParticles.FROSTFLAKE, FrostflakeParticle.Provider::new);
         ParticleFactoryRegistry.getInstance().register(FFParticles.FROSTFLAKE_TRAIL, FrostflakeTrailParticle.Provider::new);
 

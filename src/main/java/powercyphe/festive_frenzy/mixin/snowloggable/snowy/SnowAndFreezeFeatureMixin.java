@@ -4,11 +4,9 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.SnowyDirtBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.SnowAndFreezeFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import powercyphe.festive_frenzy.common.util.SnowLoggable;
@@ -16,24 +14,14 @@ import powercyphe.festive_frenzy.common.util.SnowLoggable;
 @Mixin(SnowAndFreezeFeature.class)
 public class SnowAndFreezeFeatureMixin {
 
-    // IMPORTANT: FIX FROZEN GRASS GEN
+    @WrapOperation(method = "place", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/WorldGenLevel;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z", ordinal = 1))
+    private boolean festive_frenzy$snowloggable(WorldGenLevel level, BlockPos blockPos, BlockState state, int i, Operation<Boolean> original) {
+        BlockState currentState = level.getBlockState(blockPos);
 
-    @WrapOperation(method = "place", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos$MutableBlockPos;set(III)Lnet/minecraft/core/BlockPos$MutableBlockPos;"))
-    private BlockPos.MutableBlockPos festive_frenzy$snowloggable(BlockPos.MutableBlockPos instance, int x, int y, int z, Operation<BlockPos.MutableBlockPos> original, FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        WorldGenLevel level = context.level();
-
-        BlockPos.MutableBlockPos blockPos = original.call(instance, x, y, z);
-        BlockState state = level.getBlockState(blockPos);
-
-        BlockPos belowPos = blockPos.below();
-        BlockState belowState = level.getBlockState(belowPos);
-
-        if (state.getBlock() instanceof SnowLoggable snowLoggable) {
-            if (snowLoggable.isSnowLogged(state) && belowState.hasProperty(SnowyDirtBlock.SNOWY)) {
-                level.setBlock(belowPos, belowState.setValue(SnowyDirtBlock.SNOWY, true), 2);
-            }
+        if (currentState.getBlock() instanceof SnowLoggable) {
+            state = currentState.setValue(SnowLoggable.SNOW_LAYERS, 1);
         }
 
-        return blockPos;
+        return original.call(level, blockPos, state, i);
     }
 }
