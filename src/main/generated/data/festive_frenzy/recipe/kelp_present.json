@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_transmute",
+  "category": "building",
+  "group": "present_recolor",
+  "input": "#festive_frenzy:presents",
+  "material": "minecraft:dried_kelp_block",
+  "result": "festive_frenzy:kelp_present"
+}

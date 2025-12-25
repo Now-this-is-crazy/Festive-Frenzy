@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "#": "festive_frenzy:gingerbread_block"
+    "#": "festive_frenzy:gingerbread_dough"
   },
   "pattern": [
     "##",

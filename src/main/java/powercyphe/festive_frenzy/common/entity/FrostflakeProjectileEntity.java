@@ -18,6 +18,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import powercyphe.festive_frenzy.common.mob_effect.FrostburnEffect;
 import powercyphe.festive_frenzy.common.registry.*;
 
 public class FrostflakeProjectileEntity extends Projectile {
@@ -81,14 +82,8 @@ public class FrostflakeProjectileEntity extends Projectile {
         Entity entity = entityHitResult.getEntity();
 
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.hurt(FFDamageTypes.createSource(this.level().registryAccess(), FFDamageTypes.FROSTFLAKE, this, this.getOwner()), 0.5F);
-
-            MobEffectInstance currentInstance = livingEntity.getEffect(FFEffects.FROSTBURN);
-            livingEntity.addEffect(new MobEffectInstance(
-                    FFEffects.FROSTBURN,
-                    currentInstance != null ? Math.min(currentInstance.getDuration() + 30, 600) : 30,
-                    currentInstance != null ? currentInstance.getAmplifier() : 1
-            ));
+            livingEntity.hurtOrSimulate(FFDamageTypes.createSource(this.level().registryAccess(), FFDamageTypes.FROSTFLAKE, this, this.getOwner()), 0.5F);
+            FrostburnEffect.addAccumulativeEffect(livingEntity, 30, 600);
         }
     }
 

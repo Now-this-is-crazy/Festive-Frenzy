@@ -1,29 +1,32 @@
 package powercyphe.festive_frenzy.common.registry;
 
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.UseCooldown;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import powercyphe.festive_frenzy.common.FestiveFrenzy;
 import powercyphe.festive_frenzy.common.block.*;
 import powercyphe.festive_frenzy.common.block.entity.PresentBlockEntity;
 import powercyphe.festive_frenzy.common.block.entity.StarDecorationBlockEntity;
 import powercyphe.festive_frenzy.common.item.BaubleItem;
+import powercyphe.festive_frenzy.common.item.PresentItem;
 import powercyphe.festive_frenzy.common.item.component.ExplosiveBaubleComponent;
 import powercyphe.festive_frenzy.common.item.component.PresentContentsComponent;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 public class FFBlocks {
@@ -175,7 +178,7 @@ public class FFBlocks {
     public static final Block PINK_BAUBLE = registerBauble("pink", 0xcf73a3);
 
     // Baubles
-    public static Block[] TINSEL;
+    public static Block[] TINSELS;
 
     public static final Block WHITE_TINSEL = registerTinsel("white");
     public static final Block LIGHT_GRAY_TINSEL = registerTinsel("light_gray");
@@ -195,7 +198,9 @@ public class FFBlocks {
     public static final Block PINK_TINSEL = registerTinsel("pink");
 
     public static final Block FAIRY_LIGHTS = register("fairy_lights", FairyLightsBlock::new, BlockBehaviour.Properties.ofFullCopy(WHITE_TINSEL)
-            .sound(SoundType.METAL).lightLevel(state -> 11));
+            .mapColor(MapColor.COLOR_GRAY).sound(SoundType.METAL).lightLevel(state -> 11));
+    public static final Block WREATH = register("wreath", WreathBlock::new, BlockBehaviour.Properties.of().strength(0.5F, 2F)
+            .sound(SoundType.GRASS).noCollission().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY));
     public static final Block STAR_DECORATION = register("star_decoration", StarDecorationBlock::new, BlockBehaviour.Properties.of()
             .noOcclusion().noCollission().strength(5F).instabreak().sound(SoundType.METAL).lightLevel(state -> 9)
             .emissiveRendering((state, blockGetter, blockPos) -> !state.getValue(StarDecorationBlock.WATERLOGGED)).pushReaction(PushReaction.DESTROY));
@@ -220,7 +225,7 @@ public class FFBlocks {
 
         Block block = registerWithoutItem(id, PresentBlock::new,
                 BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL).strength(1F, 3F).noOcclusion());
-        FFItems.register(id, properties -> new BlockItem(block, properties), new Item.Properties()
+        FFItems.register(id, properties -> new PresentItem(block, properties), new Item.Properties()
                 .component(FFItems.Components.PRESENT_CONTENTS_COMPONENT, PresentContentsComponent.DEFAULT));
         return block;
     }
@@ -256,7 +261,7 @@ public class FFBlocks {
                 LIME_BAUBLE, GREEN_BAUBLE, CYAN_BAUBLE, LIGHT_BLUE_BAUBLE, 
                 BLUE_BAUBLE, PURPLE_BAUBLE, MAGENTA_BAUBLE, PINK_BAUBLE
         };
-        TINSEL = new Block[]{
+        TINSELS = new Block[]{
                 WHITE_TINSEL, LIGHT_GRAY_TINSEL, GRAY_TINSEL, BLACK_TINSEL,
                 BROWN_TINSEL, RED_TINSEL, ORANGE_TINSEL, YELLOW_TINSEL,
                 LIME_TINSEL, GREEN_TINSEL, CYAN_TINSEL, LIGHT_BLUE_TINSEL,

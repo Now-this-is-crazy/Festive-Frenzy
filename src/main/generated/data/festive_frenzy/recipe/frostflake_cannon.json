@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "minecraft:blue_ice",
+    "minecraft:wind_charge",
+    "minecraft:iron_nugget"
+  ],
+  "result": {
+    "count": 3,
+    "id": "festive_frenzy:frostflake_cannon"
+  }
+}

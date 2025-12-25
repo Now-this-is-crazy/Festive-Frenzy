@@ -43,7 +43,7 @@ public class FrostflakeParticle extends TextureSheetParticle {
         super.tick();
 
         this.oRoll = this.roll;
-        this.roll += (float) (Math.abs(this.xd) + Math.abs(this.yd) + Math.abs(zd)) / 3F * this.rollMultiplier
+        this.roll += (float) (Math.abs(this.xd) + Math.abs(this.yd) + Math.abs(this.zd)) / 3F * this.rollMultiplier
                 * (this.onGround ? 0.125F : 1F);
 
         if (this.age++ > this.lifetime) {

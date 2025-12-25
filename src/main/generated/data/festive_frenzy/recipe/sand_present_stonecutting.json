@@ -1,0 +1,8 @@
+{
+  "type": "festive_frenzy:transmute_stonecutting",
+  "ingredient": "#festive_frenzy:presents",
+  "result": {
+    "count": 1,
+    "id": "festive_frenzy:sand_present"
+  }
+}

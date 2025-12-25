@@ -11,10 +11,8 @@ import net.minecraft.data.models.ItemModelGenerators;
 import net.minecraft.data.models.blockstates.*;
 import net.minecraft.data.models.model.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import powercyphe.festive_frenzy.client.render.item.BaubleExplosionModificationProperty;
@@ -79,11 +77,15 @@ public class FFModelProvider extends FabricModelProvider {
             createCategorized(generator, bauble, "bauble");
         }
 
-        for (Block tinsel : FFBlocks.TINSEL) {
+        for (Block tinsel : FFBlocks.TINSELS) {
             createTinsel(generator, tinsel);
         }
 
         createFairyLights(generator, FFBlocks.FAIRY_LIGHTS);
+
+        generator.createNonTemplateHorizontalBlock(FFBlocks.WREATH);
+        generator.createSimpleFlatItemModel(FFBlocks.WREATH);
+
         generator.createCrossBlock(FFBlocks.STAR_DECORATION, BlockModelGenerators.TintState.NOT_TINTED);
         generator.skipAutoItemBlock(FFBlocks.STAR_DECORATION);
 
@@ -209,7 +211,7 @@ public class FFModelProvider extends FabricModelProvider {
             generateBauble(generator, bauble);
         }
 
-        for (ItemLike tinsel : FFBlocks.TINSEL) {
+        for (ItemLike tinsel : FFBlocks.TINSELS) {
             createCategorized(generator, tinsel, "tinsel");
         }
 

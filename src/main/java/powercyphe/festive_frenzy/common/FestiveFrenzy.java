@@ -7,6 +7,10 @@ import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.GameRules;
 import powercyphe.festive_frenzy.common.event.CandyPouchDropEvent;
@@ -31,6 +35,7 @@ public class FestiveFrenzy implements ModInitializer {
         FFMenus.init();
         FFGamerules.init();
         FFParticles.init();
+        FFEnchantments.init();
         FFDamageTypes.init();
         FFSounds.init();
         FFTags.init();
@@ -41,6 +46,11 @@ public class FestiveFrenzy implements ModInitializer {
 
         UseBlockCallback.EVENT.register(new SnowloggablePlaceEvent());
         ServerLivingEntityEvents.AFTER_DEATH.register(new CandyPouchDropEvent());
+
+        FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
+            ResourceManagerHelper.registerBuiltinResourcePack(id("snowy_grass_fix"), modContainer,
+                    Component.literal("Snowy Grass Fix"), ResourcePackActivationType.DEFAULT_ENABLED);
+        });
 
         initNetworking();
     }

@@ -4,6 +4,16 @@
       "apply": {
         "model": "festive_frenzy:block/lime_tinsel",
         "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "festive_frenzy:block/lime_tinsel",
+        "uvlock": true,
         "y": 180
       },
       "when": {
@@ -18,16 +28,6 @@
       },
       "when": {
         "east": "true"
-      }
-    },
-    {
-      "apply": {
-        "model": "festive_frenzy:block/lime_tinsel",
-        "uvlock": true,
-        "y": 270
-      },
-      "when": {
-        "west": "true"
       }
     },
     {

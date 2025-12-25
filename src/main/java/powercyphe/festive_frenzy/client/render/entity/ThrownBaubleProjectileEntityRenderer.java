@@ -65,9 +65,8 @@ public class ThrownBaubleProjectileEntityRenderer<T extends ThrownBaubleProjecti
             poseStack.mulPose(Axis.YP.rotation((float) state.rotationY));
             poseStack.mulPose(Axis.ZP.rotation((float) state.rotationZ));
 
-            BakedModel model = this.blockRenderDispatcher.getBlockModel(blockItem.getBlock().defaultBlockState());
             this.itemRenderer.render(state.baubleStack, ItemDisplayContext.NONE, false, poseStack, multiBufferSource,
-                    state.isGlowing ? Math.max(light, LightTexture.FULL_BRIGHT) : light, OverlayTexture.NO_OVERLAY, model);
+                    state.isGlowing ? Math.max(light, LightTexture.FULL_BRIGHT) : light, OverlayTexture.NO_OVERLAY, state.bakedModel);
             poseStack.popPose();
         }
 

@@ -17,6 +17,8 @@ public class FFDataGenerator implements DataGeneratorEntrypoint {
 
         pack.addProvider(FFItemTagProvider::new);
         pack.addProvider(FFBlockTagProvider::new);
+        pack.addProvider(FFEntityTypeTagProvider::new);
+        pack.addProvider(FFEnchantmentTagProvider::new);
         pack.addProvider(FFDamageTypeTagProvider::new);
 
         pack.addProvider(FFRecipeProvider::new);

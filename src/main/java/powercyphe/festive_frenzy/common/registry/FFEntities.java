@@ -10,6 +10,7 @@ import net.minecraft.world.entity.MobCategory;
 import powercyphe.festive_frenzy.common.FestiveFrenzy;
 import powercyphe.festive_frenzy.common.entity.FrostflakeProjectileEntity;
 import powercyphe.festive_frenzy.common.entity.ThrownBaubleProjectileEntity;
+import powercyphe.festive_frenzy.common.entity.WreathChakramProjectileEntity;
 
 public class FFEntities {
 
@@ -20,6 +21,10 @@ public class FFEntities {
     public static final EntityType<ThrownBaubleProjectileEntity> THROWN_BAUBLE_PROJECTILE = register("thrown_bauble_projectile",
             EntityType.Builder.<ThrownBaubleProjectileEntity>of(ThrownBaubleProjectileEntity::new, MobCategory.MISC)
                     .sized(0.4F, 0.4F).eyeHeight(0.2F));
+
+    public static final EntityType<WreathChakramProjectileEntity> WREATH_CHAKRAM_PROJECTILE = register("wreath_chakram",
+            EntityType.Builder.<WreathChakramProjectileEntity>of(WreathChakramProjectileEntity::new, MobCategory.MISC)
+                    .sized(0.7F, 0.2F).eyeHeight(0.2F));
 
     public static void init() {}
 

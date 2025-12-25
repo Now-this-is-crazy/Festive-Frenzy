@@ -10,7 +10,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -106,11 +105,12 @@ public class FFBlockLootTableProvider extends FabricBlockLootTableProvider {
         for (Block bauble : FFBlocks.BAUBLES) {
             dropSelf(bauble);
         }
-        for (Block tinsel : FFBlocks.TINSEL) {
+        for (Block tinsel : FFBlocks.TINSELS) {
             addMultiWallDecorationBlockDrops(tinsel);
         }
 
         addMultiWallDecorationBlockDrops(FFBlocks.FAIRY_LIGHTS);
+        dropSelf(FFBlocks.WREATH);
         dropSelf(FFBlocks.STAR_DECORATION);
     }
 

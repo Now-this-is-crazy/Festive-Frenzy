@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    "festive_frenzy:gingerbread_block"
+    "festive_frenzy:gingerbread_dough"
   ],
   "result": {
     "count": 1,

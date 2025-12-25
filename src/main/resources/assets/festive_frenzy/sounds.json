@@ -77,6 +77,18 @@
       "minecraft:random/glass3"
     ]
   },
+  "wreath_chakram_throw": {
+    "subtitle": "subtitles.festive_frenzy.wreath_chakram_throw",
+    "sounds": [
+      "festive_frenzy:wreath_chakram_throw"
+    ]
+  },
+  "wreath_chakram_hit": {
+    "subtitle": "subtitles.festive_frenzy.wreath_chakram_hit",
+    "sounds": [
+      "festive_frenzy:wreath_chakram_hit"
+    ]
+  },
   "pouch_open": {
     "subtitle": "subtitles.festive_frenzy.pouch_open",
     "sounds": [

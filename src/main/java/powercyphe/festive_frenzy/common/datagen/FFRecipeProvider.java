@@ -16,9 +16,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
-import net.minecraft.world.item.crafting.TransmuteRecipe;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -28,11 +26,14 @@ import powercyphe.festive_frenzy.common.FestiveFrenzy;
 import powercyphe.festive_frenzy.common.block.BaubleBlock;
 import powercyphe.festive_frenzy.common.block.PresentBlock;
 import powercyphe.festive_frenzy.common.block.TinselBlock;
+import powercyphe.festive_frenzy.common.recipe.TransmuteStonecutterRecipe;
 import powercyphe.festive_frenzy.common.registry.FFBlocks;
 import powercyphe.festive_frenzy.common.registry.FFItems;
 import powercyphe.festive_frenzy.common.registry.FFTags;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class FFRecipeProvider extends FabricRecipeProvider {
@@ -44,6 +45,7 @@ public class FFRecipeProvider extends FabricRecipeProvider {
     protected RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
         return new RecipeProvider(registryLookup, exporter) {
             private static final HashMap<DyeColor, Tuple<Block, Block>> DYE_TO_ITEM = new HashMap<>();
+            private static final List<Tuple<Block, ItemLike>> SPECIAL_PRESENTS = new ArrayList<>();
 
             @Override
             public void buildRecipes() {
@@ -61,15 +63,41 @@ public class FFRecipeProvider extends FabricRecipeProvider {
                         .unlockedBy("has_tall_grass", has(Items.TALL_GRASS))
                         .save(exporter);
 
-                // Sharpened Candy Cane
+                // Other Items
+                this.shaped(RecipeCategory.MISC, FFItems.FESTIVE_HAT)
+                        .pattern("LWL")
+                        .pattern("WWW")
+                        .define('W', ItemTags.WOOL)
+                        .define('L', Items.LEATHER)
+                        .unlockedBy("has_wooL", has(ItemTags.WOOL))
+                        .save(exporter);
+
                 this.shaped(RecipeCategory.COMBAT, FFItems.SHARPENED_CANDY_CANE)
-                        .pattern("  B")
+                        .pattern(" HB")
                         .pattern("FB ")
                         .pattern("SF ")
                         .define('S', Items.DIAMOND_SWORD)
                         .define('F', FFBlocks.FAIRY_LIGHTS)
                         .define('B', FFTags.Items.CANDY_CANE_BLOCKS)
+                        .define('H', FFItems.HOLLY)
                         .unlockedBy("has_candy_cane", has(FFTags.Items.CANDY_CANES))
+                        .save(exporter);
+
+                this.shaped(RecipeCategory.COMBAT, FFItems.WREATH_CHAKRAM)
+                        .pattern("IFI")
+                        .pattern("FWF")
+                        .pattern("IFI")
+                        .define('W', FFBlocks.WREATH)
+                        .define('F', Items.FLINT)
+                        .define('I', Items.IRON_NUGGET)
+                        .unlockedBy("has_iron", has(Items.IRON_INGOT))
+                        .save(exporter);
+
+                this.shapeless(RecipeCategory.COMBAT, FFItems.FROSTFLAKE_CANNON, 3)
+                        .requires(Items.BLUE_ICE)
+                        .requires(Items.WIND_CHARGE)
+                        .requires(Items.IRON_NUGGET)
+                        .unlockedBy("has_iron", has(Items.IRON_INGOT))
                         .save(exporter);
 
                 // Candy Cane & Other Foods
@@ -125,16 +153,16 @@ public class FFRecipeProvider extends FabricRecipeProvider {
                 this.chiseled(RecipeCategory.BUILDING_BLOCKS, FFBlocks.CHISELED_GINGERBREAD_BLOCK, FFBlocks.GINGERBREAD_SLAB);
                 this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, FFBlocks.CHISELED_GINGERBREAD_BLOCK, FFBlocks.GINGERBREAD_BLOCK);
 
-                this.doorBuilder(FFBlocks.GINGERBREAD_DOOR, Ingredient.of(FFBlocks.GINGERBREAD_BLOCK))
+                this.doorBuilder(FFBlocks.GINGERBREAD_DOOR, Ingredient.of(FFItems.GINGERBREAD_DOUGH))
                         .unlockedBy("has_gingerbread_dough", has(FFItems.GINGERBREAD_DOUGH))
                         .save(exporter);
-                this.trapdoorBuilder(FFBlocks.GINGERBREAD_TRAPDOOR, Ingredient.of(FFBlocks.GINGERBREAD_BLOCK))
+                this.trapdoorBuilder(FFBlocks.GINGERBREAD_TRAPDOOR, Ingredient.of(FFItems.GINGERBREAD_DOUGH))
                         .unlockedBy("has_gingerbread_dough", has(FFItems.GINGERBREAD_DOUGH))
                         .save(exporter);
-                this.buttonBuilder(FFBlocks.GINGERBREAD_BUTTON, Ingredient.of(FFBlocks.GINGERBREAD_BLOCK))
+                this.buttonBuilder(FFBlocks.GINGERBREAD_BUTTON, Ingredient.of(FFItems.GINGERBREAD_DOUGH))
                         .unlockedBy("has_gingerbread_dough", has(FFItems.GINGERBREAD_DOUGH))
                         .save(exporter);
-                this.pressurePlateBuilder(RecipeCategory.BUILDING_BLOCKS, FFBlocks.GINGERBREAD_PRESSURE_PLATE, Ingredient.of(FFBlocks.GINGERBREAD_BLOCK))
+                this.pressurePlateBuilder(RecipeCategory.BUILDING_BLOCKS, FFBlocks.GINGERBREAD_PRESSURE_PLATE, Ingredient.of(FFItems.GINGERBREAD_DOUGH))
                         .unlockedBy("has_gingerbread_dough", has(FFItems.GINGERBREAD_DOUGH))
                         .save(exporter);
 
@@ -167,6 +195,14 @@ public class FFRecipeProvider extends FabricRecipeProvider {
                         .define('C', Items.COPPER_INGOT)
                         .define('A', Items.AMETHYST_SHARD)
                         .unlockedBy("has_amethyst", has(Items.AMETHYST_SHARD))
+                        .save(exporter);
+
+                this.shaped(RecipeCategory.BUILDING_BLOCKS, FFBlocks.WREATH)
+                        .pattern("HHH")
+                        .pattern("H H")
+                        .pattern("HHH")
+                        .define('H', FFItems.HOLLY)
+                        .unlockedBy("has_holly", has(FFItems.HOLLY))
                         .save(exporter);
 
                 this.shaped(RecipeCategory.BUILDING_BLOCKS, FFBlocks.STAR_DECORATION)
@@ -268,6 +304,21 @@ public class FFRecipeProvider extends FabricRecipeProvider {
                             .unlockedBy("has_wool", has(ItemTags.WOOL))
                             .save(exporter, tinsel + "_with_dye");
                 }
+
+                for (Tuple<Block, ItemLike> tuple : SPECIAL_PRESENTS) {
+                    Block present = tuple.getA();
+                    ItemLike ingredient = tuple.getB();
+
+                    TransmuteRecipeBuilder.transmute(RecipeCategory.BUILDING_BLOCKS, tag(FFTags.Items.PRESENTS),
+                                    Ingredient.of(ingredient), present.asItem())
+                            .group("present_recolor")
+                            .unlockedBy("has_present", has(FFTags.Items.PRESENTS))
+                            .save(exporter);
+
+                    transmuteStonecutting(RecipeCategory.BUILDING_BLOCKS, tag(FFTags.Items.PRESENTS), present, 1)
+                            .unlockedBy("has_present", has(FFTags.Items.PRESENTS))
+                            .save(exporter, RecipeProvider.getItemName(present) + "_stonecutting");
+                }
             }
             
             public void createBlockFamily(ItemLike rootItem, Block baseBlock, Block stairs, Block slab, Block wall, int baseBlockAmount) {
@@ -293,6 +344,10 @@ public class FFRecipeProvider extends FabricRecipeProvider {
                 this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, slab, baseBlock, 2);
                 this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, wall, baseBlock);
             }
+
+            public SingleItemRecipeBuilder transmuteStonecutting(RecipeCategory recipeCategory, Ingredient ingredient, ItemLike output, int amount) {
+                return new SingleItemRecipeBuilder(recipeCategory, TransmuteStonecutterRecipe::new, ingredient, output, amount);
+            }
             
             static {
                 DYE_TO_ITEM.put(DyeColor.WHITE, new Tuple<>(Blocks.WHITE_WOOL, Blocks.WHITE_STAINED_GLASS));
@@ -311,7 +366,13 @@ public class FFRecipeProvider extends FabricRecipeProvider {
                 DYE_TO_ITEM.put(DyeColor.PURPLE, new Tuple<>(Blocks.PURPLE_WOOL, Blocks.PURPLE_STAINED_GLASS));
                 DYE_TO_ITEM.put(DyeColor.MAGENTA, new Tuple<>(Blocks.MAGENTA_WOOL, Blocks.MAGENTA_STAINED_GLASS));
                 DYE_TO_ITEM.put(DyeColor.PINK, new Tuple<>(Blocks.PINK_WOOL, Blocks.PINK_STAINED_GLASS));
-                
+
+                SPECIAL_PRESENTS.add(new Tuple<>(FFBlocks.FOLLY_PRESENT, Items.RED_TULIP));
+                SPECIAL_PRESENTS.add(new Tuple<>(FFBlocks.BLOOD_PRESENT, Items.ROTTEN_FLESH));
+                SPECIAL_PRESENTS.add(new Tuple<>(FFBlocks.GOLDEN_PRESENT, Items.GOLD_BLOCK));
+                SPECIAL_PRESENTS.add(new Tuple<>(FFBlocks.SAND_PRESENT, Items.SAND));
+                SPECIAL_PRESENTS.add(new Tuple<>(FFBlocks.KELP_PRESENT, Items.DRIED_KELP_BLOCK));
+                SPECIAL_PRESENTS.add(new Tuple<>(FFBlocks.SCULK_PRESENT, Items.SCULK_CATALYST));
             }
         };
     }

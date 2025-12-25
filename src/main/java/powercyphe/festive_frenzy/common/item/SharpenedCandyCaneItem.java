@@ -20,7 +20,6 @@ public class SharpenedCandyCaneItem extends Item {
     public static final ResourceLocation BASE_ENTITY_INTERACTION_RANGE_ID = FestiveFrenzy.id("base_entity_interaction_range");
     public static final ResourceLocation BASE_BLOCK_INTERACTION_RANGE_ID = FestiveFrenzy.id("base_block_interaction_range");
 
-    // ADD REACH ATTRIBUTE
     public SharpenedCandyCaneItem(Properties properties, ToolMaterial toolMaterial, float attackDamage, float attackSpeed, float range) {
         super(toolMaterial.applySwordProperties(properties, attackDamage, attackSpeed)
                 .attributes(createAttributeModifiers(toolMaterial, attackDamage, attackSpeed, range)));

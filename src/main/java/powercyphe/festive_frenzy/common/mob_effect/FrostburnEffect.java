@@ -4,6 +4,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -22,7 +23,9 @@ public class FrostburnEffect extends MobEffect {
 
     @Override
     public void onMobHurt(ServerLevel serverLevel, LivingEntity entity, int amplifier, DamageSource source, float damage) {
-        if (source.is(DamageTypeTags.IS_FIRE)) {
+        if (source.is(DamageTypes.LAVA)) {
+            entity.removeEffect(FFEffects.FROSTBURN);
+        } else if (source.is(DamageTypeTags.IS_FIRE)) {
             this.tryRemoveFire(entity.getEffect(FFEffects.FROSTBURN), entity, amplifier);
         }
     }
@@ -41,5 +44,14 @@ public class FrostburnEffect extends MobEffect {
                 entity.removeEffect(FFEffects.FROSTBURN);
             }
         }
+    }
+
+    public static void addAccumulativeEffect(LivingEntity entity, int baseTicks, int maxTicks) {
+        MobEffectInstance currentInstance = entity.getEffect(FFEffects.FROSTBURN);
+        entity.addEffect(new MobEffectInstance(
+                FFEffects.FROSTBURN,
+                currentInstance != null ? Math.min(currentInstance.getDuration() + baseTicks, maxTicks) : baseTicks,
+                currentInstance != null ? currentInstance.getAmplifier() : 0
+        ));
     }
 }

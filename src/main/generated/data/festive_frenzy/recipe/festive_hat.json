@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": "minecraft:leather",
+    "W": "#minecraft:wool"
+  },
+  "pattern": [
+    "LWL",
+    "WWW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "festive_frenzy:festive_hat"
+  }
+}

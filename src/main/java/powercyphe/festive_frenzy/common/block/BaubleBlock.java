@@ -7,6 +7,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -67,7 +69,7 @@ public class BaubleBlock extends Block implements SimpleWaterloggedBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
         ItemStack stack = player.getMainHandItem().isEmpty() ? player.getOffhandItem() : player.getMainHandItem();
 
-        if (stack.is(Items.GLOW_INK_SAC)) {
+        if (stack.is(Items.GLOW_INK_SAC) && !state.getValue(IS_GLOWING)) {
             if (!level.isClientSide()) {
                 level.setBlockAndUpdate(blockPos, state.setValue(IS_GLOWING, true));
             }
@@ -87,9 +89,17 @@ public class BaubleBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
         Level level = context.getLevel();
-        BlockPos blockPos = context.getClickedPos();
 
-        return super.getStateForPlacement(context).setValue(WATERLOGGED, level.getFluidState(blockPos).is(Fluids.WATER));
+        ItemStack stack = context.getItemInHand();
+        ExplosiveBaubleComponent component = ExplosiveBaubleComponent.get(stack);
+
+        BlockPos blockPos = context.getClickedPos();
+        BlockState state = super.getStateForPlacement(context);
+
+
+        return state != null ? state.setValue(WATERLOGGED, level.getFluidState(blockPos).is(Fluids.WATER))
+                .setValue(EXPLOSION_MODIFICATION, component.explosionModification()).setValue(EXPLOSION_POWER, component.explosionPower())
+                : null;
     }
 
     @Override
@@ -117,6 +127,16 @@ public class BaubleBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     protected boolean propagatesSkylightDown(BlockState state) {
         return !state.getValue(WATERLOGGED);
+    }
+
+    @Override
+    protected void onProjectileHit(Level level, BlockState state, BlockHitResult blockHitResult, Projectile projectile) {
+        BlockPos blockPos = blockHitResult.getBlockPos();
+
+        if (projectile.getType().is(FFTags.Entities.DETACHES_BAUBLES)) {
+            ThrownBaubleProjectileEntity.fromBlock(level, state, blockPos);
+            level.destroyBlock(blockPos, false);
+        }
     }
 
     public boolean hasStableSupport(BlockGetter blockGetter, BlockState state, BlockPos blockPos) {

@@ -33,6 +33,9 @@ public class FFBlockTagProvider extends FabricTagProvider.BlockTagProvider {
         getOrCreateTagBuilder(FFTags.Blocks.SUPPORTS_MULTIFACE_DECORATION)
                 .forceAddTag(BlockTags.LEAVES);
 
+        getOrCreateTagBuilder(FFTags.Blocks.SUPPORTS_WREATH)
+                .forceAddTag(BlockTags.LEAVES);
+
         getOrCreateTagBuilder(FFTags.Blocks.SUPPORTS_STAR_DECORATION)
                 .forceAddTag(BlockTags.LEAVES);
 

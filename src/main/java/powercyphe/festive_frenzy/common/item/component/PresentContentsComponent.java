@@ -7,6 +7,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import powercyphe.festive_frenzy.common.block.entity.PresentBlockEntity;
+import powercyphe.festive_frenzy.common.registry.FFItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,10 @@ public record PresentContentsComponent(List<ItemStack> stacks, boolean closed) {
     public static final StreamCodec<RegistryFriendlyByteBuf, PresentContentsComponent> STREAM_CODEC = StreamCodec.composite(
             ItemStack.OPTIONAL_LIST_STREAM_CODEC, PresentContentsComponent::stacks,
             ByteBufCodecs.BOOL, PresentContentsComponent::closed, PresentContentsComponent::new);
+
+    public static PresentContentsComponent get(ItemStack stack) {
+        return stack.getOrDefault(FFItems.Components.PRESENT_CONTENTS_COMPONENT, DEFAULT);
+    }
 
     public static PresentContentsComponent fromBlock(PresentBlockEntity present, boolean closed) {
         List<ItemStack> stacks = new ArrayList<>();

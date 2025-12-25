@@ -3,7 +3,7 @@
   "id": "festive_frenzy",
   "version": "${version}",
   "name": "Festive Frenzy",
-  "description": "",
+  "description": "Adds festive blocks, decorations, equipment and more to the game.",
   "authors": [
     "Powercyphe",
     "oPixeel"
@@ -15,6 +15,7 @@
   "license": "MIT",
   "icon": "assets/festive_frenzy/icon.png",
   "environment": "*",
+  "accessWidener": "festive_frenzy.accesswidener",
   "entrypoints": {
     "fabric-datagen": [
       "powercyphe.festive_frenzy.common.datagen.FFDataGenerator"

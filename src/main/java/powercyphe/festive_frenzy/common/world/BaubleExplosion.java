@@ -5,6 +5,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.game.ClientboundExplodePacket;
@@ -16,6 +17,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +29,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import powercyphe.festive_frenzy.common.entity.ThrownBaubleProjectileEntity;
+import powercyphe.festive_frenzy.common.mob_effect.FrostburnEffect;
 import powercyphe.festive_frenzy.common.particle.BaubleExplosionParticleOption;
+import powercyphe.festive_frenzy.common.registry.FFEffects;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -77,12 +81,12 @@ public class BaubleExplosion extends ServerExplosion {
 
         FIRE(Items.FIRE_CHARGE, new Handler() {
             @Override
-            public void affectEntity(Level level, LivingEntity entity, float distanceMultiplier) {
+            public void affectEntity(Level level, LivingEntity entity, float distanceMultiplier, float radius) {
                 entity.setRemainingFireTicks((int) (entity.getRemainingFireTicks() + (90 * distanceMultiplier)));
             }
 
             @Override
-            public void affectBlock(Level level, BlockState state, BlockPos blockPos, float distanceMultiplier) {
+            public void affectBlock(Level level, BlockState state, BlockPos blockPos, float distanceMultiplier, float radius) {
                 if (RandomSource.create().nextInt(8 - (int) (distanceMultiplier * 7)) == 1 && BaseFireBlock.canBePlacedAt(level, blockPos, Direction.DOWN)) {
                     level.setBlockAndUpdate(blockPos, BaseFireBlock.getState(level, blockPos));
                 }
@@ -90,12 +94,13 @@ public class BaubleExplosion extends ServerExplosion {
         }),
         ICE(Items.BLUE_ICE, new Handler() {
             @Override
-            public void affectEntity(Level level, LivingEntity entity, float distanceMultiplier) {
-
+            public void affectEntity(Level level, LivingEntity entity, float distanceMultiplier, float radius) {
+                int baseTicks = (int) (300 * distanceMultiplier);
+                FrostburnEffect.addAccumulativeEffect(entity, baseTicks, 600);
             }
 
             @Override
-            public void affectBlock(Level level, BlockState state, BlockPos blockPos, float distanceMultiplier) {
+            public void affectBlock(Level level, BlockState state, BlockPos blockPos, float distanceMultiplier, float radius) {
                 if (RandomSource.create().nextInt(21 - (int) (distanceMultiplier * 20)) == 1 && state.isAir()) {
                     level.setBlockAndUpdate(blockPos, Blocks.ICE.defaultBlockState());
                 }
@@ -146,13 +151,19 @@ public class BaubleExplosion extends ServerExplosion {
         }
 
         public void affectBlock(Level level, Explosion explosion, BlockPos blockPos) {
-            float multiplier = 1F - Mth.clamp((float) explosion.center().distanceTo(blockPos.getCenter()) / explosion.radius(), 0F, 1F);
-            this.getHandler().affectBlock(level, level.getBlockState(blockPos), blockPos, multiplier);
+            float multiplier = 1F - Mth.clamp((float) Math.max(
+                    explosion.center().distanceTo(blockPos.getCenter()) - 0.5, 0)
+                    / explosion.radius(), 0F, 1F
+            );
+            this.getHandler().affectBlock(level, level.getBlockState(blockPos), blockPos, multiplier, explosion.radius());
         }
 
         public void affectEntity(Level level, Explosion explosion, LivingEntity entity) {
-            float multiplier = 1F - Mth.clamp((float) explosion.center().distanceTo(entity.getPosition(1F)) / explosion.radius(), 0F, 1F);
-            this.getHandler().affectEntity(level, entity, multiplier);
+            float multiplier = 1F - Mth.clamp((float) Math.max(
+                    Math.sqrt(entity.getBoundingBox().distanceToSqr(explosion.center())) - 0.5, 0)
+                    / explosion.radius(), 0F, 1F
+            );
+            this.getHandler().affectEntity(level, entity, multiplier, explosion.radius());
         }
 
         public Handler getHandler() {
@@ -160,7 +171,7 @@ public class BaubleExplosion extends ServerExplosion {
         }
 
         public String getTranslationKey() {
-            return "festive_frenzy.explosion_modification." + this.name;
+            return "tooltip.festive_frenzy.explosion_modification." + this.name;
         }
 
         @Override
@@ -171,15 +182,15 @@ public class BaubleExplosion extends ServerExplosion {
         public interface Handler {
             Handler EMPTY = new Handler() {
                 @Override
-                public void affectEntity(Level level, LivingEntity entity, float distanceMultiplier) {}
+                public void affectEntity(Level level, LivingEntity entity, float distanceMultiplier, float radius) {}
 
                 @Override
-                public void affectBlock(Level level, BlockState state, BlockPos blockPos, float distanceMultiplier) {}
+                public void affectBlock(Level level, BlockState state, BlockPos blockPos, float distanceMultiplier, float radius) {}
             };
 
-            void affectEntity(Level level, LivingEntity entity, float distanceMultiplier);
+            void affectEntity(Level level, LivingEntity entity, float distanceMultiplier, float radius);
 
-            void affectBlock(Level level, BlockState state, BlockPos blockPos, float distanceMultiplier);
+            void affectBlock(Level level, BlockState state, BlockPos blockPos, float distanceMultiplier, float radius);
         }
     }
 }

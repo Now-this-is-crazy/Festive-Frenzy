@@ -34,8 +34,12 @@ public class FFFeatures {
             BiomeModifications.addFeature(BiomeSelectors.foundInOverworld().and(context -> context.getBiome().getBaseTemperature() <= 0),
                     GenerationStep.Decoration.VEGETAL_DECORATION, PATCH_TALL_FROZEN_GRASS);
 
-            BiomeModifications.addFeature(BiomeSelectors.foundInOverworld().and(BiomeSelectors.tag(BiomeTags.IS_FOREST)),
-                    GenerationStep.Decoration.VEGETAL_DECORATION, PATCH_HOLLY_BUSH);
+            BiomeModifications.addFeature(BiomeSelectors.foundInOverworld().and(
+                    BiomeSelectors.includeByKey(
+                            Biomes.FOREST, Biomes.BIRCH_FOREST,
+                            Biomes.DARK_FOREST, Biomes.OLD_GROWTH_BIRCH_FOREST
+                    )
+            ), GenerationStep.Decoration.VEGETAL_DECORATION, PATCH_HOLLY_BUSH);
         }
 
         public static ResourceKey<PlacedFeature> register(String id) {

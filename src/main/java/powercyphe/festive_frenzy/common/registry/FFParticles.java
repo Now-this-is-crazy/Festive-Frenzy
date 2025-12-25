@@ -19,6 +19,7 @@ public class FFParticles {
     public static final ParticleType<SimpleParticleType> FROSTFLAKE = register("frostflake", FabricParticleTypes.simple());
     public static final ParticleType<SimpleParticleType> FROSTFLAKE_TRAIL = register("frostflake_trail", FabricParticleTypes.simple());
 
+    public static final ParticleType<SimpleParticleType> HOLLY_LEAF = register("holly_leaf", FabricParticleTypes.simple());
     public static final ParticleType<SimpleParticleType> GOLDEN_SPARKLE = register("golden_sparkle", FabricParticleTypes.simple());
 
     public static final ParticleType<BaubleExplosionParticleOption> BAUBLE_EXPLOSION = register("bauble_explosion",

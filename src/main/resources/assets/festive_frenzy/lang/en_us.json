@@ -17,9 +17,12 @@
   "item.festive_frenzy.mixed_candy_cane_block": "Mixed Candy Cane Block",
   "item.festive_frenzy.peppermint_block": "Peppermint Block",
 
+  "item.festive_frenzy.festive_hat": "Festive Hat",
+
   "item.festive_frenzy.candy_pouch": "Candy Pouch",
   "item.festive_frenzy.frostflake_cannon": "Frostflake Cannon",
   "item.festive_frenzy.sharpened_candy_cane": "Sharpened Candy Cane",
+  "item.festive_frenzy.wreath_chakram": "Wreath Chakram",
 
   "item.festive_frenzy.holly": "Holly",
   "item.festive_frenzy.short_frozen_grass": "Short Frozen Grass",
@@ -134,6 +137,7 @@
   "item.festive_frenzy.pink_tinsel": "Pink Tinsel",
 
   "item.festive_frenzy.fairy_lights": "Fairy Lights",
+  "item.festive_frenzy.wreath": "Wreath",
   "item.festive_frenzy.star_decoration": "Star Decoration",
 
 
@@ -255,23 +259,35 @@
   "block.festive_frenzy.pink_tinsel": "Pink Tinsel",
 
   "block.festive_frenzy.fairy_lights": "Fairy Lights",
+  "block.festive_frenzy.wreath": "Wreath",
   "block.festive_frenzy.star_decoration": "Star Decoration",
 
-  "festive_frenzy.explosion_power": "Power: ",
-  "festive_frenzy.explosion_power.1": "I",
-  "festive_frenzy.explosion_power.2": "II",
-  "festive_frenzy.explosion_power.3": "III",
-  "festive_frenzy.explosion_power.4": "IV",
-  "festive_frenzy.explosion_power.5": "V",
-  "festive_frenzy.explosion_power.6": "VI",
-  "festive_frenzy.explosion_power.7": "VII",
-  "festive_frenzy.explosion_power.8": "VIII",
-  "festive_frenzy.explosion_power.9": "IX",
+  "enchantment.festive_frenzy.prickled": "Prickled",
+  "enchantment.festive_frenzy.phytotoxicity": "Phytotoxicity",
 
-  "festive_frenzy.explosion_modification": "Modification: ",
-  "festive_frenzy.explosion_modification.none": "None",
-  "festive_frenzy.explosion_modification.fire": "Fire",
-  "festive_frenzy.explosion_modification.ice": "Ice",
+  "effect.festive_frenzy.frostburn": "Frostburn",
+
+  "gamerule.layeredMeltingSnow": "Layered Melting Snow",
+  "gamerule.candyPouchDropChance": "Candy Pouch Drop Chance",
+
+  "tooltip.festive_frenzy.present_contents_single": "Contains %1$s Item",
+  "tooltip.festive_frenzy.present_contents_plural": "Contains %1$s Items",
+
+  "tooltip.festive_frenzy.explosion_power": "Power: ",
+  "tooltip.festive_frenzy.explosion_power.1": "I",
+  "tooltip.festive_frenzy.explosion_power.2": "II",
+  "tooltip.festive_frenzy.explosion_power.3": "III",
+  "tooltip.festive_frenzy.explosion_power.4": "IV",
+  "tooltip.festive_frenzy.explosion_power.5": "V",
+  "tooltip.festive_frenzy.explosion_power.6": "VI",
+  "tooltip.festive_frenzy.explosion_power.7": "VII",
+  "tooltip.festive_frenzy.explosion_power.8": "VIII",
+  "tooltip.festive_frenzy.explosion_power.9": "IX",
+
+  "tooltip.festive_frenzy.explosion_modification": "Modification: ",
+  "tooltip.festive_frenzy.explosion_modification.none": "None",
+  "tooltip.festive_frenzy.explosion_modification.fire": "Fire",
+  "tooltip.festive_frenzy.explosion_modification.ice": "Ice",
 
   "subtitles.festive_frenzy.present_open": "Present opens",
   "subtitles.festive_frenzy.present_unbox": "Present unboxed",
@@ -284,6 +300,9 @@
 
   "subtitles.festive_frenzy.bauble_throw": "Bauble thrown",
   "subtitles.festive_frenzy.bauble_break": "Bauble breaks",
+
+  "subtitles.festive_frenzy.wreath_chakram_throw": "Wreath Chakram thrown",
+  "subtitles.festive_frenzy.wreath_chakram_hit": "Wreath Chakram hits",
 
   "subtitles.festive_frenzy.pouch_open": "Pouch opened"
 }

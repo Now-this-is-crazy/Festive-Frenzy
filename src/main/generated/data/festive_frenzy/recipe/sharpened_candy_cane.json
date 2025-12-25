@@ -4,10 +4,11 @@
   "key": {
     "B": "#festive_frenzy:candy_cane_blocks",
     "F": "festive_frenzy:fairy_lights",
+    "H": "festive_frenzy:holly",
     "S": "minecraft:diamond_sword"
   },
   "pattern": [
-    "  B",
+    " HB",
     "FB ",
     "SF "
   ],

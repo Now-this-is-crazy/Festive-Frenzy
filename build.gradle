@@ -17,6 +17,10 @@ fabricApi {
     }
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/festive_frenzy.accesswidener")
+}
+
 repositories {
     maven {
         name "Modrinth"

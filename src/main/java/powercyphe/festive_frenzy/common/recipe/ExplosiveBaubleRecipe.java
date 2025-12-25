@@ -32,8 +32,9 @@ public class ExplosiveBaubleRecipe extends CustomRecipe {
             }
         }
 
-        return !this.getBauble(input).isEmpty() && this.getExplosionPower(input) > 0
-                && this.getExplosionModification(input) != null;
+        ItemStack bauble = this.getBauble(input);
+        return !bauble.isEmpty() && ExplosiveBaubleComponent.get(bauble).explosionPower() <= 0
+                && this.getExplosionPower(input) > 0 && this.getExplosionModification(input) != null;
     }
 
     @Override

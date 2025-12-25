@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import powercyphe.festive_frenzy.common.block.entity.PresentBlockEntity;
 import powercyphe.festive_frenzy.common.registry.FFBlocks;
 import powercyphe.festive_frenzy.common.registry.FFMenus;
+import powercyphe.festive_frenzy.common.registry.FFTags;
 
 public class PresentMenu extends AbstractContainerMenu {
     private static final String DEFAULT_PRESENT_TYPE = BuiltInRegistries.BLOCK.getKey(FFBlocks.RED_PRESENT).getPath();
@@ -44,40 +45,40 @@ public class PresentMenu extends AbstractContainerMenu {
         for (int k = 0; k < 3; k++) {
             for (int l = 0; l < 3; l++) {
                 int m = l + k * 3;
-                this.addSlot(new Slot(container, m, i + l * 18, j + k * 18));
+                this.addSlot(new PresentMenuSlot(container, m, i + l * 18, j + k * 18));
             }
         }
     }
 
     @Override
     public ItemStack quickMoveStack(Player player, int i) {
-        ItemStack itemStack = ItemStack.EMPTY;
+        ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(i);
         if (slot.hasItem()) {
-            ItemStack itemStack2 = slot.getItem();
-            itemStack = itemStack2.copy();
+            ItemStack slotStack = slot.getItem();
+            stack = slotStack.copy();
             if (i < 9) {
-                if (!this.moveItemStackTo(itemStack2, 9, 45, true)) {
+                if (!this.moveItemStackTo(slotStack, 9, 45, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemStack2, 0, 9, false)) {
+            } else if (!this.moveItemStackTo(slotStack, 0, 9, false)) {
                 return ItemStack.EMPTY;
             }
 
-            if (itemStack2.isEmpty()) {
+            if (slotStack.isEmpty()) {
                 slot.setByPlayer(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
 
-            if (itemStack2.getCount() == itemStack.getCount()) {
+            if (slotStack.getCount() == stack.getCount()) {
                 return ItemStack.EMPTY;
             }
 
-            slot.onTake(player, itemStack2);
+            slot.onTake(player, slotStack);
         }
 
-        return itemStack;
+        return stack;
     }
 
     @Override
@@ -89,5 +90,16 @@ public class PresentMenu extends AbstractContainerMenu {
     public void removed(Player player) {
         super.removed(player);
         this.present.stopOpen(player);
+    }
+
+    public static class PresentMenuSlot extends Slot {
+        public PresentMenuSlot(Container container, int i, int j, int k) {
+            super(container, i, j, k);
+        }
+
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return !stack.is(FFTags.Items.PRESENTS);
+        }
     }
 }

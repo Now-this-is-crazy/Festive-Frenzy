@@ -32,18 +32,26 @@ public class FFItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
         fromItemLike(FFTags.Items.PRESENTS, FFBlocks.PRESENTS);
         fromItemLike(FFTags.Items.BAUBLES, FFBlocks.BAUBLES);
-        fromItemLike(FFTags.Items.TINSEL, FFBlocks.TINSEL);
+        fromItemLike(FFTags.Items.TINSEL, FFBlocks.TINSELS);
 
         getOrCreateTagBuilder(FFTags.Items.ITEMS_WITH_EXPLOSION_POWER)
                 .add(Items.GUNPOWDER);
 
 
+        getOrCreateTagBuilder(ItemTags.DYEABLE)
+                .add(FFItems.FESTIVE_HAT);
 
         getOrCreateTagBuilder(ItemTags.FOX_FOOD)
                 .add(FFItems.HOLLY);
 
         getOrCreateTagBuilder(ItemTags.SWORDS)
                 .add(FFItems.SHARPENED_CANDY_CANE);
+
+        getOrCreateTagBuilder(FFTags.Items.WREATH_CHAKRAM_ENCHANTABLE)
+                .add(FFItems.WREATH_CHAKRAM);
+
+        getOrCreateTagBuilder(ItemTags.DURABILITY_ENCHANTABLE)
+                .add(FFItems.WREATH_CHAKRAM);
 
         fromItemLike(ItemTags.STAIRS, FFBlocks.GINGERBREAD_STAIRS, FFBlocks.GINGERBREAD_BRICK_STAIRS,
                         FFBlocks.PACKED_SNOW_STAIRS, FFBlocks.POLISHED_PACKED_SNOW_STAIRS,

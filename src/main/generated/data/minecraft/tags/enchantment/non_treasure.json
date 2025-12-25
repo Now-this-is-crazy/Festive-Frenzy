@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "festive_frenzy:prickled",
+      "required": false
+    },
+    {
+      "id": "festive_frenzy:phytotoxicity",
+      "required": false
+    }
+  ]
+}
