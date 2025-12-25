@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:short_grass",
+    "minecraft:snowball"
+  ],
+  "result": {
+    "count": 1,
+    "id": "festive_frenzy:short_frozen_grass"
+  }
+}

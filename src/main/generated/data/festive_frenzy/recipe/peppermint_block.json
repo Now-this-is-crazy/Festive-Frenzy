@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "P": {
-      "item": "festive_frenzy:peppermint"
-    }
+    "P": "festive_frenzy:peppermint"
   },
   "pattern": [
     "PP",

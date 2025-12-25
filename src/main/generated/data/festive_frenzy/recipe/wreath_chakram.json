@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "F": "minecraft:flint",
+    "I": "minecraft:iron_nugget",
+    "W": "festive_frenzy:wreath"
+  },
+  "pattern": [
+    "IFI",
+    "FWF",
+    "IFI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "festive_frenzy:wreath_chakram"
+  }
+}

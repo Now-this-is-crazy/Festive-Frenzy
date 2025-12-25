@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "festive_frenzy:bauble",
+      "required": false
+    },
+    {
+      "id": "festive_frenzy:frostflake",
+      "required": false
+    }
+  ]
+}

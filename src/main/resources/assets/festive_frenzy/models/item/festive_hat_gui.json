@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "festive_frenzy:item/festive_hat_gui",
+    "layer1": "festive_frenzy:item/festive_hat_gui_overlay"
+  }
+}

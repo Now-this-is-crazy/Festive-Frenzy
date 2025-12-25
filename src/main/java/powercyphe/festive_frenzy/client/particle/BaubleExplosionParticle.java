@@ -1,71 +1,69 @@
 package powercyphe.festive_frenzy.client.particle;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.particle.ExplosionLargeParticle;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.SpriteProvider;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.math.random.Random;
-import powercyphe.festive_frenzy.common.particle.BaubleExplosionParticleEffect;
-import powercyphe.festive_frenzy.common.registry.ModBlocks;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Camera;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.*;
+import net.minecraft.util.ARGB;
+import org.jetbrains.annotations.Nullable;
+import powercyphe.festive_frenzy.common.particle.BaubleExplosionParticleOption;
 
-import java.util.Arrays;
-import java.util.HashMap;
+public class BaubleExplosionParticle extends HugeExplosionParticle {
+    private final int color;
+    private final boolean isEmitter;
 
-public class BaubleExplosionParticle extends ExplosionLargeParticle {
-    public BaubleExplosionParticle(ClientWorld world, double x, double y, double z, double d, SpriteProvider spriteProvider, ItemStack stack) {
-        super(world, x, y, z, d, spriteProvider);
+    public BaubleExplosionParticle(ClientLevel clientLevel, double x, double y, double z, double velocityX, double velocityY, double velocityZ, int color, boolean isEmitter, SpriteSet spriteSet) {
+        super(clientLevel, x, y, z, velocityX, spriteSet);
+        this.color = color;
+        this.isEmitter = isEmitter;
+        if (this.isEmitter) {
+            this.lifetime = 8;
+        }
 
-        HashMap<Item, DyeItem> baubleDyePairs = new HashMap<>();
-        baubleDyePairs.put(ModBlocks.WHITE_BAUBLE.asItem(), (DyeItem) Items.WHITE_DYE);
-        baubleDyePairs.put(ModBlocks.LIGHT_BLUE_BAUBLE.asItem(), (DyeItem) Items.LIGHT_GRAY_DYE);
-        baubleDyePairs.put(ModBlocks.GRAY_BAUBLE.asItem(), (DyeItem) Items.GRAY_DYE);
-        baubleDyePairs.put(ModBlocks.BLACK_BAUBLE.asItem(), (DyeItem) Items.BLACK_DYE);
-        baubleDyePairs.put(ModBlocks.BROWN_BAUBLE.asItem(), (DyeItem) Items.BROWN_DYE);
-        baubleDyePairs.put(ModBlocks.RED_BAUBLE.asItem(), (DyeItem) Items.RED_DYE);
-        baubleDyePairs.put(ModBlocks.ORANGE_BAUBLE.asItem(), (DyeItem) Items.ORANGE_DYE);
-        baubleDyePairs.put(ModBlocks.YELLOW_BAUBLE.asItem(), (DyeItem) Items.YELLOW_DYE);
-        baubleDyePairs.put(ModBlocks.LIME_BAUBLE.asItem(), (DyeItem) Items.LIME_DYE);
-        baubleDyePairs.put(ModBlocks.GREEN_BAUBLE.asItem(), (DyeItem) Items.GREEN_DYE);
-        baubleDyePairs.put(ModBlocks.CYAN_BAUBLE.asItem(), (DyeItem) Items.CYAN_DYE);
-        baubleDyePairs.put(ModBlocks.LIGHT_BLUE_BAUBLE.asItem(), (DyeItem) Items.LIGHT_BLUE_DYE);
-        baubleDyePairs.put(ModBlocks.BLUE_BAUBLE.asItem(), (DyeItem) Items.BLUE_DYE);
-        baubleDyePairs.put(ModBlocks.PURPLE_BAUBLE.asItem(), (DyeItem) Items.PURPLE_DYE);
-        baubleDyePairs.put(ModBlocks.MAGENTA_BAUBLE.asItem(), (DyeItem) Items.MAGENTA_DYE);
-        baubleDyePairs.put(ModBlocks.PINK_BAUBLE.asItem(), (DyeItem) Items.PINK_DYE);
+        this.rCol = ((color & 16711680) >> 16) / 255F;
+        this.gCol = ((color & '\uff00') >> 8) / 255F;
+        this.bCol = (color & 255) / 255F;
+    }
 
-        if (baubleDyePairs.containsKey(stack.getItem())) {
-            DyeItem dyeItem = baubleDyePairs.get(stack.getItem());
-            int j = (dyeItem.getColor().getEntityColor() & 16711680) >> 16;
-            int k = (dyeItem.getColor().getEntityColor() & '\uff00') >> 8;
-            int l = (dyeItem.getColor().getEntityColor() & 255) >> 0;
-            float[] color = new float[]{(float)j / 255.0F, (float)k / 255.0F, (float)l / 255.0F};
+    @Override
+    public void tick() {
+        if (!this.isEmitter) {
+            super.tick();
+        } else {
+            for (int i = 0; i < 6; i++) {
+                double x = this.x + (this.random.nextDouble() - this.random.nextDouble()) * 4.0;
+                double y = this.y + (this.random.nextDouble() - this.random.nextDouble()) * 4.0;
+                double z = this.z + (this.random.nextDouble() - this.random.nextDouble()) * 4.0;
+                this.level.addParticle(new BaubleExplosionParticleOption(this.color, false), x, y, z, (float)this.age / this.lifetime, 0.0, 0.0);
+            }
 
-            this.red = dyeItem.getColor() == DyeColor.BLACK ? 0 : Math.max(Math.min(color[0] + (Random.create().nextBetween(-10, 10) / 255f), 1), 0);
-            this.green = dyeItem.getColor() == DyeColor.BLACK ? 0 : Math.max(Math.min(color[1] + (Random.create().nextBetween(-10, 10) / 255f), 1), 0);
-            this.blue = dyeItem.getColor() == DyeColor.BLACK ? 0 : Math.max(Math.min(color[2] + (Random.create().nextBetween(-10, 10) / 255f), 1), 0);
+            this.age++;
+            if (this.age == this.lifetime) {
+                this.remove();
+            }
         }
     }
 
-    @Environment(EnvType.CLIENT)
-    public static class Factory implements ParticleFactory<BaubleExplosionParticleEffect> {
-        private final SpriteProvider spriteProvider;
+    @Override
+    public void render(VertexConsumer vertexConsumer, Camera camera, float f) {
+        if (!this.isEmitter) {
+            super.render(vertexConsumer, camera, f);
+        }
+    }
 
-        public Factory(SpriteProvider spriteProvider) {
-            this.spriteProvider = spriteProvider;
+    public static class Provider implements ParticleProvider<BaubleExplosionParticleOption> {
+        private final SpriteSet sprites;
+
+        public Provider(SpriteSet spriteSet) {
+            this.sprites = spriteSet;
         }
 
-        public Particle createParticle(BaubleExplosionParticleEffect defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
-            return new BaubleExplosionParticle(clientWorld, d, e, f, g, this.spriteProvider, defaultParticleType.getBauble());
+        @Override
+        public @Nullable Particle createParticle(BaubleExplosionParticleOption options, ClientLevel clientLevel, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+            int color = options.color();
+            boolean isEmitter = options.isEmitter();
+
+            return new BaubleExplosionParticle(clientLevel, x, y, z, velocityX, velocityY, velocityZ, color, isEmitter, this.sprites);
         }
     }
 }

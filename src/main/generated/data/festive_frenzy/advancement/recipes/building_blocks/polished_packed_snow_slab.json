@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_polished_packed_snow": {
+    "has_Block{festive_frenzy:packed_snow}": {
       "conditions": {
         "items": [
           {
-            "items": "festive_frenzy:polished_packed_snow"
+            "items": "festive_frenzy:packed_snow"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_polished_packed_snow"
+      "has_Block{festive_frenzy:packed_snow}"
     ]
   ],
   "rewards": {

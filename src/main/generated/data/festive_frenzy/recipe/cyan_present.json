@@ -1,14 +1,10 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "building",
-  "group": "colored",
+  "group": "present",
   "key": {
-    "S": {
-      "item": "minecraft:string"
-    },
-    "W": {
-      "item": "minecraft:cyan_wool"
-    }
+    "S": "minecraft:string",
+    "W": "minecraft:cyan_wool"
   },
   "pattern": [
     " S ",

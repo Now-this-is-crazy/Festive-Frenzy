@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "festive_frenzy:item/green_present"
+    "layer0": "festive_frenzy:item/present/green_present"
   }
 }

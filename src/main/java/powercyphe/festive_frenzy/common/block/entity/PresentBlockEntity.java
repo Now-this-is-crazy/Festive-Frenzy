@@ -1,86 +1,80 @@
 package powercyphe.festive_frenzy.common.block.entity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.LootableContainerBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.text.Text;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.DispenserMenu;
+import net.minecraft.world.inventory.HopperMenu;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import powercyphe.festive_frenzy.common.block.PresentBlock;
-import powercyphe.festive_frenzy.common.registry.ModBlocks;
-import powercyphe.festive_frenzy.common.screen.PresentScreenHandler;
+import powercyphe.festive_frenzy.common.menu.PresentMenu;
+import powercyphe.festive_frenzy.common.registry.FFBlocks;
 
-public class PresentBlockEntity extends LootableContainerBlockEntity {
-    private DefaultedList<ItemStack> inventory;
+public class PresentBlockEntity extends RandomizableContainerBlockEntity implements ExtendedScreenHandlerFactory<String> {
+    public static final int SLOTS = 9;
+    private NonNullList<ItemStack> inventory;
 
-    public PresentBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlocks.Entities.PRESENT_BLOCK_ENTITY, pos, state);
-        this.inventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
+    public PresentBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(FFBlocks.Entities.PRESENT_BLOCK_ENTITY, blockPos, blockState);
+        this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
     }
 
-    public void setInventory(DefaultedList<ItemStack> items) {
-        if (items == null) {
-            items = DefaultedList.ofSize(9, ItemStack.EMPTY);
-        }
-        this.inventory = items;
+    @Override
+    public Component getDefaultName() {
+        return Component.empty(); // Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
 
-    public DefaultedList<ItemStack> getInventory() {
-        if (inventory == null) {
-            return DefaultedList.ofSize(9, ItemStack.EMPTY);
-        }
+    @Override
+    public NonNullList<ItemStack> getItems() {
         return this.inventory;
     }
 
     @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        Inventories.readNbt(nbt, inventory, registryLookup);
-        super.readNbt(nbt, registryLookup);
-    }
-
-    @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        if (inventory != null) {
-            Inventories.writeNbt(nbt, inventory, registryLookup);
-        }
-        super.writeNbt(nbt, registryLookup);
-    }
-
-    @Override
-    protected Text getContainerName() {
-        return Text.empty(); // Text.translatable(this.getWorld().getBlockState(this.getPos()).getBlock().getTranslationKey());
-    }
-
-    @Override
-    protected DefaultedList<ItemStack> getHeldStacks() {
-        return this.inventory;
-    }
-
-    @Override
-    protected void setHeldStacks(DefaultedList<ItemStack> inventory) {
+    public void setItems(NonNullList<ItemStack> inventory) {
         this.inventory = inventory;
     }
 
     @Override
-    protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-        return new PresentScreenHandler(syncId, playerInventory, this, Registries.BLOCK.getId(this.getCachedState().getBlock()).getPath());
+    public AbstractContainerMenu createMenu(int syncId, Inventory inventory) {
+        return new PresentMenu(syncId, inventory, this, this.getScreenOpeningData(null));
     }
 
     @Override
-    public int size() {
-        return this.inventory.size();
+    public int getContainerSize() {
+        return SLOTS;
     }
 
     @Override
-    public boolean canPlayerUse(PlayerEntity player) {
-        return super.canPlayerUse(player) && !this.getCachedState().get(PresentBlock.CLOSED);
+    public boolean canOpen(Player player) {
+         return super.canOpen(player) && !this.getBlockState().getValue(PresentBlock.CLOSED);
     }
 
+    @Override
+    protected void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        ContainerHelper.loadAllItems(compoundTag, this.inventory, provider);
+        super.loadAdditional(compoundTag, provider);
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        ContainerHelper.saveAllItems(compoundTag, this.inventory, provider);
+        super.saveAdditional(compoundTag, provider);
+    }
+
+    @Override
+    public String getScreenOpeningData(ServerPlayer serverPlayer) {
+        return BuiltInRegistries.BLOCK.getKey(this.getBlockState().getBlock()).getPath();
+    }
 }

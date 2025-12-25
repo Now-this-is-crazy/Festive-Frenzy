@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "festive_frenzy:block/tall_frozen_grass_bottom"
+  }
+}

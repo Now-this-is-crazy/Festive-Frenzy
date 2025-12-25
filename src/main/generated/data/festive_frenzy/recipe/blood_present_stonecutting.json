@@ -1,8 +1,6 @@
 {
-  "type": "festive_frenzy:present_stonecutting",
-  "ingredient": {
-    "tag": "festive_frenzy:presents"
-  },
+  "type": "festive_frenzy:transmute_stonecutting",
+  "ingredient": "#festive_frenzy:presents",
   "result": {
     "count": 1,
     "id": "festive_frenzy:blood_present"

@@ -1,0 +1,7 @@
+{
+  "parent": "festive_frenzy:block/bauble",
+  "textures": {
+    "bauble": "festive_frenzy:block/bauble/orange_bauble",
+    "particle": "festive_frenzy:item/bauble/orange_bauble"
+  }
+}

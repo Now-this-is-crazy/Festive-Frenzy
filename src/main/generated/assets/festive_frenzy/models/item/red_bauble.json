@@ -1,6 +1,30 @@
 {
   "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "festive_frenzy:item/red_bauble_none",
+      "predicate": {
+        "festive_frenzy:bauble_explosion_modification": 0,
+        "festive_frenzy:bauble_explosion_power": 1
+      }
+    },
+    {
+      "model": "festive_frenzy:item/red_bauble_fire",
+      "predicate": {
+        "festive_frenzy:bauble_explosion_modification": 1,
+        "festive_frenzy:bauble_explosion_power": 1
+      }
+    },
+    {
+      "model": "festive_frenzy:item/red_bauble_ice",
+      "predicate": {
+        "festive_frenzy:bauble_explosion_modification": 2,
+        "festive_frenzy:bauble_explosion_power": 1
+      }
+    }
+  ],
   "textures": {
-    "layer0": "festive_frenzy:item/red_bauble"
+    "layer0": "festive_frenzy:item/bauble/red_bauble",
+    "layer1": "festive_frenzy:item/bauble/ring_default"
   }
 }

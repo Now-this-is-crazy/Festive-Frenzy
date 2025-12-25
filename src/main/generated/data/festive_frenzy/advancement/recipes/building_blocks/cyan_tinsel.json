@@ -7,16 +7,6 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_tinsel": {
-      "conditions": {
-        "items": [
-          {
-            "items": "#festive_frenzy:tinsels"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_wool": {
       "conditions": {
         "items": [
@@ -31,8 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_wool",
-      "has_tinsel"
+      "has_wool"
     ]
   ],
   "rewards": {

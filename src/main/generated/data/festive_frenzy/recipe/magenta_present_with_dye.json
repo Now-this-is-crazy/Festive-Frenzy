@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "present",
+  "key": {
+    "D": "minecraft:magenta_dye",
+    "S": "minecraft:string",
+    "W": "#minecraft:wool"
+  },
+  "pattern": [
+    " S ",
+    "WDW",
+    " W "
+  ],
+  "result": {
+    "count": 1,
+    "id": "festive_frenzy:magenta_present"
+  }
+}

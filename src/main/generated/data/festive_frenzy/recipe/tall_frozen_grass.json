@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:tall_grass",
+    "minecraft:snowball"
+  ],
+  "result": {
+    "count": 1,
+    "id": "festive_frenzy:tall_frozen_grass"
+  }
+}

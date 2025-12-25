@@ -1,0 +1,11 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "festive_frenzy:block/star_decoration"
+	},
+	"display": {
+		"gui": {
+			"translation": [0.5, 0.5, 0]
+		}
+	}
+}

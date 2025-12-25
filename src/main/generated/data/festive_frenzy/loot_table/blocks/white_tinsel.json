@@ -3,75 +3,72 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "block": "festive_frenzy:white_tinsel",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "north": "true"
-          }
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "festive_frenzy:white_tinsel"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "block": "festive_frenzy:white_tinsel",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "south": "true"
-          }
-        }
-      ],
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "festive_frenzy:white_tinsel"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "block": "festive_frenzy:white_tinsel",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "east": "true"
-          }
-        }
-      ],
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "festive_frenzy:white_tinsel"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "block": "festive_frenzy:white_tinsel",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "west": "true"
-          }
-        }
-      ],
-      "entries": [
-        {
-          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 0.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": true,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:white_tinsel",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "west": "true"
+                  }
+                }
+              ],
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": true,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:white_tinsel",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "south": "true"
+                  }
+                }
+              ],
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": true,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:white_tinsel",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "east": "true"
+                  }
+                }
+              ],
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": true,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:white_tinsel",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "north": "true"
+                  }
+                }
+              ],
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "festive_frenzy:white_tinsel"
         }
       ],

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_transmute",
+  "category": "building",
+  "group": "present_recolor",
+  "input": "#festive_frenzy:presents",
+  "material": "minecraft:yellow_dye",
+  "result": "festive_frenzy:yellow_present"
+}

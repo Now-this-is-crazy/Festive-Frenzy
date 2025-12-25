@@ -5,81 +5,93 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
-import net.minecraft.client.particle.SweepAttackParticle;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.entity.EmptyEntityRenderer;
-import net.minecraft.client.render.entity.FallingBlockEntityRenderer;
-import net.minecraft.client.util.ModelIdentifier;
-import net.minecraft.component.type.DyedColorComponent;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Pair;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.ColorHelper;
-import powercyphe.festive_frenzy.FestiveFrenzy;
+import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.DyedItemColor;
+import powercyphe.festive_frenzy.client.event.ExplosiveBaubleTooltipEvent;
 import powercyphe.festive_frenzy.client.particle.*;
-import powercyphe.festive_frenzy.common.payload.BaubleExplosionPayload;
-import powercyphe.festive_frenzy.common.registry.*;
-import powercyphe.festive_frenzy.client.render.entity.BaubleProjectileEntityRenderer;
+import powercyphe.festive_frenzy.client.render.entity.FrostflakeProjectileRenderer;
+import powercyphe.festive_frenzy.client.render.entity.ThrownBaubleProjectileEntityRenderer;
+import powercyphe.festive_frenzy.client.render.entity.WreathChakramProjectileRenderer;
+import powercyphe.festive_frenzy.client.render.entity.model.FrostflakeProjectileEntityModel;
+import powercyphe.festive_frenzy.client.render.item.BaubleExplosionModificationProperty;
+import powercyphe.festive_frenzy.client.render.item.BaubleExplosionProperty;
 import powercyphe.festive_frenzy.client.screen.PresentScreen;
+import powercyphe.festive_frenzy.common.FestiveFrenzy;
+import powercyphe.festive_frenzy.common.payload.EmitterParticlePayload;
+import powercyphe.festive_frenzy.common.registry.*;
+import powercyphe.festive_frenzy.mixin.accessor.ItemPropertiesAccessor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FestiveFrenzyClient implements ClientModInitializer {
-	public static DefaultedList<Pair<Item, ModelIdentifier>> GUI_MODELS = DefaultedList.of();
 
-	@Override
-	public void onInitializeClient() {
+    public static final ModelLayerLocation FROSTFLAKE = new ModelLayerLocation(FestiveFrenzy.id("entity/frostflake"), "main");
+    public static List<Tuple<Item, ModelResourceLocation>> GUI_MODELS = new ArrayList<>();
 
-		initNetworking();
+    @Override
+    public void onInitializeClient() {
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.SHORT_FROZEN_GRASS, FFBlocks.TALL_FROZEN_GRASS, FFBlocks.HOLLY_BUSH);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.GINGERBREAD_DOOR, FFBlocks.GINGERBREAD_TRAPDOOR);
 
-		for (Block present : ModBlocks.PRESENTS) {
-			BlockRenderLayerMap.INSTANCE.putBlock(present, RenderLayer.getCutout());
-		}
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.PRESENTS);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.TINSELS);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.BAUBLES);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.FAIRY_LIGHTS, FFBlocks.WREATH, FFBlocks.STAR_DECORATION);
 
-		for (Block bauble : ModBlocks.BAUBLES) {
-			BlockRenderLayerMap.INSTANCE.putBlock(bauble, RenderLayer.getCutout());
-		}
+        ItemPropertiesAccessor.festive_frenzy$getGenericProperties().put(BaubleExplosionModificationProperty.ID, new BaubleExplosionModificationProperty());
+        ItemProperties.registerGeneric(BaubleExplosionProperty.ID, new BaubleExplosionProperty());
 
-		for (Block tinsel : ModBlocks.TINSELS) {
-			BlockRenderLayerMap.INSTANCE.putBlock(tinsel, RenderLayer.getCutout());
-		}
+        EntityModelLayerRegistry.registerModelLayer(FROSTFLAKE, FrostflakeProjectileEntityModel::createBodyLayer);
 
-		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.FAIRY_LIGHTS, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.SNOW_GLOBE, RenderLayer.getCutout());
+        EntityRendererRegistry.register(FFEntities.FROSTFLAKE_PROJECTILE, FrostflakeProjectileRenderer::new);
+        EntityRendererRegistry.register(FFEntities.THROWN_BAUBLE_PROJECTILE, ThrownBaubleProjectileEntityRenderer::new);
+        EntityRendererRegistry.register(FFEntities.WREATH_CHAKRAM_PROJECTILE, WreathChakramProjectileRenderer::new);
 
-		EntityRendererRegistry.register(ModEntities.FROSTFLAKE_PROJECTILE, EmptyEntityRenderer::new);
-		EntityRendererRegistry.register(ModEntities.BAUBLE_PROJECTILE, BaubleProjectileEntityRenderer::new);
-		EntityRendererRegistry.register(ModEntities.FALLING_BAUBLE_BLOCK_ENTITY, FallingBlockEntityRenderer::new);
+        ParticleFactoryRegistry.getInstance().register(FFParticles.CANDY_CRIT, CandyCritParticle.Provider::new);
+        ParticleFactoryRegistry.getInstance().register(FFParticles.CANDY_SWEEP, CandySweepParticle.Provider::new);
+        ParticleFactoryRegistry.getInstance().register(FFParticles.FAIRY_SPARK, FairySparkParticle.Provider::new);
 
-		ParticleFactoryRegistry.getInstance().register(ModParticles.CANDY_SWEEP, CandySweepAttackParticle.Factory::new);
-		ParticleFactoryRegistry.getInstance().register(ModParticles.CANDY_CRIT, CandyCritParticle.Factory::new);
-		ParticleFactoryRegistry.getInstance().register(ModParticles.FAIRY_SPARK, FairySparkParticle.Factory::new);
-		ParticleFactoryRegistry.getInstance().register(ModParticles.FROSTFLAKE, FrostflakeParticle.Factory::new);
-		ParticleFactoryRegistry.getInstance().register(ModParticles.FROSTFLAKE_TRAIL, FrostflakeTrailParticle.Factory::new);
-		ParticleFactoryRegistry.getInstance().register(ModParticles.BAUBLE_EXPLOSION, BaubleExplosionParticle.Factory::new);
-		ParticleFactoryRegistry.getInstance().register(ModParticles.BAUBLE_EXPLOSION_EMITTER, ((parameters, world, x, y, z, velocityX, velocityY, velocityZ) -> new BaubleExplosionEmitterParticle(world, x, y, z, parameters.getBauble())));
+        ParticleFactoryRegistry.getInstance().register(FFParticles.FROSTBURN, FrostflakeTrailParticle.FrostburnProvider::new);
+        ParticleFactoryRegistry.getInstance().register(FFParticles.FROSTFLAKE, FrostflakeParticle.Provider::new);
+        ParticleFactoryRegistry.getInstance().register(FFParticles.FROSTFLAKE_TRAIL, FrostflakeTrailParticle.Provider::new);
 
-		HandledScreens.register(ModScreenHandlers.PRESENT_SCREEN_HANDLER, PresentScreen::new);
+        ParticleFactoryRegistry.getInstance().register(FFParticles.HOLLY_LEAF, HollyLeafParticle.Provider::new);
+        ParticleFactoryRegistry.getInstance().register(FFParticles.GOLDEN_SPARKLE, GoldenSparkleParticle.Provider::new);
+        ParticleFactoryRegistry.getInstance().register(FFParticles.BAUBLE_EXPLOSION, BaubleExplosionParticle.Provider::new);
 
-		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
-			return tintIndex > 0 ? -1 : DyedColorComponent.getColor(stack, ColorHelper.Argb.fullAlpha(0xf6553c));
-		}, ModItems.FESTIVE_HAT);
+        MenuScreens.register(FFMenus.PRESENT_MENU, PresentScreen::new);
 
-		for (Item item : ModItems.SHARPENED_CANDY_CANES) {
-			addGuiModel(item);
-		}
-		addGuiModel(ModItems.FESTIVE_HAT);
-	}
+        TooltipComponentCallback.EVENT.register(new ExplosiveBaubleTooltipEvent());
 
-	public static void initNetworking() {
-		ClientPlayNetworking.registerGlobalReceiver(BaubleExplosionPayload.ID, new BaubleExplosionPayload.Receiver());
-	}
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) ->
+                tintIndex > 0 ? -1 : DyedItemColor.getOrDefault(stack, ARGB.opaque(0xf6553c)),
+                FFItems.FESTIVE_HAT
+        );
 
-	public static void addGuiModel(Item item) {
-		Pair<Item, ModelIdentifier> pair = new Pair<>(item, new ModelIdentifier(
-				FestiveFrenzy.id(Registries.ITEM.getId(item).getPath() + "_2d"), "inventory"));
-		GUI_MODELS.add(pair);
-	}
+        addGuiModel(FFItems.FESTIVE_HAT);
+        addGuiModel(FFItems.SHARPENED_CANDY_CANE);
+
+        initNetworking();
+    }
+
+    public void initNetworking() {
+        ClientPlayNetworking.registerGlobalReceiver(EmitterParticlePayload.TYPE, new EmitterParticlePayload.Receiver());
+    }
+
+    public void addGuiModel(Item item) {
+        GUI_MODELS.add(new Tuple<>(item, ModelResourceLocation.inventory(
+                BuiltInRegistries.ITEM.getKey(item).withSuffix("_gui"))));
+    }
 }

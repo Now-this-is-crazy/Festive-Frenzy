@@ -1,14 +1,8 @@
 {
   "values": [
-    "festive_frenzy:packed_snow",
     "festive_frenzy:chiseled_packed_snow",
+    "festive_frenzy:packed_snow",
     "festive_frenzy:polished_packed_snow",
-    "festive_frenzy:polished_packed_snow_stairs",
-    "festive_frenzy:polished_packed_snow_slab",
-    "festive_frenzy:polished_packed_snow_wall",
-    "festive_frenzy:packed_snow_bricks",
-    "festive_frenzy:packed_snow_brick_stairs",
-    "festive_frenzy:packed_snow_brick_slab",
-    "festive_frenzy:packed_snow_brick_wall"
+    "festive_frenzy:packed_snow_bricks"
   ]
 }

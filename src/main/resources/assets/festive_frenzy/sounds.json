@@ -13,6 +13,16 @@
       "festive_frenzy:present_unbox"
     ]
   },
+  "present_pickup": {
+    "subtitle": "subtitles.festive_frenzy.present_pickup",
+    "sounds": [
+      {
+        "name": "minecraft:random/pop",
+        "pitch": 1.4,
+        "volume": 0.5
+      }
+    ]
+  },
   "fairy_lights_switch": {
     "subtitle": "subtitles.festive_frenzy.fairy_lights_switch",
     "sounds": [
@@ -22,13 +32,41 @@
   "frostflake_cannon_shoot": {
     "subtitle": "subtitles.festive_frenzy.frostflake_cannon_shoot",
     "sounds": [
-      "festive_frenzy:frostflake_cannon_shoot"
+      {
+        "name": "festive_frenzy:frostflake_cannon_shoot",
+        "pitch": 1,
+        "volume": 0.5
+      }
+    ]
+  },
+  "frostflake_projectile_hit": {
+    "subtitle": "subtitles.festive_frenzy.frostflake_projectile_hit",
+    "sounds": [
+      {
+        "name": "minecraft:random/glass1",
+        "pitch": 1.4,
+        "volume": 0.3
+      },
+      {
+        "name": "minecraft:random/glass2",
+        "pitch": 1.4,
+        "volume": 0.3
+      },
+      {
+        "name": "minecraft:random/glass3",
+        "pitch": 1.4,
+        "volume": 0.3
+      }
     ]
   },
   "bauble_throw": {
     "subtitle": "subtitles.festive_frenzy.bauble_throw",
     "sounds": [
-      "festive_frenzy:bauble_throw"
+      {
+        "name": "festive_frenzy:bauble_throw",
+        "pitch": 1,
+        "volume": 0.5
+      }
     ]
   },
   "bauble_break": {
@@ -37,6 +75,18 @@
       "minecraft:random/glass1",
       "minecraft:random/glass2",
       "minecraft:random/glass3"
+    ]
+  },
+  "wreath_chakram_throw": {
+    "subtitle": "subtitles.festive_frenzy.wreath_chakram_throw",
+    "sounds": [
+      "festive_frenzy:wreath_chakram_throw"
+    ]
+  },
+  "wreath_chakram_hit": {
+    "subtitle": "subtitles.festive_frenzy.wreath_chakram_hit",
+    "sounds": [
+      "festive_frenzy:wreath_chakram_hit"
     ]
   },
   "pouch_open": {

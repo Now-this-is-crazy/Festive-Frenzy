@@ -1,109 +1,138 @@
 package powercyphe.festive_frenzy.common.entity;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.decoration.AbstractDecorationEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-import powercyphe.festive_frenzy.common.registry.ModEntities;
-import powercyphe.festive_frenzy.common.registry.ModParticles;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import powercyphe.festive_frenzy.common.mob_effect.FrostburnEffect;
+import powercyphe.festive_frenzy.common.registry.*;
 
-public class FrostflakeProjectileEntity extends PersistentProjectileEntity {
-    public FrostflakeProjectileEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
-        super(entityType, world);
-        this.setDamage(0.1f);
-        this.pickupType = PickupPermission.DISALLOWED;
+public class FrostflakeProjectileEntity extends Projectile {
+    private int nextParticleTick = 0;
+
+    public FrostflakeProjectileEntity(EntityType<? extends Projectile> entityType, Level level) {
+        super(entityType, level);
     }
 
-    public FrostflakeProjectileEntity(World world, LivingEntity owner) {
-        super(ModEntities.FROSTFLAKE_PROJECTILE, owner, world, ItemStack.EMPTY, null);
+    public FrostflakeProjectileEntity(LivingEntity owner, Level level) {
+        this(owner.getX(), owner.getEyeY() - 0.1F, owner.getZ(), level);
         this.setOwner(owner);
-        this.setDamage(0.05f);
-        this.pickupType = PickupPermission.DISALLOWED;
+    }
+
+    public FrostflakeProjectileEntity(double x, double y, double z, Level level) {
+        super(FFEntities.FROSTFLAKE_PROJECTILE, level);
+        this.setPos(x, y, z);
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {}
+
+    @Override
+    public boolean canUsePortal(boolean bl) {
+        return true;
     }
 
     @Override
     public void tick() {
-        super.tick();
-        if (this.isOnFire() || this.inGround || this.age >= 110) {
-            this.discard();
-            return;
+        if (!tryFreezeWater()) {
+            this.applyGravity();
+            this.applyInertia();
+            HitResult hitResult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
+            Vec3 vec3;
+            if (hitResult.getType() != HitResult.Type.MISS) {
+                vec3 = hitResult.getLocation();
+            } else {
+                vec3 = this.position().add(this.getDeltaMovement());
+            }
+
+            this.setPos(vec3);
+            this.updateRotation();
+            this.applyEffectsFromBlocks();
+            super.tick();
+            if (hitResult.getType() != HitResult.Type.MISS && this.isAlive()) {
+                this.hitTargetOrDeflectSelf(hitResult);
+            }
+
+            if (this.level().isClientSide()) {
+                if (this.tickCount >= this.nextParticleTick) {
+                    this.nextParticleTick += RandomSource.create().nextInt(3) + 2;
+                    this.level().addParticle((ParticleOptions) FFParticles.FROSTFLAKE_TRAIL, this.getX(), this.getY() + this.getBbHeight() / 2, this.getZ(), 0, 0, 0);
+                }
+            }
         }
-        if (this.isTouchingWater()) {
-            this.getWorld().setBlockState(this.getBlockPos(), Blocks.FROSTED_ICE.getDefaultState());
-            this.discard();
-            return;
-        }
-
-        if (this.getWorld().isClient()) {
-            this.getWorld().addParticle(ModParticles.FROSTFLAKE_TRAIL, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-        } else {
-            if (this.age % 3 == 0) this.setDamage(MathHelper.clamp(this.getDamage() * 1.1, 0, 1f));
-        }
     }
 
     @Override
-    protected SoundEvent getHitSound() {
-        return SoundEvents.BLOCK_GLASS_BREAK;
-    }
-
-    @Override
-    protected SoundEvent getHighSpeedSplashSound() {
-        return SoundEvents.INTENTIONALLY_EMPTY;
-    }
-
-    @Override
-    protected SoundEvent getSplashSound() {
-        return SoundEvents.INTENTIONALLY_EMPTY;
-    }
-
-    @Override
-    protected void onEntityHit(EntityHitResult entityHitResult) {
-        super.onEntityHit(entityHitResult);
+    protected void onHitEntity(EntityHitResult entityHitResult) {
+        super.onHitEntity(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        if (!(entity instanceof AbstractDecorationEntity)) {
-            entity.setFrozenTicks(Random.create().nextBetween(350, 400));
+
+        if (entity instanceof LivingEntity livingEntity) {
+            livingEntity.hurtOrSimulate(FFDamageTypes.createSource(this.level().registryAccess(), FFDamageTypes.FROSTFLAKE, this, this.getOwner()), 0.5F);
+            FrostburnEffect.addAccumulativeEffect(livingEntity, 30, 600);
+        }
+    }
+
+    @Override
+    protected void onHit(HitResult hitResult) {
+        super.onHit(hitResult);
+
+        if (this.level() instanceof ServerLevel serverLevel) {
+            this.playSound(FFSounds.FROSTFLAKE_PROJECTILE_HIT);
+            serverLevel.sendParticles((ParticleOptions) FFParticles.FROSTFLAKE, this.getX(), this.getY() + this.getEyeHeight(), this.getZ(),
+                    RandomSource.create().nextInt(4, 7), 0, 0, 0, 0.5);
         }
         this.discard();
     }
 
-    @Override
-    protected void onCollision(HitResult hitResult) {
-        if (hitResult.getType() != HitResult.Type.MISS) {
-            double x = this.getX();
-            double y = this.getY();
-            double z = this.getZ();
+    private void applyInertia() {
+        Vec3 vec3 = this.getDeltaMovement();
+        float g;
+        if (this.isInWater()) {
+            g = 0F;
+            this.discard();
+        } else {
+            g = 0.99F;
+        }
 
-            if (hitResult.getType() == HitResult.Type.ENTITY) {
-                Entity entity = ((EntityHitResult) hitResult).getEntity();
-                x = entity.getX();
-                z = entity.getZ();
-            }
+        this.setDeltaMovement(vec3.scale(g));
+    }
 
-            if (this.getWorld().isClient()) {
-                for (int i = 0; i < this.random.nextInt(5); i++)
-                    this.getWorld().addParticle(ModParticles.FROSTFLAKE, x, y, z, 0, 0, 0);
+    private boolean tryFreezeWater() {
+        Level level = this.level();
+
+        if (this.isInWater()) {
+            BlockPos blockPos = this.blockPosition();
+
+            if (level.getFluidState(blockPos).is(Fluids.WATER) && level.getBlockState(blockPos).canBeReplaced()) {
+                level.setBlockAndUpdate(blockPos, Blocks.FROSTED_ICE.defaultBlockState());
+
+                this.discard();
+                return true;
             }
         }
-        super.onCollision(hitResult);
+        return false;
     }
 
     @Override
-    protected ItemStack asItemStack() {
-        return ItemStack.EMPTY;
-    }
+    protected void doWaterSplashEffect() {}
 
     @Override
-    protected ItemStack getDefaultItemStack() {
-        return ItemStack.EMPTY;
+    protected double getDefaultGravity() {
+        return 0.03;
     }
 }

@@ -1,8 +1,6 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "festive_frenzy:packed_snow"
-  },
+  "ingredient": "festive_frenzy:packed_snow",
   "result": {
     "count": 1,
     "id": "minecraft:snow_block"

@@ -1,8 +1,9 @@
 {
   "textures": [
-    "festive_frenzy:fairy_spark_1",
-    "festive_frenzy:fairy_spark_2",
-    "festive_frenzy:fairy_spark_3",
-    "festive_frenzy:fairy_spark_4"
+    "festive_frenzy:fairy_spark/fairy_spark_1",
+    "festive_frenzy:fairy_spark/fairy_spark_2",
+    "festive_frenzy:fairy_spark/fairy_spark_3",
+    "festive_frenzy:fairy_spark/fairy_spark_4",
+    "festive_frenzy:fairy_spark/fairy_spark_5"
   ]
 }

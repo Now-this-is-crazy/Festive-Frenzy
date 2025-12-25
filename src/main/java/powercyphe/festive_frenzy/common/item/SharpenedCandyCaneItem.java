@@ -1,43 +1,65 @@
 package powercyphe.festive_frenzy.common.item;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
-import net.minecraft.block.Blocks;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.AttributeModifierSlot;
-import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.component.type.ToolComponent;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.Identifier;
-import powercyphe.festive_frenzy.FestiveFrenzy;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import powercyphe.festive_frenzy.common.FestiveFrenzy;
 
-import java.util.List;
-import java.util.UUID;
+public class SharpenedCandyCaneItem extends Item {
+    public static final ResourceLocation BASE_ENTITY_INTERACTION_RANGE_ID = FestiveFrenzy.id("base_entity_interaction_range");
+    public static final ResourceLocation BASE_BLOCK_INTERACTION_RANGE_ID = FestiveFrenzy.id("base_block_interaction_range");
 
-public class SharpenedCandyCaneItem extends SwordItem {
-    protected static final Identifier REACH_MODIFIER_ID = FestiveFrenzy.id("reach_modifier");
-    protected static final Identifier ATTACK_RANGE_MODIFIER_ID = FestiveFrenzy.id("attack_range_modifier");
-
-    public SharpenedCandyCaneItem(ToolMaterial toolMaterial, Settings settings) {
-        super(toolMaterial, settings);
+    public SharpenedCandyCaneItem(Properties properties, ToolMaterial toolMaterial, float attackDamage, float attackSpeed, float range) {
+        super(toolMaterial.applySwordProperties(properties, attackDamage, attackSpeed)
+                .attributes(createAttributeModifiers(toolMaterial, attackDamage, attackSpeed, range)));
     }
 
-    public static AttributeModifiersComponent createAttributeModifiers(ToolMaterial material, int attackDamage, float attackSpeed, float reach) {
-        return AttributeModifiersComponent.builder().add(EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, (double)((float)attackDamage + material.getAttackDamage()),
-                        EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).add(EntityAttributes.GENERIC_ATTACK_SPEED,
-                new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, (double)attackSpeed,
-                        EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).add(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE,
-                new EntityAttributeModifier(REACH_MODIFIER_ID, reach,
-                        EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).add(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,
-                new EntityAttributeModifier(ATTACK_RANGE_MODIFIER_ID, reach,
-                        EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+    @Override
+    public boolean canAttackBlock(BlockState blockState, Level level, BlockPos blockPos, Player player) {
+        return !player.isCreative();
+    }
+
+    @Override
+    public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity2) {
+        return true;
+    }
+
+    @Override
+    public void postHurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
+        super.postHurtEnemy(stack, target, attacker);
+    }
+
+    public static ItemAttributeModifiers createAttributeModifiers(ToolMaterial material, float attackDamage, float attackSpeed, float range) {
+        return ItemAttributeModifiers.builder()
+                .add(
+                        Attributes.ATTACK_DAMAGE,
+                        new AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, attackDamage + material.attackDamageBonus(), AttributeModifier.Operation.ADD_VALUE),
+                        EquipmentSlotGroup.MAINHAND
+                )
+                .add(
+                        Attributes.ATTACK_SPEED,
+                        new AttributeModifier(Item.BASE_ATTACK_SPEED_ID, attackSpeed, AttributeModifier.Operation.ADD_VALUE),
+                        EquipmentSlotGroup.MAINHAND)
+                .add(
+                        Attributes.ENTITY_INTERACTION_RANGE,
+                        new AttributeModifier(BASE_ENTITY_INTERACTION_RANGE_ID, range, AttributeModifier.Operation.ADD_VALUE),
+                        EquipmentSlotGroup.MAINHAND)
+                .add(
+                        Attributes.BLOCK_INTERACTION_RANGE,
+                        new AttributeModifier(BASE_BLOCK_INTERACTION_RANGE_ID, range, AttributeModifier.Operation.ADD_VALUE),
+                        EquipmentSlotGroup.MAINHAND)
                 .build();
     }
 }

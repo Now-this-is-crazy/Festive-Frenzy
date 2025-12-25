@@ -3,12 +3,8 @@
   "category": "building",
   "group": "tinsel_recolor",
   "ingredients": [
-    {
-      "tag": "festive_frenzy:tinsels"
-    },
-    {
-      "item": "minecraft:red_dye"
-    }
+    "#festive_frenzy:tinsel",
+    "minecraft:red_dye"
   ],
   "result": {
     "count": 1,

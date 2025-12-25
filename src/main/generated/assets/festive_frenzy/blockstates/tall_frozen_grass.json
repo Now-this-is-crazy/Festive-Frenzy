@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "festive_frenzy:block/tall_frozen_grass_bottom"
+    },
+    "half=upper": {
+      "model": "festive_frenzy:block/tall_frozen_grass_top"
+    }
+  }
+}

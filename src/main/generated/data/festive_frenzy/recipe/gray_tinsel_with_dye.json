@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "tinsel",
+  "key": {
+    "D": "minecraft:gray_dye",
+    "W": "#minecraft:wool"
+  },
+  "pattern": [
+    "WWW",
+    " D "
+  ],
+  "result": {
+    "count": 8,
+    "id": "festive_frenzy:gray_tinsel"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "festive_frenzy:block/wreath",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "festive_frenzy:block/wreath"
+    },
+    "facing=south": {
+      "model": "festive_frenzy:block/wreath",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "festive_frenzy:block/wreath",
+      "y": 270
+    }
+  }
+}

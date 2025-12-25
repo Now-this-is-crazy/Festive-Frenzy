@@ -1,15 +1,16 @@
 package powercyphe.festive_frenzy.mixin.client;
 
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.item.ItemModels;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.json.ModelTransformationMode;
-import net.minecraft.client.util.ModelIdentifier;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Pair;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelManager;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,20 +20,20 @@ import powercyphe.festive_frenzy.client.FestiveFrenzyClient;
 @Mixin(ItemRenderer.class)
 public abstract class ItemRendererMixin {
 
-    @Shadow public abstract ItemModels getModels();
+    @Shadow @Final private ModelManager modelManager;
 
-    @ModifyVariable(method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V", at = @At(value = "HEAD"), argsOnly = true)
-    public BakedModel festive_frenzy$renderSmallerTexture(BakedModel value, ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if (renderMode == ModelTransformationMode.GUI || renderMode == ModelTransformationMode.GROUND) {
-            for (Pair<Item, ModelIdentifier> pair : FestiveFrenzyClient.GUI_MODELS) {
-                Item item = pair.getLeft();
-                ModelIdentifier model = pair.getRight();
-                if (stack.isOf(item)) {
-                    return this.getModels().getModelManager().getModel(model);
+    @ModifyVariable(method = "renderSimpleItemModel", at = @At("HEAD"), index = 8, argsOnly = true)
+    public BakedModel festive_frenzy$renderGuiTexture(BakedModel original, ItemStack stack, ItemDisplayContext context, boolean leftHanded, PoseStack poseStack, MultiBufferSource multiBufferSource, int light, int overlay, BakedModel bakedModel, boolean useInventoryModel) {
+        if (useInventoryModel) {
+            for (Tuple<Item, ModelResourceLocation> pair : FestiveFrenzyClient.GUI_MODELS) {
+                Item item = pair.getA();
+                ModelResourceLocation model = pair.getB();
+                if (stack.is(item)) {
+                    return this.modelManager.getModel(model);
                 }
             }
         }
 
-        return value;
+        return original;
     }
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "festive_frenzy:block/present",
+  "textures": {
+    "particle": "festive_frenzy:item/present/pink_present",
+    "present": "festive_frenzy:block/present/pink_present"
+  }
+}

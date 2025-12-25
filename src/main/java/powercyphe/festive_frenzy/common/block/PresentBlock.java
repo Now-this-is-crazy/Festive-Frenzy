@@ -1,196 +1,201 @@
 package powercyphe.festive_frenzy.common.block;
 
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContextParameterSet;
-import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.Registries;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 import powercyphe.festive_frenzy.common.block.entity.PresentBlockEntity;
-import powercyphe.festive_frenzy.common.item.PresentBlockItem;
-import powercyphe.festive_frenzy.common.registry.ModSounds;
-import powercyphe.festive_frenzy.common.util.PresentTypeAccessor;
+import powercyphe.festive_frenzy.common.item.component.PresentContentsComponent;
+import powercyphe.festive_frenzy.common.registry.FFBlocks;
+import powercyphe.festive_frenzy.common.registry.FFItems;
+import powercyphe.festive_frenzy.common.registry.FFSounds;
 
 import java.util.List;
-import java.util.Objects;
 
-public class PresentBlock extends BlockWithEntity {
-    public static BooleanProperty CLOSED = BooleanProperty.of("closed");
+public class PresentBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+    public static final MapCodec<PresentBlock> CODEC = simpleCodec((PresentBlock::new));
+    public static final BooleanProperty CLOSED = BooleanProperty.create("closed");
 
-    public PresentBlock(Settings settings) {
-        super(settings);
-        setDefaultState(this.getStateManager().getDefaultState().with(CLOSED, false));
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+
+    public PresentBlock(Properties properties) {
+        super(properties);
+        this.registerDefaultState(this.defaultBlockState().setValue(CLOSED, false).setValue(WATERLOGGED, false));
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(CLOSED);
-        super.appendProperties(builder);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(CLOSED, WATERLOGGED);
+        super.createBlockStateDefinition(builder);
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return createCodec(PresentBlock::new);
+    public MapCodec<PresentBlock> codec() {
+        return CODEC;
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    protected RenderShape getRenderShape(BlockState blockState) {
+        return RenderShape.MODEL;
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return VoxelShapes.cuboid(0.2f, 0.0f, 0.2f, 0.8f, 0.55f, 0.8f);
+    protected VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
+        return Shapes.box(0.22, 0, 0.22, 0.78, 0.5625, 0.78);
     }
 
     @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (world.getBlockEntity(pos) instanceof PresentBlockEntity presentBlockEntity) {
-            if (!(state.getBlock() == newState.getBlock())) {
-                ItemScatterer.spawn(world, pos, presentBlockEntity);
-            }
+    protected BlockState updateShape(BlockState state, LevelReader levelReader, ScheduledTickAccess scheduledTickAccess, BlockPos blockPos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource randomSource) {
+        if (state.getValue(WATERLOGGED)) {
+            scheduledTickAccess.scheduleTick(blockPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelReader));
         }
-        super.onStateReplaced(state, world, pos, newState, moved);
-    }
-
-    @Nullable
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockState state = super.getPlacementState(ctx);
-        ItemStack stack = ctx.getStack();
-
-        if (state != null && PresentBlockItem.isClosed(stack)) {
-            state = state.with(CLOSED, true);
-        }
-        return state;
+        return super.updateShape(state, levelReader, scheduledTickAccess, blockPos, direction, neighborPos, neighborState, randomSource);
     }
 
     @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        if (!world.isClient()) {
-            List<ItemStack> items = PresentBlockItem.getStoredItems(stack);
-
-            DefaultedList<ItemStack> content = DefaultedList.of();
-            content.addAll(items);
-            content.removeIf(Objects::isNull);
-            content.removeIf(ItemStack::isEmpty);
-
-            if (content.size() <= 9) {
-                if (world.getBlockEntity(pos) instanceof PresentBlockEntity presentBlockEntity) {
-                    while (content.size() < 9) {
-                        content.add(ItemStack.EMPTY);
-                    }
-                    presentBlockEntity.setInventory(content);
-                }
-            }
-        }
-        super.onPlaced(world, pos, state, placer, stack);
+    protected FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos blockPos, PlayerEntity player, BlockHitResult hit) {
-        if (!world.isClient()) {
-            BlockEntity blockEntity = world.getBlockEntity(blockPos);
-            if (blockEntity instanceof PresentBlockEntity presentBlockEntity) {
-                if (state.get(CLOSED) && player.getMainHandStack().isEmpty()) {
+    protected boolean propagatesSkylightDown(BlockState state) {
+        return !state.getValue(WATERLOGGED);
+    }
 
-                    // Pickup
-                    if (player.isSneaking()) {
-                        closePresent(world, presentBlockEntity, state, blockPos, player);
-                        return ActionResult.SUCCESS;
-                    }
-                    // Present Unboxing
-                    Vec3d pos = blockPos.toCenterPos();
+    @Override
+    public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
+        Level level = context.getLevel();
+        BlockPos blockPos = context.getClickedPos();
+        ItemStack stack = context.getItemInHand();
 
-                    ItemScatterer.spawn(world, blockPos, presentBlockEntity);
-                    presentBlockEntity.clear();
-                    world.breakBlock(blockPos, true, player);
-                    world.playSound(null, blockPos, ModSounds.PRESENT_UNBOX, SoundCategory.BLOCKS, 1f, 0.9f + (Random.create().nextInt(4) * 0.05f));
+        return super.getStateForPlacement(context).setValue(CLOSED, stack.getOrDefault(
+                FFItems.Components.PRESENT_CONTENTS_COMPONENT, PresentContentsComponent.DEFAULT).closed())
+                .setValue(WATERLOGGED, level.getFluidState(blockPos).is(Fluids.WATER));
+    }
 
-                    ((ServerWorld) world).spawnParticles(ParticleTypes.POOF, pos.getX(), pos.getY(), pos.getZ(), 7, 0, 0, 0, 0.05);
-                    player.swingHand(Hand.MAIN_HAND, true);
-                    return ActionResult.SUCCESS;
+    @Override
+    public void setPlacedBy(Level level, BlockPos blockPos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        if (!level.isClientSide()) {
+            PresentContentsComponent component = stack.getOrDefault(FFItems.Components.PRESENT_CONTENTS_COMPONENT,
+                    PresentContentsComponent.DEFAULT);
 
-                } else if (!state.get(CLOSED)) {
-                    if (!player.isSneaking()) {
-                        // Opening Present Screen
-                        NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, blockPos);
-                        if (screenHandlerFactory != null) {
-                            player.openHandledScreen(screenHandlerFactory);
-                        }
-                        world.playSound(null, blockPos, ModSounds.PRESENT_OPEN, SoundCategory.BLOCKS, 1f, 1f + (Random.create().nextInt(4) * 0.025f));
-                        player.swingHand(Hand.MAIN_HAND, true);
-                        return ActionResult.SUCCESS;
+            if (!component.stacks().isEmpty() && level.getBlockEntity(blockPos) instanceof PresentBlockEntity present) {
+                List<ItemStack> stacks = component.stacks();
 
-                    } else {
-                        // Closing Present
-                        closePresent(world, presentBlockEntity, state, blockPos, player);
-                        return ActionResult.SUCCESS;
+                for (int i = 0; i < Math.min(stacks.size(), PresentBlockEntity.SLOTS); i++) {
+                    if (!stack.isEmpty()) {
+                        present.setItem(i, stacks.get(i).copy());
                     }
                 }
             }
-        } else {
-            ((PresentTypeAccessor) player).festive_frenzy$setPresent(Registries.BLOCK.getId(this).getPath());
         }
-        return ActionResult.CONSUME;
-    }
-
-    public static void closePresent(World world, PresentBlockEntity presentBlockEntity, BlockState state, BlockPos blockPos, PlayerEntity player) {
-        ItemStack stack = state.getBlock().asItem().getDefaultStack();
-
-        if (!presentBlockEntity.isEmpty()) {
-            PresentBlockItem.setStoredItems(stack, presentBlockEntity.getInventory());
-            presentBlockEntity.clear();
-        }
-
-        player.getInventory().offerOrDrop(stack);
-        world.breakBlock(blockPos, false, player);
-
-        world.playSound(null, blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1.4f + (Random.create().nextInt(4) * 0.025f));
-        player.swingHand(Hand.MAIN_HAND, true);
+        super.setPlacedBy(level, blockPos, state, placer, stack);
     }
 
     @Override
-    public List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
-        List<ItemStack> drops = super.getDroppedStacks(state, builder);
-        if (state.get(PresentBlock.CLOSED)) {
-            for (int i = 0; i < drops.size(); i++) {
-                ItemStack stack = drops.get(i);
-                if (stack.getItem() instanceof PresentBlockItem && builder.get(LootContextParameters.BLOCK_ENTITY) instanceof PresentBlockEntity presentBlock) {
-                    PresentBlockItem.setStoredItems(stack, presentBlock.getInventory());
+    protected void onRemove(BlockState state, Level level, BlockPos blockPos, BlockState newState, boolean bl) {
+        if (!level.isClientSide() && level.getBlockEntity(blockPos) instanceof PresentBlockEntity present) {
+            Containers.dropContents(level, blockPos, present);
+        }
+        super.onRemove(state, level, blockPos, newState, bl);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
+        if (player.isCrouching()) {
+            pickupPresent(level, state, blockPos, player);
+            return InteractionResult.SUCCESS;
+        } else if (level.getBlockEntity(blockPos) instanceof PresentBlockEntity presentBlock) {
+            if (state.getValue(CLOSED)) {
+                Containers.dropContents(level, blockPos, presentBlock);
+
+                level.destroyBlock(blockPos, true, player);
+                level.playSound(player, blockPos, FFSounds.PRESENT_UNBOX, SoundSource.BLOCKS, 1F, 1F);
+                return InteractionResult.SUCCESS;
+            } else {
+                MenuProvider provider = state.getMenuProvider(level, blockPos);
+                if (provider != null) {
+                    player.openMenu(provider);
+
+                    player.playSound(FFSounds.PRESENT_OPEN, 1F, 0.9F + RandomSource.create().nextFloat() * 0.2F);
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
-        return drops;
+        return super.useWithoutItem(state, level, blockPos, player, blockHitResult);
     }
 
-    @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new PresentBlockEntity(pos, state);
+    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState state) {
+        return new PresentBlockEntity(blockPos, state);
+    }
+
+    public void pickupPresent(Level level, BlockState state, BlockPos blockPos, @Nullable Player player) {
+        if (!level.isClientSide()) {
+            ItemStack presentItem = this.asItem().getDefaultInstance();
+
+            if (level.getBlockEntity(blockPos) instanceof PresentBlockEntity presentBlock) {
+                presentItem.set(FFItems.Components.PRESENT_CONTENTS_COMPONENT, PresentContentsComponent.fromBlock(presentBlock, !presentBlock.isEmpty()));
+                presentBlock.clearContent();
+            }
+
+            if (player != null) {
+                player.getInventory().placeItemBackInInventory(presentItem);
+            }
+        }
+        level.setBlockAndUpdate(blockPos, state.setValue(CLOSED, true));
+        level.destroyBlock(blockPos, false, player);
+        level.playSound(player, blockPos, FFSounds.PRESENT_PICKUP, SoundSource.BLOCKS, 1F, 0.9F + RandomSource.create().nextFloat() * 0.2F);
+    }
+
+    public static Block fromColor(DyeColor color) {
+        return switch (color) {
+            case LIGHT_GRAY -> FFBlocks.LIGHT_GRAY_PRESENT;
+            case GRAY -> FFBlocks.GRAY_PRESENT;
+            case BLACK -> FFBlocks.BLACK_PRESENT;
+            case BROWN -> FFBlocks.BROWN_PRESENT;
+            case RED -> FFBlocks.RED_PRESENT;
+            case ORANGE -> FFBlocks.ORANGE_PRESENT;
+            case YELLOW -> FFBlocks.YELLOW_PRESENT;
+            case LIME -> FFBlocks.LIME_PRESENT;
+            case GREEN -> FFBlocks.GREEN_PRESENT;
+            case CYAN -> FFBlocks.CYAN_PRESENT;
+            case LIGHT_BLUE -> FFBlocks.LIGHT_BLUE_PRESENT;
+            case BLUE -> FFBlocks.BLUE_PRESENT;
+            case PURPLE -> FFBlocks.PURPLE_PRESENT;
+            case MAGENTA -> FFBlocks.MAGENTA_PRESENT;
+            case PINK -> FFBlocks.PINK_PRESENT;
+            case null, default -> FFBlocks.WHITE_PRESENT;
+        };
     }
 }

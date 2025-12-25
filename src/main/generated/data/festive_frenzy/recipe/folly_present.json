@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_transmute",
+  "category": "building",
+  "group": "present_recolor",
+  "input": "#festive_frenzy:presents",
+  "material": "minecraft:red_tulip",
+  "result": "festive_frenzy:folly_present"
+}

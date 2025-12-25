@@ -1,45 +1,45 @@
 {
-	"schemaVersion": 1,
-	"id": "festive_frenzy",
-	"version": "${version}",
-	"name": "Festive Frenzy",
-	"description": "Festive Frenzy is a mod that adds various festive decorations and items.",
-	"authors": [
-		"Powercyphe",
-		"oPixeel"
-	],
-	"custom": {
-		"modmenu": {
-			"links": {
-				"modmenu.discord": "https://discord.gg/Dmp2dbyNrs"
-			}
-		}
-	},
-	"contact": {
-		"homepage": "https://modrinth.com/mod/festive-frenzy",
-		"sources": "https://github.com/Now-this-is-crazy/Festive-Frenzy"
-	},
-	"license": "MIT",
-	"icon": "assets/festive_frenzy/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"powercyphe.festive_frenzy.FestiveFrenzy"
-		],
-		"client": [
-          "powercyphe.festive_frenzy.client.FestiveFrenzyClient"
-		],
-		"fabric-datagen": [
-          "powercyphe.festive_frenzy.common.datagen.FestiveFrenzyDatagen"
-		]
-	},
-	"mixins": [
-		"festive_frenzy.mixins.json"
-	],
-	"depends": {
-		"fabricloader": "*",
-		"minecraft": ">=1.21",
-		"java": ">=17",
-		"fabric-api": "*"
-	}
+  "schemaVersion": 1,
+  "id": "festive_frenzy",
+  "version": "${version}",
+  "name": "Festive Frenzy",
+  "description": "Adds festive blocks, decorations, equipment and more to the game.",
+  "authors": [
+    "Powercyphe",
+    "oPixeel"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/festive-frenzy",
+    "sources": "https://github.com/Now-this-is-crazy/Festive-Frenzy"
+  },
+  "license": "MIT",
+  "icon": "assets/festive_frenzy/icon.png",
+  "environment": "*",
+  "accessWidener": "festive_frenzy.accesswidener",
+  "entrypoints": {
+    "fabric-datagen": [
+      "powercyphe.festive_frenzy.common.datagen.FFDataGenerator"
+    ],
+    "client": [
+      "powercyphe.festive_frenzy.client.FestiveFrenzyClient"
+    ],
+    "main": [
+      "powercyphe.festive_frenzy.common.FestiveFrenzy"
+    ]
+  },
+  "mixins": [
+    "festive_frenzy.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": ">=${minecraft_version}"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/Dmp2dbyNrs"
+      }
+    }
+  }
 }

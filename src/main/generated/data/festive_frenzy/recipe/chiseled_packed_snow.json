@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "festive_frenzy:polished_packed_snow_slab"
-    }
+    "#": "festive_frenzy:polished_packed_snow_slab"
   },
   "pattern": [
     "#",

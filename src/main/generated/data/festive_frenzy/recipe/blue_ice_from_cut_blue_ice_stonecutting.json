@@ -1,8 +1,6 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "festive_frenzy:cut_blue_ice"
-  },
+  "ingredient": "festive_frenzy:cut_blue_ice",
   "result": {
     "count": 1,
     "id": "minecraft:blue_ice"
