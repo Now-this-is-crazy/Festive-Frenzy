@@ -2,14 +2,12 @@ package powercyphe.festive_frenzy.common.registry;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.component.UseCooldown;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -26,7 +24,6 @@ import powercyphe.festive_frenzy.common.item.PresentItem;
 import powercyphe.festive_frenzy.common.item.component.ExplosiveBaubleComponent;
 import powercyphe.festive_frenzy.common.item.component.PresentContentsComponent;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 public class FFBlocks {
@@ -59,8 +56,20 @@ public class FFBlocks {
 
 
     public static final Block RED_CANDY_CANE_BLOCK = register("red_candy_cane_block", Block::new, BlockBehaviour.Properties.of().strength(0.6F, 3F).sound(SoundType.PACKED_MUD));
+    public static final Block RED_CANDY_CANE_STAIRS = register("red_candy_cane_stairs", properties ->
+            new StairBlock(RED_CANDY_CANE_BLOCK.defaultBlockState(), properties), BlockBehaviour.Properties.ofFullCopy(RED_CANDY_CANE_BLOCK));
+    public static final Block RED_CANDY_CANE_SLAB = register("red_candy_cane_slab", SlabBlock::new, BlockBehaviour.Properties.ofFullCopy(RED_CANDY_CANE_BLOCK));
+
     public static final Block GREEN_CANDY_CANE_BLOCK = register("green_candy_cane_block", Block::new, BlockBehaviour.Properties.ofFullCopy(RED_CANDY_CANE_BLOCK));
+    public static final Block GREEN_CANDY_CANE_STAIRS = register("green_candy_cane_stairs", properties ->
+            new StairBlock(GREEN_CANDY_CANE_BLOCK.defaultBlockState(), properties), BlockBehaviour.Properties.ofFullCopy(GREEN_CANDY_CANE_BLOCK));
+    public static final Block GREEN_CANDY_CANE_SLAB = register("green_candy_cane_slab", SlabBlock::new, BlockBehaviour.Properties.ofFullCopy(GREEN_CANDY_CANE_BLOCK));
+
     public static final Block MIXED_CANDY_CANE_BLOCK = register("mixed_candy_cane_block", Block::new, BlockBehaviour.Properties.ofFullCopy(RED_CANDY_CANE_BLOCK));
+    public static final Block MIXED_CANDY_CANE_STAIRS = register("mixed_candy_cane_stairs", properties ->
+            new StairBlock(MIXED_CANDY_CANE_BLOCK.defaultBlockState(), properties), BlockBehaviour.Properties.ofFullCopy(MIXED_CANDY_CANE_BLOCK));
+    public static final Block MIXED_CANDY_CANE_SLAB = register("mixed_candy_cane_slab", SlabBlock::new, BlockBehaviour.Properties.ofFullCopy(MIXED_CANDY_CANE_BLOCK));
+
     public static final Block PEPPERMINT_BLOCK = register("peppermint_block", Block::new, BlockBehaviour.Properties.ofFullCopy(RED_CANDY_CANE_BLOCK));
 
     // Gingerbread
@@ -71,14 +80,14 @@ public class FFBlocks {
             SoundEvents.NETHER_WOOD_BUTTON_CLICK_OFF, SoundEvents.NETHER_WOOD_BUTTON_CLICK_ON);
 
     public static final Block GINGERBREAD_BLOCK = register("gingerbread_block", Block::new, BlockBehaviour.Properties.of().strength(0.6F, 4F).sound(SoundType.PACKED_MUD));
-    public static final Block GINGERBREAD_STAIRS = register("gingerbread_stairs", properties -> new StairBlock(GINGERBREAD_BLOCK.defaultBlockState(), properties),
-            BlockBehaviour.Properties.ofFullCopy(GINGERBREAD_BLOCK));
+    public static final Block GINGERBREAD_STAIRS = register("gingerbread_stairs", properties ->
+                    new StairBlock(GINGERBREAD_BLOCK.defaultBlockState(), properties), BlockBehaviour.Properties.ofFullCopy(GINGERBREAD_BLOCK));
     public static final Block GINGERBREAD_SLAB = register("gingerbread_slab", SlabBlock::new, BlockBehaviour.Properties.ofFullCopy(GINGERBREAD_BLOCK));
     public static final Block GINGERBREAD_WALL = register("gingerbread_wall", WallBlock::new, BlockBehaviour.Properties.ofFullCopy(GINGERBREAD_BLOCK));
 
     public static final Block GINGERBREAD_BRICKS = register("gingerbread_bricks", Block::new, BlockBehaviour.Properties.ofFullCopy(GINGERBREAD_BLOCK));
-    public static final Block GINGERBREAD_BRICK_STAIRS = register("gingerbread_brick_stairs", properties -> new StairBlock(GINGERBREAD_BRICKS.defaultBlockState(), properties),
-            BlockBehaviour.Properties.ofFullCopy(GINGERBREAD_BRICKS));
+    public static final Block GINGERBREAD_BRICK_STAIRS = register("gingerbread_brick_stairs", properties ->
+                    new StairBlock(GINGERBREAD_BRICKS.defaultBlockState(), properties), BlockBehaviour.Properties.ofFullCopy(GINGERBREAD_BRICKS));
     public static final Block GINGERBREAD_BRICK_SLAB = register("gingerbread_brick_slab", SlabBlock::new, BlockBehaviour.Properties.ofFullCopy(GINGERBREAD_BRICKS));
     public static final Block GINGERBREAD_BRICK_WALL = register("gingerbread_brick_wall", WallBlock::new, BlockBehaviour.Properties.ofFullCopy(GINGERBREAD_BRICKS));
 
@@ -94,7 +103,7 @@ public class FFBlocks {
 
 
     // Packed Snow
-    public static final Block PACKED_SNOW = register("packed_snow", Block::new, BlockBehaviour.Properties.ofFullCopy(Blocks.SNOW_BLOCK).strength(1F, 6F));
+    public static final Block PACKED_SNOW = register("packed_snow", Block::new, BlockBehaviour.Properties.ofFullCopy(Blocks.SNOW_BLOCK).strength(1F, 6F).requiresCorrectToolForDrops());
     public static final Block PACKED_SNOW_STAIRS = register("packed_snow_stairs", (properties -> new StairBlock(PACKED_SNOW.defaultBlockState(), properties)), BlockBehaviour.Properties.ofFullCopy(PACKED_SNOW));
     public static final Block PACKED_SNOW_SLAB = register("packed_snow_slab", SlabBlock::new, BlockBehaviour.Properties.ofFullCopy(PACKED_SNOW));
     public static final Block PACKED_SNOW_WALL = register("packed_snow_wall", WallBlock::new, BlockBehaviour.Properties.ofFullCopy(PACKED_SNOW));
@@ -113,7 +122,7 @@ public class FFBlocks {
 
 
     // Blue Ice Blocks
-    public static final Block CUT_BLUE_ICE = register("cut_blue_ice", Block::new, BlockBehaviour.Properties.ofFullCopy(Blocks.BLUE_ICE));
+    public static final Block CUT_BLUE_ICE = register("cut_blue_ice", Block::new, BlockBehaviour.Properties.ofFullCopy(Blocks.BLUE_ICE).requiresCorrectToolForDrops());
     public static final Block CUT_BLUE_ICE_STAIRS = register("cut_blue_ice_stairs", (properties -> new StairBlock(CUT_BLUE_ICE.defaultBlockState(), properties)), BlockBehaviour.Properties.ofFullCopy(CUT_BLUE_ICE));
     public static final Block CUT_BLUE_ICE_SLAB = register("cut_blue_ice_slab", SlabBlock::new, BlockBehaviour.Properties.ofFullCopy(CUT_BLUE_ICE));
     public static final Block CUT_BLUE_ICE_WALL = register("cut_blue_ice_wall", WallBlock::new, BlockBehaviour.Properties.ofFullCopy(CUT_BLUE_ICE));

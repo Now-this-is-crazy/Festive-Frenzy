@@ -89,6 +89,12 @@
       "festive_frenzy:wreath_chakram_hit"
     ]
   },
+  "wreath_chakram_ricochet": {
+    "subtitle": "subtitles.festive_frenzy.wreath_chakram_ricochet",
+    "sounds": [
+      "festive_frenzy:wreath_chakram_ricochet"
+    ]
+  },
   "pouch_open": {
     "subtitle": "subtitles.festive_frenzy.pouch_open",
     "sounds": [

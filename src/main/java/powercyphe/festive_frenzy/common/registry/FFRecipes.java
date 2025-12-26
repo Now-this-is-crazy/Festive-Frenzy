@@ -12,7 +12,7 @@ public class FFRecipes {
     public static final RecipeSerializer<ExplosiveBaubleRecipe> EXPLOSIVE_BAUBLE_RECIPE = register("explosive_bauble",
             new CustomRecipe.Serializer<>(ExplosiveBaubleRecipe::new));
     public static final RecipeSerializer<StonecutterRecipe> TRANSMUTE_STONECUTTING_RECIPE = register("transmute_stonecutting",
-            new SingleItemRecipe.Serializer<>(TransmuteStonecutterRecipe::new));
+            new TransmuteStonecutterRecipe.Serializer<>(TransmuteStonecutterRecipe::new));
 
     public static void init() {}
 

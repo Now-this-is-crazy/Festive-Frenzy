@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_festive_frenzy:red_candy_cane": {
+      "conditions": {
+        "items": [
+          {
+            "items": "festive_frenzy:red_candy_cane"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "festive_frenzy:red_candy_cane_slab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_festive_frenzy:red_candy_cane"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "festive_frenzy:red_candy_cane_slab"
+    ]
+  }
+}

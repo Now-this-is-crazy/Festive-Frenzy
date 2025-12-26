@@ -42,13 +42,17 @@ public class FFBlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
 
         getOrCreateTagBuilder(BlockTags.STAIRS)
-                .add(FFBlocks.GINGERBREAD_STAIRS, FFBlocks.GINGERBREAD_BRICK_STAIRS,
+                .add(FFBlocks.RED_CANDY_CANE_STAIRS, FFBlocks.GREEN_CANDY_CANE_STAIRS,
+                        FFBlocks.MIXED_CANDY_CANE_STAIRS,
+                        FFBlocks.GINGERBREAD_STAIRS, FFBlocks.GINGERBREAD_BRICK_STAIRS,
                         FFBlocks.PACKED_SNOW_STAIRS, FFBlocks.POLISHED_PACKED_SNOW_STAIRS,
                         FFBlocks.PACKED_SNOW_BRICK_STAIRS, FFBlocks.CUT_BLUE_ICE_STAIRS,
                         FFBlocks.POLISHED_BLUE_ICE_STAIRS, FFBlocks.BLUE_ICE_BRICK_STAIRS
                 );
         getOrCreateTagBuilder(BlockTags.SLABS)
-                .add(FFBlocks.GINGERBREAD_SLAB, FFBlocks.GINGERBREAD_BRICK_SLAB,
+                .add(FFBlocks.RED_CANDY_CANE_SLAB, FFBlocks.GREEN_CANDY_CANE_SLAB,
+                        FFBlocks.MIXED_CANDY_CANE_SLAB,
+                        FFBlocks.GINGERBREAD_SLAB, FFBlocks.GINGERBREAD_BRICK_SLAB,
                         FFBlocks.PACKED_SNOW_SLAB, FFBlocks.POLISHED_PACKED_SNOW_SLAB,
                         FFBlocks.PACKED_SNOW_BRICK_SLAB, FFBlocks.CUT_BLUE_ICE_SLAB,
                         FFBlocks.POLISHED_BLUE_ICE_SLAB, FFBlocks.BLUE_ICE_BRICK_SLAB
@@ -95,7 +99,13 @@ public class FFBlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
 
         getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(FFBlocks.GINGERBREAD_BLOCK, FFBlocks.GINGERBREAD_STAIRS,
+                .add(
+                        FFBlocks.RED_CANDY_CANE_BLOCK, FFBlocks.RED_CANDY_CANE_STAIRS, FFBlocks.RED_CANDY_CANE_SLAB,
+                        FFBlocks.GREEN_CANDY_CANE_BLOCK, FFBlocks.GREEN_CANDY_CANE_STAIRS, FFBlocks.GREEN_CANDY_CANE_SLAB,
+                        FFBlocks.MIXED_CANDY_CANE_BLOCK, FFBlocks.MIXED_CANDY_CANE_STAIRS, FFBlocks.MIXED_CANDY_CANE_SLAB,
+                        FFBlocks.PEPPERMINT_BLOCK,
+
+                        FFBlocks.GINGERBREAD_BLOCK, FFBlocks.GINGERBREAD_STAIRS,
                         FFBlocks.GINGERBREAD_SLAB, FFBlocks.GINGERBREAD_WALL,
                         FFBlocks.GINGERBREAD_BRICKS, FFBlocks.GINGERBREAD_BRICK_STAIRS,
                         FFBlocks.GINGERBREAD_BRICK_SLAB, FFBlocks.GINGERBREAD_BRICK_WALL,
@@ -111,10 +121,7 @@ public class FFBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                         FFBlocks.POLISHED_BLUE_ICE, FFBlocks.POLISHED_BLUE_ICE_STAIRS,
                         FFBlocks.POLISHED_BLUE_ICE_SLAB, FFBlocks.POLISHED_BLUE_ICE_WALL,
                         FFBlocks.BLUE_ICE_BRICKS, FFBlocks.BLUE_ICE_BRICK_STAIRS,
-                        FFBlocks.BLUE_ICE_BRICK_SLAB, FFBlocks.BLUE_ICE_BRICK_WALL,
-
-                        FFBlocks.RED_CANDY_CANE_BLOCK, FFBlocks.GREEN_CANDY_CANE_BLOCK,
-                        FFBlocks.MIXED_CANDY_CANE_BLOCK, FFBlocks.PEPPERMINT_BLOCK
+                        FFBlocks.BLUE_ICE_BRICK_SLAB, FFBlocks.BLUE_ICE_BRICK_WALL
                 );
 
         getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_SHOVEL)

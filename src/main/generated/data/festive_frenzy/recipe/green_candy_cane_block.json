@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "G": "festive_frenzy:green_candy_cane"
+    "R": "festive_frenzy:green_candy_cane"
   },
   "pattern": [
-    "GG",
-    "GG"
+    "RR",
+    "RR"
   ],
   "result": {
     "count": 2,
