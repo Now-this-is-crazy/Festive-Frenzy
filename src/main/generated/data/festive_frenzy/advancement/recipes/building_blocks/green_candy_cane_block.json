@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_candy_cane": {
+    "has_festive_frenzy:green_candy_cane": {
       "conditions": {
         "items": [
           {
-            "items": "#festive_frenzy:candy_canes"
+            "items": "festive_frenzy:green_candy_cane"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_candy_cane"
+      "has_festive_frenzy:green_candy_cane"
     ]
   ],
   "rewards": {

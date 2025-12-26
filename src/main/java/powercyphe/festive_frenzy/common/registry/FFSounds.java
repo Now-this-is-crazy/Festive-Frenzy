@@ -14,6 +14,7 @@ public class FFSounds {
 
     public static final SoundEvent WREATH_CHAKRAM_THROW = register("wreath_chakram_throw");
     public static final SoundEvent WREATH_CHAKRAM_HIT = register("wreath_chakram_hit");
+    public static final SoundEvent WREATH_CHAKRAM_RICOCHET = register("wreath_chakram_ricochet");
 
     public static final SoundEvent PRESENT_OPEN = register("present_open");
     public static final SoundEvent PRESENT_UNBOX = register("present_unbox");

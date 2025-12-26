@@ -77,8 +77,10 @@ public class FFItems {
                     FFBlocks.BLUE_ICE_BRICK_SLAB, FFBlocks.BLUE_ICE_BRICK_WALL,
                     FFBlocks.CHISELED_BLUE_ICE,
 
-                    FFBlocks.RED_CANDY_CANE_BLOCK, FFBlocks.GREEN_CANDY_CANE_BLOCK,
-                    FFBlocks.MIXED_CANDY_CANE_BLOCK, FFBlocks.PEPPERMINT_BLOCK,
+                    FFBlocks.RED_CANDY_CANE_BLOCK, FFBlocks.RED_CANDY_CANE_STAIRS, FFBlocks.RED_CANDY_CANE_SLAB,
+                    FFBlocks.GREEN_CANDY_CANE_BLOCK, FFBlocks.GREEN_CANDY_CANE_STAIRS, FFBlocks.GREEN_CANDY_CANE_SLAB,
+                    FFBlocks.MIXED_CANDY_CANE_BLOCK, FFBlocks.MIXED_CANDY_CANE_STAIRS, FFBlocks.MIXED_CANDY_CANE_SLAB,
+                    FFBlocks.PEPPERMINT_BLOCK,
 
                     FFBlocks.GINGERBREAD_BLOCK, FFBlocks.GINGERBREAD_STAIRS,
                     FFBlocks.GINGERBREAD_SLAB, FFBlocks.GINGERBREAD_WALL,
@@ -100,7 +102,12 @@ public class FFItems {
                         FFBlocks.CHISELED_GINGERBREAD_BLOCK,
 
                         FFBlocks.GINGERBREAD_DOOR, FFBlocks.GINGERBREAD_TRAPDOOR,
-                        FFBlocks.GINGERBREAD_PRESSURE_PLATE, FFBlocks.GINGERBREAD_BUTTON
+                        FFBlocks.GINGERBREAD_PRESSURE_PLATE, FFBlocks.GINGERBREAD_BUTTON,
+
+                        FFBlocks.RED_CANDY_CANE_BLOCK, FFBlocks.RED_CANDY_CANE_STAIRS, FFBlocks.RED_CANDY_CANE_SLAB,
+                        FFBlocks.GREEN_CANDY_CANE_BLOCK, FFBlocks.GREEN_CANDY_CANE_STAIRS, FFBlocks.GREEN_CANDY_CANE_SLAB,
+                        FFBlocks.MIXED_CANDY_CANE_BLOCK, FFBlocks.MIXED_CANDY_CANE_STAIRS, FFBlocks.MIXED_CANDY_CANE_SLAB,
+                        FFBlocks.PEPPERMINT_BLOCK
                 );
                 entries.addBefore(Items.SEA_LANTERN,
                         FFBlocks.PACKED_SNOW, FFBlocks.PACKED_SNOW_STAIRS,
@@ -118,10 +125,6 @@ public class FFItems {
                         FFBlocks.BLUE_ICE_BRICKS, FFBlocks.BLUE_ICE_BRICK_STAIRS,
                         FFBlocks.BLUE_ICE_BRICK_SLAB, FFBlocks.BLUE_ICE_BRICK_WALL,
                         FFBlocks.CHISELED_BLUE_ICE
-                );
-                entries.addAfter(Items.NETHERITE_BLOCK,
-                        FFBlocks.RED_CANDY_CANE_BLOCK, FFBlocks.GREEN_CANDY_CANE_BLOCK,
-                        FFBlocks.MIXED_CANDY_CANE_BLOCK, FFBlocks.PEPPERMINT_BLOCK
                 );
             });
             addToTab(CreativeModeTabs.COLORED_BLOCKS, entries -> {

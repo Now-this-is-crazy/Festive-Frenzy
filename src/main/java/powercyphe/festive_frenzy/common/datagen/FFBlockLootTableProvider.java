@@ -36,13 +36,30 @@ public class FFBlockLootTableProvider extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
+        
+        // Candy Blocks
+        dropSelf(FFBlocks.RED_CANDY_CANE_BLOCK);
+        dropSelf(FFBlocks.RED_CANDY_CANE_STAIRS);
+        dropSelf(FFBlocks.RED_CANDY_CANE_SLAB);
 
-        add(FFBlocks.SHORT_FROZEN_GRASS, (block) -> createGrassDrops(block)
+        dropSelf(FFBlocks.GREEN_CANDY_CANE_BLOCK);
+        dropSelf(FFBlocks.GREEN_CANDY_CANE_STAIRS);
+        dropSelf(FFBlocks.GREEN_CANDY_CANE_SLAB);
+
+        dropSelf(FFBlocks.MIXED_CANDY_CANE_BLOCK);
+        dropSelf(FFBlocks.MIXED_CANDY_CANE_STAIRS);
+        dropSelf(FFBlocks.MIXED_CANDY_CANE_SLAB);
+        
+        dropSelf(FFBlocks.PEPPERMINT_BLOCK);
+        
+        // Plants
+        add(FFBlocks.SHORT_FROZEN_GRASS, block -> createGrassDrops(block)
                 .withPool(createSnowloggable(block)));
-        add(FFBlocks.TALL_FROZEN_GRASS, (block) -> createDoublePlantWithSeedDrops(block, FFBlocks.SHORT_FROZEN_GRASS)
+        add(FFBlocks.TALL_FROZEN_GRASS, block -> createDoublePlantWithSeedDrops(block, FFBlocks.SHORT_FROZEN_GRASS)
                 .withPool(createSnowloggable(block)));
 
-        dropOther(FFBlocks.HOLLY_BUSH, FFItems.HOLLY);
+        add(FFBlocks.HOLLY_BUSH, block -> createSingleItemTable(FFItems.HOLLY)
+                .withPool(createSnowloggable(block)));
 
         // Gingerbread Blocks
         dropSelf(FFBlocks.GINGERBREAD_BLOCK);
@@ -57,7 +74,7 @@ public class FFBlockLootTableProvider extends FabricBlockLootTableProvider {
 
         dropSelf(FFBlocks.CHISELED_GINGERBREAD_BLOCK);
 
-        createDoorTable(FFBlocks.GINGERBREAD_DOOR);
+        add(FFBlocks.GINGERBREAD_DOOR, this::createDoorTable);
         dropSelf(FFBlocks.GINGERBREAD_TRAPDOOR);
         dropSelf(FFBlocks.GINGERBREAD_BUTTON);
         dropSelf(FFBlocks.GINGERBREAD_PRESSURE_PLATE);

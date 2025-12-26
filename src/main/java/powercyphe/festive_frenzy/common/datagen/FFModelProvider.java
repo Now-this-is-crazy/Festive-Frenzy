@@ -36,9 +36,13 @@ public class FFModelProvider extends FabricModelProvider {
 
         createHollyBush(generator, FFBlocks.HOLLY_BUSH);
 
-        generator.createTrivialCube(FFBlocks.RED_CANDY_CANE_BLOCK);
-        generator.createTrivialCube(FFBlocks.GREEN_CANDY_CANE_BLOCK);
-        generator.createTrivialCube(FFBlocks.MIXED_CANDY_CANE_BLOCK);
+        generator.family(FFBlocks.RED_CANDY_CANE_BLOCK)
+                .stairs(FFBlocks.RED_CANDY_CANE_STAIRS).slab(FFBlocks.RED_CANDY_CANE_SLAB);
+        generator.family(FFBlocks.GREEN_CANDY_CANE_BLOCK)
+                .stairs(FFBlocks.GREEN_CANDY_CANE_STAIRS).slab(FFBlocks.GREEN_CANDY_CANE_SLAB);
+        generator.family(FFBlocks.MIXED_CANDY_CANE_BLOCK)
+                .stairs(FFBlocks.MIXED_CANDY_CANE_STAIRS).slab(FFBlocks.MIXED_CANDY_CANE_SLAB);
+
         generator.createTrivialCube(FFBlocks.PEPPERMINT_BLOCK);
 
         // Gingerbread

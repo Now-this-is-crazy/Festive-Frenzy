@@ -1,5 +1,8 @@
 package powercyphe.festive_frenzy.common.item;
 
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -14,11 +17,14 @@ import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
-import powercyphe.festive_frenzy.common.FestiveFrenzy;
 import powercyphe.festive_frenzy.common.entity.WreathChakramProjectileEntity;
+import powercyphe.festive_frenzy.common.registry.FFEnchantments;
 import powercyphe.festive_frenzy.common.registry.FFSounds;
 import powercyphe.festive_frenzy.common.util.FFUtil;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WreathChakramItem extends Item {
     public WreathChakramItem(Properties properties, ToolMaterial toolMaterial, float attackDamage, float attackSpeed) {
@@ -49,6 +55,14 @@ public class WreathChakramItem extends Item {
             return InteractionResult.SUCCESS;
         }
         return super.use(level, player, hand);
+    }
+
+    public static boolean hasRicochetEnchant(RegistryAccess registryAccess, ItemStack stack) {
+        AtomicBoolean bl = new AtomicBoolean(false);
+        registryAccess.lookupOrThrow(Registries.ENCHANTMENT).get(FFEnchantments.RICOCHET_ENCHANTMENT)
+                .ifPresent(enchantment ->
+                        bl.set(stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).getLevel(enchantment) > 0));
+        return bl.get();
     }
 
     public static ItemAttributeModifiers createAttributeModifiers(ToolMaterial material, float attackDamage, float attackSpeed) {

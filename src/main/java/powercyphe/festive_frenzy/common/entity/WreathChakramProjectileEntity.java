@@ -1,7 +1,11 @@
 package powercyphe.festive_frenzy.common.entity;
 
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.EntitySubPredicates;
+import net.minecraft.advancements.critereon.EntityTypePredicate;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -11,8 +15,12 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.behavior.EntityTracker;
+import net.minecraft.world.entity.ai.sensing.Sensor;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -20,9 +28,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
+import powercyphe.festive_frenzy.common.item.WreathChakramItem;
 import powercyphe.festive_frenzy.common.registry.FFEntities;
 import powercyphe.festive_frenzy.common.registry.FFItems;
 import powercyphe.festive_frenzy.common.registry.FFParticles;
@@ -33,11 +44,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WreathChakramProjectileEntity extends AbstractArrow {
-    private static final EntityDataAccessor<Integer> ID_SLOT = SynchedEntityData.defineId(WreathChakramProjectileEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> ID_ENCHANTED = SynchedEntityData.defineId(WreathChakramProjectileEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_SLOT = SynchedEntityData.defineId(WreathChakramProjectileEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_RICOCHET = SynchedEntityData.defineId(WreathChakramProjectileEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_ENCHANTED = SynchedEntityData.defineId(WreathChakramProjectileEntity.class, EntityDataSerializers.BOOLEAN);
 
     private final List<Integer> hitEntities = new ArrayList<>();
-    private int hitBlocks = 0;
+    private int hitsBeforeReturn = 0;
     private boolean isReturning = false;
 
     private float spinRotation = RandomSource.create().nextFloat();
@@ -49,14 +61,18 @@ public class WreathChakramProjectileEntity extends AbstractArrow {
 
     public WreathChakramProjectileEntity(ServerLevel level, LivingEntity owner, ItemStack stack) {
         super(FFEntities.WREATH_CHAKRAM_PROJECTILE, owner, level, stack, null);
-        this.entityData.set(ID_ENCHANTED, stack.hasFoil());
+
+        this.setRicochet(WreathChakramItem.hasRicochetEnchant(level.registryAccess(), stack));
+        this.getEntityData().set(DATA_ENCHANTED, stack.hasFoil());
+
         this.pickup = (owner instanceof Player player && player.isCreative()) ? Pickup.CREATIVE_ONLY : Pickup.ALLOWED;
     }
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(ID_ENCHANTED, false);
-        builder.define(ID_SLOT, -1);
+        builder.define(DATA_ENCHANTED, false);
+        builder.define(DATA_RICOCHET, false);
+        builder.define(DATA_SLOT, -1);
         super.defineSynchedData(builder);
     }
 
@@ -155,7 +171,7 @@ public class WreathChakramProjectileEntity extends AbstractArrow {
         Vec3 vel = this.getDeltaMovement();
         this.setDeltaMovement(FFUtil.reflectVector(vel, hitResult.getDirection()).multiply(0.8, 0.33, 0.8));
 
-        if (this.hitBlocks++ > 5) {
+        if (this.hitsBeforeReturn++ > 5) {
             this.setReturning(true);
         }
 
@@ -184,9 +200,23 @@ public class WreathChakramProjectileEntity extends AbstractArrow {
 
             // Entity Damage
             if (this.level() instanceof ServerLevel serverLevel) {
+                this.addToHitEntities(livingEntity);
+
                 if (this.isRemoved()) {
                     serverLevel.sendParticles((ParticleOptions) FFParticles.HOLLY_LEAF, this.getX(), this.getY(), this.getZ(),
                             14, 0.07, 0.025, 0.07, 2);
+                } else if (this.shouldRicochet() && !this.isReturning()) {
+                    if (this.hitsBeforeReturn++ > 7) {
+                        this.setReturning(true);
+                    } else {
+                        Vec3 targetPos = this.findRicochetTarget();
+
+                        if (targetPos != null) {
+                            Vec3 ricochetVel = targetPos.subtract(this.position());
+                            this.setDeltaMovement(ricochetVel.normalize());
+                            this.playSound(FFSounds.WREATH_CHAKRAM_RICOCHET, 1F, 0.8F + (this.hitsBeforeReturn / 6F) * 0.4F);
+                        }
+                    }
                 }
 
                 DamageSource source = this.damageSources().arrow(this,
@@ -196,7 +226,6 @@ public class WreathChakramProjectileEntity extends AbstractArrow {
 
                 livingEntity.hurtServer(serverLevel, source, damage);
                 EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, entity, source, stack);
-                this.addToHitEntities(livingEntity);
             }
 
         }
@@ -254,16 +283,48 @@ public class WreathChakramProjectileEntity extends AbstractArrow {
         return FFItems.WREATH_CHAKRAM.getDefaultInstance();
     }
 
+    public void setRicochet(boolean shouldRicochet) {
+        this.getEntityData().set(DATA_RICOCHET, shouldRicochet);
+    }
+
+    public boolean shouldRicochet() {
+        return this.getEntityData().get(DATA_RICOCHET);
+    }
+
+    @Nullable
+    public Vec3 findRicochetTarget() {
+        AABB box = AABB.ofSize(this.position(), 27, 14, 27);
+        List<Entity> entities = this.level().getEntities(this, box, EntitySelector.LIVING_ENTITY_STILL_ALIVE
+                .and(other -> !this.hitEntities.contains(other.getId()) && !other.equals(this.getOwner()))
+                .and(other -> other instanceof LivingEntity living && living.hasLineOfSight(this)));
+        if (!entities.isEmpty()) {
+            double lastDistance = -1;
+            Entity nextEntity = null;
+
+            for (Entity entity : entities) {
+                double distance = entity.distanceTo(this);
+                if (distance < lastDistance || lastDistance == -1) {
+                    nextEntity = entity;
+                    lastDistance = distance;
+                }
+            }
+
+            return nextEntity.getEyePosition();
+        }
+
+        return null;
+    }
+
     public boolean isEnchanted() {
-        return this.entityData.get(ID_ENCHANTED);
+        return this.getEntityData().get(DATA_ENCHANTED);
     }
 
     public void setSavedSlot(int slot) {
-        this.entityData.set(ID_SLOT, slot);
+        this.getEntityData().set(DATA_SLOT, slot);
     }
 
     public int getSavedSlot() {
-        return this.entityData.get(ID_SLOT);
+        return this.getEntityData().get(DATA_SLOT);
     }
 
     public float getSpinRotation(float tickProgress) {

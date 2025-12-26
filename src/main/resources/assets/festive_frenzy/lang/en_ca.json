@@ -12,11 +12,6 @@
   "item.festive_frenzy.tree_cookie": "Tree Cookie",
   "item.festive_frenzy.star_cookie": "Star Cookie",
 
-  "item.festive_frenzy.red_candy_cane_block": "Red Candy Cane Block",
-  "item.festive_frenzy.green_candy_cane_block": "Green Candy Cane Block",
-  "item.festive_frenzy.mixed_candy_cane_block": "Mixed Candy Cane Block",
-  "item.festive_frenzy.peppermint_block": "Peppermint Block",
-
   "item.festive_frenzy.festive_hat": "Festive Hat",
 
   "item.festive_frenzy.candy_pouch": "Candy Pouch",
@@ -27,6 +22,20 @@
   "item.festive_frenzy.holly": "Holly",
   "item.festive_frenzy.short_frozen_grass": "Short Frozen Grass",
   "item.festive_frenzy.tall_frozen_grass": "Tall Frozen Grass",
+
+  "item.festive_frenzy.red_candy_cane_block": "Red Candy Cane Block",
+  "item.festive_frenzy.red_candy_cane_stairs": "Red Candy Cane Stairs",
+  "item.festive_frenzy.red_candy_cane_slab": "Red Candy Cane Slab",
+
+  "item.festive_frenzy.green_candy_cane_block": "Green Candy Cane Block",
+  "item.festive_frenzy.green_candy_cane_stairs": "Green Candy Cane Stairs",
+  "item.festive_frenzy.green_candy_cane_slab": "Green Candy Cane Slab",
+
+  "item.festive_frenzy.mixed_candy_cane_block": "Mixed Candy Cane Block",
+  "item.festive_frenzy.mixed_candy_cane_stairs": "Mixed Candy Cane Stairs",
+  "item.festive_frenzy.mixed_candy_cane_slab": "Mixed Candy Cane Slab",
+
+  "item.festive_frenzy.peppermint_block": "Peppermint Block",
 
   "item.festive_frenzy.gingerbread_block": "Gingerbread Block",
   "item.festive_frenzy.gingerbread_stairs": "Gingerbread Stairs",
@@ -146,8 +155,17 @@
   "block.festive_frenzy.tall_frozen_grass": "Tall Frozen Grass",
 
   "block.festive_frenzy.red_candy_cane_block": "Red Candy Cane Block",
+  "block.festive_frenzy.red_candy_cane_stairs": "Red Candy Cane Stairs",
+  "block.festive_frenzy.red_candy_cane_slab": "Red Candy Cane Slab",
+
   "block.festive_frenzy.green_candy_cane_block": "Green Candy Cane Block",
+  "block.festive_frenzy.green_candy_cane_stairs": "Green Candy Cane Stairs",
+  "block.festive_frenzy.green_candy_cane_slab": "Green Candy Cane Slab",
+
   "block.festive_frenzy.mixed_candy_cane_block": "Mixed Candy Cane Block",
+  "block.festive_frenzy.mixed_candy_cane_stairs": "Mixed Candy Cane Stairs",
+  "block.festive_frenzy.mixed_candy_cane_slab": "Mixed Candy Cane Slab",
+
   "block.festive_frenzy.peppermint_block": "Peppermint Block",
 
   "block.festive_frenzy.gingerbread_block": "Gingerbread Block",
@@ -264,6 +282,7 @@
 
   "enchantment.festive_frenzy.prickled": "Prickled",
   "enchantment.festive_frenzy.phytotoxicity": "Phytotoxicity",
+  "enchantment.festive_frenzy.ricochet": "Ricochet",
 
   "effect.festive_frenzy.frostburn": "Frostburn",
 
@@ -303,6 +322,7 @@
 
   "subtitles.festive_frenzy.wreath_chakram_throw": "Wreath Chakram thrown",
   "subtitles.festive_frenzy.wreath_chakram_hit": "Wreath Chakram hits",
+  "subtitles.festive_frenzy.wreath_chakram_ricochet": "Wreath Chakram ricochets",
 
   "subtitles.festive_frenzy.pouch_open": "Pouch opened"
 }

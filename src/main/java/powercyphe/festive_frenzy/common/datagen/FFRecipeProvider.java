@@ -101,18 +101,9 @@ public class FFRecipeProvider extends FabricRecipeProvider {
                         .save(exporter);
 
                 // Candy Cane & Other Foods
-                this.shaped(RecipeCategory.BUILDING_BLOCKS, FFBlocks.RED_CANDY_CANE_BLOCK, 2)
-                        .pattern("RR")
-                        .pattern("RR")
-                        .define('R', FFItems.RED_CANDY_CANE)
-                        .unlockedBy("has_candy_cane", has(FFTags.Items.CANDY_CANES))
-                        .save(exporter);
-                this.shaped(RecipeCategory.BUILDING_BLOCKS, FFBlocks.GREEN_CANDY_CANE_BLOCK, 2)
-                        .pattern("GG")
-                        .pattern("GG")
-                        .define('G', FFItems.GREEN_CANDY_CANE)
-                        .unlockedBy("has_candy_cane", has(FFTags.Items.CANDY_CANES))
-                        .save(exporter);
+                this.createBlockFamily(FFItems.RED_CANDY_CANE, FFBlocks.RED_CANDY_CANE_BLOCK, FFBlocks.RED_CANDY_CANE_STAIRS, FFBlocks.RED_CANDY_CANE_SLAB, null, 2);
+                this.createBlockFamily(FFItems.GREEN_CANDY_CANE, FFBlocks.GREEN_CANDY_CANE_BLOCK, FFBlocks.GREEN_CANDY_CANE_STAIRS, FFBlocks.GREEN_CANDY_CANE_SLAB, null, 2);
+
                 this.shaped(RecipeCategory.BUILDING_BLOCKS, FFBlocks.MIXED_CANDY_CANE_BLOCK, 2)
                         .group("mixed_candy_cane_block")
                         .pattern("RG")
@@ -127,6 +118,7 @@ public class FFRecipeProvider extends FabricRecipeProvider {
                         .requires(FFBlocks.GREEN_CANDY_CANE_BLOCK)
                         .unlockedBy("has_candy_cane", has(FFTags.Items.CANDY_CANES))
                         .save(exporter, "mixed_candy_cane_block_with_blocks");
+                this.createBlockFamily(null, FFBlocks.MIXED_CANDY_CANE_BLOCK, FFBlocks.MIXED_CANDY_CANE_STAIRS, FFBlocks.MIXED_CANDY_CANE_SLAB, null, 0);
 
 
                 this.shaped(RecipeCategory.BUILDING_BLOCKS, FFBlocks.PEPPERMINT_BLOCK)
@@ -322,27 +314,41 @@ public class FFRecipeProvider extends FabricRecipeProvider {
             }
             
             public void createBlockFamily(ItemLike rootItem, Block baseBlock, Block stairs, Block slab, Block wall, int baseBlockAmount) {
-                this.shaped(RecipeCategory.BUILDING_BLOCKS, baseBlock, baseBlockAmount)
-                        .pattern("RR")
-                        .pattern("RR")
-                        .define('R', rootItem)
-                        .unlockedBy("has_" + rootItem, has(rootItem))
-                        .save(exporter);
-                this.stairBuilder(stairs, Ingredient.of(baseBlock))
-                        .unlockedBy("has_" + rootItem, has(rootItem))
-                        .save(exporter);
-                this.slabBuilder(RecipeCategory.BUILDING_BLOCKS, slab, Ingredient.of(baseBlock))
-                        .unlockedBy("has_" + rootItem, has(rootItem))
-                        .save(exporter);
-                this.wallBuilder(RecipeCategory.BUILDING_BLOCKS, wall, Ingredient.of(baseBlock))
-                        .unlockedBy("has_" + rootItem, has(rootItem))
-                        .save(exporter);
+                ItemLike requiredItem = rootItem != null ? rootItem : baseBlock;
 
-                this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, baseBlock, rootItem);
-                this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, rootItem, baseBlock);
-                this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, stairs, baseBlock);
-                this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, slab, baseBlock, 2);
-                this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, wall, baseBlock);
+                // Base Block
+                if (rootItem != null) {
+                    this.shaped(RecipeCategory.BUILDING_BLOCKS, baseBlock, baseBlockAmount)
+                            .pattern("RR")
+                            .pattern("RR")
+                            .define('R', rootItem)
+                            .unlockedBy("has_" + rootItem, has(rootItem))
+                            .save(exporter);
+                    this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, baseBlock, rootItem);
+                    this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, rootItem, baseBlock);
+                }
+
+                if (stairs != null) {
+                    // Stairs
+                    this.stairBuilder(stairs, Ingredient.of(baseBlock))
+                            .unlockedBy("has_" + requiredItem, has(requiredItem))
+                            .save(exporter);
+                    this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, stairs, baseBlock);
+                }
+                if (slab != null) {
+                    // Slab
+                    this.slabBuilder(RecipeCategory.BUILDING_BLOCKS, slab, Ingredient.of(baseBlock))
+                            .unlockedBy("has_" + requiredItem, has(requiredItem))
+                            .save(exporter);
+                    this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, slab, baseBlock, 2);
+                }
+                if (wall != null) {
+                    // Wall
+                    this.wallBuilder(RecipeCategory.BUILDING_BLOCKS, wall, Ingredient.of(baseBlock))
+                            .unlockedBy("has_" + requiredItem, has(requiredItem))
+                            .save(exporter);
+                    this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, wall, baseBlock);
+                }
             }
 
             public SingleItemRecipeBuilder transmuteStonecutting(RecipeCategory recipeCategory, Ingredient ingredient, ItemLike output, int amount) {

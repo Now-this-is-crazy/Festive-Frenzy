@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "festive_frenzy:mixed_candy_cane_block",
+  "result": {
+    "count": 1,
+    "id": "festive_frenzy:mixed_candy_cane_stairs"
+  }
+}

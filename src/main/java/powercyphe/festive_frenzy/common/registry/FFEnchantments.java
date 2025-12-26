@@ -9,6 +9,7 @@ public class FFEnchantments {
 
     public static final ResourceKey<Enchantment> PRICKLED_ENCHANTMENT = key("prickled");
     public static final ResourceKey<Enchantment> PHYTOTOXICITY_ENCHANTMENT = key("phytotoxicity");
+    public static final ResourceKey<Enchantment> RICOCHET_ENCHANTMENT = key("ricochet");
 
     public static void init() {}
 

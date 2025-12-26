@@ -30,4 +30,10 @@ public class TransmuteStonecutterRecipe extends StonecutterRecipe {
     public RecipeBookCategory recipeBookCategory() {
         return RecipeBookCategories.STONECUTTER;
     }
+
+    public static class Serializer<T extends SingleItemRecipe> extends SingleItemRecipe.Serializer<T> {
+        public Serializer(Factory<T> factory) {
+            super(factory);
+        }
+    }
 }

@@ -15,7 +15,6 @@
   "license": "MIT",
   "icon": "assets/festive_frenzy/icon.png",
   "environment": "*",
-  "accessWidener": "festive_frenzy.accesswidener",
   "entrypoints": {
     "fabric-datagen": [
       "powercyphe.festive_frenzy.common.datagen.FFDataGenerator"
