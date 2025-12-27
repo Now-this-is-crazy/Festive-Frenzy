@@ -23,6 +23,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import powercyphe.festive_frenzy.common.block.BaubleBlock;
+import powercyphe.festive_frenzy.common.cca.ThrownBaubleDataComponent;
 import powercyphe.festive_frenzy.common.item.BaubleItem;
 import powercyphe.festive_frenzy.common.item.component.ExplosiveBaubleComponent;
 import powercyphe.festive_frenzy.common.registry.*;
@@ -30,10 +31,6 @@ import powercyphe.festive_frenzy.common.util.VelocityBasedRotationImpl;
 import powercyphe.festive_frenzy.common.world.BaubleExplosion;
 
 public class ThrownBaubleProjectileEntity extends ThrowableItemProjectile implements VelocityBasedRotationImpl {
-    private static final String IS_GLOWING_KEY = "isGlowing";
-    private static final EntityDataAccessor<Boolean> DATA_IS_GLOWING = SynchedEntityData.defineId(
-            ThrownBaubleProjectileEntity.class, EntityDataSerializers.BOOLEAN);
-
     private static final String SHOULD_DROP_ITEM_KEY = "shouldDropItem";
     private boolean shouldDropItem = true;
 
@@ -63,29 +60,21 @@ public class ThrownBaubleProjectileEntity extends ThrowableItemProjectile implem
             Vec3 pos = blockPos.getCenter();
 
             ThrownBaubleProjectileEntity bauble = new ThrownBaubleProjectileEntity(level, pos.x(), pos.y() - 0.25, pos.z(), block.getBaubleStack(state));
-            bauble.setGlowing(state.getValue(BaubleBlock.IS_GLOWING));
+            bauble.getData().setGlowing(state.getValue(BaubleBlock.IS_GLOWING));
             level.addFreshEntity(bauble);
         }
 
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(DATA_IS_GLOWING, false);
-        super.defineSynchedData(builder);
-    }
-
-    @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
-        this.setGlowing(compoundTag.getBoolean(IS_GLOWING_KEY));
         this.shouldDropItem = compoundTag.getBoolean(SHOULD_DROP_ITEM_KEY);
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
-        compoundTag.putBoolean(IS_GLOWING_KEY, this.isGlowing());
         compoundTag.putBoolean(SHOULD_DROP_ITEM_KEY, this.shouldDropItem);
     }
 
@@ -132,14 +121,6 @@ public class ThrownBaubleProjectileEntity extends ThrowableItemProjectile implem
         return this.shouldDropItem;
     }
 
-    public void setGlowing(boolean isGlowing) {
-        this.getEntityData().set(DATA_IS_GLOWING, isGlowing);
-    }
-
-    public boolean isGlowing() {
-        return this.getEntityData().get(DATA_IS_GLOWING);
-    }
-
     public int getExplosionColor() {
         ItemStack stack = this.getItem();
         if (stack.getItem() instanceof BaubleItem baubleItem && baubleItem.getBlock() instanceof BaubleBlock block) {
@@ -167,6 +148,10 @@ public class ThrownBaubleProjectileEntity extends ThrowableItemProjectile implem
         }
 
         return BaubleExplosion.ExplosionModification.NONE;
+    }
+
+    public ThrownBaubleDataComponent getData() {
+        return ThrownBaubleDataComponent.get(this);
     }
 
     @Override

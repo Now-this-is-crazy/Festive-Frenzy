@@ -40,7 +40,7 @@ public class ThrownBaubleProjectileEntityRenderer<T extends ThrownBaubleProjecti
             state.bakedModel = this.blockRenderDispatcher.getBlockModel(FFBlocks.WHITE_BAUBLE.defaultBlockState());
         }
 
-        state.isGlowing = entity.isGlowing();
+        state.isGlowing = entity.getData().isGlowing();
 
         Vec3 rotation = entity.getRotation();
         Vec3 lastRotation = entity.getLastRotation();

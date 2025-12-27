@@ -36,7 +36,7 @@ public class WreathChakramProjectileRenderer<T extends WreathChakramProjectileEn
     public void extractRenderState(T entity, WreathChakramProjectileEntityRenderState state, float tickProgress) {
         super.extractRenderState(entity, state, tickProgress);
         state.chakramStack = (entity.getPickupItem().isEmpty() ? entity.getDefaultPickupItem() : entity.getPickupItem()).copy();
-        state.chakramStack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, entity.isEnchanted());
+        state.chakramStack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, entity.getData().isEnchanted());
 
         state.bakedModel = this.itemRenderer.getModel(state.chakramStack, entity.level(),
                 (entity.getOwner() instanceof LivingEntity livingEntity) ? livingEntity : null , 0);
