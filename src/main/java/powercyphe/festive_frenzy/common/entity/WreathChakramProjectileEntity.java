@@ -1,11 +1,7 @@
 package powercyphe.festive_frenzy.common.entity;
 
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.EntitySubPredicates;
-import net.minecraft.advancements.critereon.EntityTypePredicate;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -18,9 +14,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.behavior.EntityTracker;
-import net.minecraft.world.entity.ai.sensing.Sensor;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -33,6 +26,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import powercyphe.festive_frenzy.common.cca.WreathChakramDataComponent;
 import powercyphe.festive_frenzy.common.item.WreathChakramItem;
 import powercyphe.festive_frenzy.common.registry.FFEntities;
 import powercyphe.festive_frenzy.common.registry.FFItems;
@@ -44,10 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WreathChakramProjectileEntity extends AbstractArrow {
-    private static final EntityDataAccessor<Integer> DATA_SLOT = SynchedEntityData.defineId(WreathChakramProjectileEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> DATA_RICOCHET = SynchedEntityData.defineId(WreathChakramProjectileEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> DATA_ENCHANTED = SynchedEntityData.defineId(WreathChakramProjectileEntity.class, EntityDataSerializers.BOOLEAN);
-
     private final List<Integer> hitEntities = new ArrayList<>();
     private int hitsBeforeReturn = 0;
     private boolean isReturning = false;
@@ -62,18 +52,10 @@ public class WreathChakramProjectileEntity extends AbstractArrow {
     public WreathChakramProjectileEntity(ServerLevel level, LivingEntity owner, ItemStack stack) {
         super(FFEntities.WREATH_CHAKRAM_PROJECTILE, owner, level, stack, null);
 
-        this.setRicochet(WreathChakramItem.hasRicochetEnchant(level.registryAccess(), stack));
-        this.getEntityData().set(DATA_ENCHANTED, stack.hasFoil());
+        this.getData().setRicochet(WreathChakramItem.hasRicochetEnchant(level.registryAccess(), stack));
+        this.getData().setEnchanted(stack.hasFoil());
 
         this.pickup = (owner instanceof Player player && player.isCreative()) ? Pickup.CREATIVE_ONLY : Pickup.ALLOWED;
-    }
-
-    @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(DATA_ENCHANTED, false);
-        builder.define(DATA_RICOCHET, false);
-        builder.define(DATA_SLOT, -1);
-        super.defineSynchedData(builder);
     }
 
     @Override
@@ -205,7 +187,7 @@ public class WreathChakramProjectileEntity extends AbstractArrow {
                 if (this.isRemoved()) {
                     serverLevel.sendParticles((ParticleOptions) FFParticles.HOLLY_LEAF, this.getX(), this.getY(), this.getZ(),
                             14, 0.07, 0.025, 0.07, 2);
-                } else if (this.shouldRicochet() && !this.isReturning()) {
+                } else if (this.getData().shouldRicochet() && !this.isReturning()) {
                     if (this.hitsBeforeReturn++ > 7) {
                         this.setReturning(true);
                     } else {
@@ -263,7 +245,7 @@ public class WreathChakramProjectileEntity extends AbstractArrow {
     @Override
     protected boolean tryPickup(Player player) {
         if (this.pickup == Pickup.ALLOWED) {
-            int savedSlot = this.getSavedSlot();
+            int savedSlot = this.getData().getSavedSlot();
             ItemStack stack = this.getPickupItem();
             if (savedSlot != -1 && player.getInventory().getItem(savedSlot).isEmpty()) {
                 player.getInventory().setItem(savedSlot, stack);
@@ -281,14 +263,6 @@ public class WreathChakramProjectileEntity extends AbstractArrow {
     @Override
     public ItemStack getDefaultPickupItem() {
         return FFItems.WREATH_CHAKRAM.getDefaultInstance();
-    }
-
-    public void setRicochet(boolean shouldRicochet) {
-        this.getEntityData().set(DATA_RICOCHET, shouldRicochet);
-    }
-
-    public boolean shouldRicochet() {
-        return this.getEntityData().get(DATA_RICOCHET);
     }
 
     @Nullable
@@ -309,22 +283,14 @@ public class WreathChakramProjectileEntity extends AbstractArrow {
                 }
             }
 
-            return nextEntity.getEyePosition();
+            return nextEntity.getEyePosition().add(nextEntity.getDeltaMovement().scale(0.5));
         }
 
         return null;
     }
 
-    public boolean isEnchanted() {
-        return this.getEntityData().get(DATA_ENCHANTED);
-    }
-
-    public void setSavedSlot(int slot) {
-        this.getEntityData().set(DATA_SLOT, slot);
-    }
-
-    public int getSavedSlot() {
-        return this.getEntityData().get(DATA_SLOT);
+    public WreathChakramDataComponent getData() {
+        return WreathChakramDataComponent.get(this);
     }
 
     public float getSpinRotation(float tickProgress) {

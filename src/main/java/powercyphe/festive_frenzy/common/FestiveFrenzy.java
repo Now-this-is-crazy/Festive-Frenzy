@@ -3,8 +3,6 @@ package powercyphe.festive_frenzy.common;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
-import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -12,12 +10,12 @@ import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.GameRules;
 import powercyphe.festive_frenzy.common.event.CandyPouchDropEvent;
 import powercyphe.festive_frenzy.common.event.SnowloggablePlaceEvent;
 import powercyphe.festive_frenzy.common.payload.EmitterParticlePayload;
 import powercyphe.festive_frenzy.common.payload.PresentClosePayload;
 import powercyphe.festive_frenzy.common.registry.*;
+import powercyphe.festive_frenzy.common.util.FFDispenserBehavior;
 import powercyphe.festive_frenzy.common.util.FFLootTableModifier;
 
 public class FestiveFrenzy implements ModInitializer {
@@ -40,9 +38,10 @@ public class FestiveFrenzy implements ModInitializer {
         FFSounds.init();
         FFTags.init();
         FFRecipes.init();
+        FFFeatures.init();
         FFLootTables.init();
         FFLootTableModifier.init();
-        FFFeatures.init();
+        FFDispenserBehavior.init();
 
         UseBlockCallback.EVENT.register(new SnowloggablePlaceEvent());
         ServerLivingEntityEvents.AFTER_DEATH.register(new CandyPouchDropEvent());

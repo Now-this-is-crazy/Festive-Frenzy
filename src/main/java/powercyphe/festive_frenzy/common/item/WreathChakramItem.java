@@ -39,13 +39,13 @@ public class WreathChakramItem extends Item {
 
         if (!cooldowns.isOnCooldown(stack)) {
             level.playSound(null, player.getX(), player.getY(), player.getZ(), FFSounds.WREATH_CHAKRAM_THROW, SoundSource.NEUTRAL,
-                    1F, 0.875F + (level.getRandom().nextFloat() * 0.3F));
+                    0.5F, 0.875F + (level.getRandom().nextFloat() * 0.3F));
 
             if (level instanceof ServerLevel serverLevel) {
                 WreathChakramProjectileEntity projectile = Projectile.spawnProjectileFromRotation(
                         WreathChakramProjectileEntity::new, serverLevel, stack, player, 0.0F, 2.5F, 0.5F);
 
-                projectile.setSavedSlot(FFUtil.getSlotForItem(player.getInventory(), stack));
+                projectile.getData().setSavedSlot(FFUtil.getSlotForItem(player.getInventory(), stack));
             }
 
             stack.consume(1, player);
