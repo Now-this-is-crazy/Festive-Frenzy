@@ -4,5 +4,7 @@
   "group": "present_recolor",
   "input": "#festive_frenzy:presents",
   "material": "minecraft:sculk_catalyst",
-  "result": "festive_frenzy:sculk_present"
+  "result": {
+    "id": "festive_frenzy:sculk_present"
+  }
 }

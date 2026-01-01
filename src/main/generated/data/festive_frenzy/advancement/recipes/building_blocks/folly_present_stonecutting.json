@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:folly_present_stonecutting"
+        "recipe": "festive_frenzy:folly_present_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:folly_present_stonecutting"
+      "festive_frenzy:folly_present_stonecutting"
     ]
   }
 }

@@ -4,5 +4,7 @@
   "group": "present_recolor",
   "input": "#festive_frenzy:presents",
   "material": "minecraft:purple_dye",
-  "result": "festive_frenzy:purple_present"
+  "result": {
+    "id": "festive_frenzy:purple_present"
+  }
 }

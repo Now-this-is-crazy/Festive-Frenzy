@@ -1,15 +1,16 @@
 package powercyphe.festive_frenzy.client;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperties;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperties;
 import powercyphe.festive_frenzy.client.event.ExplosiveBaubleTooltipEvent;
@@ -30,13 +31,13 @@ public class FestiveFrenzyClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.SHORT_FROZEN_GRASS, FFBlocks.TALL_FROZEN_GRASS, FFBlocks.HOLLY_BUSH);
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.GINGERBREAD_DOOR, FFBlocks.GINGERBREAD_TRAPDOOR);
+        BlockRenderLayerMap.putBlocks(ChunkSectionLayer.CUTOUT, FFBlocks.SHORT_FROZEN_GRASS, FFBlocks.TALL_FROZEN_GRASS, FFBlocks.HOLLY_BUSH);
+        BlockRenderLayerMap.putBlocks(ChunkSectionLayer.CUTOUT, FFBlocks.GINGERBREAD_DOOR, FFBlocks.GINGERBREAD_TRAPDOOR);
 
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.PRESENTS);
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.TINSELS);
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.BAUBLES);
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.FAIRY_LIGHTS, FFBlocks.WREATH, FFBlocks.STAR_DECORATION);
+        BlockRenderLayerMap.putBlocks(ChunkSectionLayer.CUTOUT, FFBlocks.PRESENTS);
+        BlockRenderLayerMap.putBlocks(ChunkSectionLayer.CUTOUT, FFBlocks.TINSELS);
+        BlockRenderLayerMap.putBlocks(ChunkSectionLayer.CUTOUT, FFBlocks.BAUBLES);
+        BlockRenderLayerMap.putBlocks(ChunkSectionLayer.CUTOUT, FFBlocks.FAIRY_LIGHTS, FFBlocks.WREATH, FFBlocks.STAR_DECORATION);
 
         RangeSelectItemModelProperties.ID_MAPPER.put(BaubleExplosionPowerProperty.ID, BaubleExplosionPowerProperty.CODEC);
         SelectItemModelProperties.ID_MAPPER.put(BaubleExplosionModificationProperty.ID, BaubleExplosionModificationProperty.TYPE);

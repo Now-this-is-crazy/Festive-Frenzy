@@ -19,8 +19,17 @@
     "minecraft:purple_stained_glass_pane",
     "minecraft:magenta_stained_glass_pane",
     "minecraft:pink_stained_glass_pane",
-    "#minecraft:fences",
-    "#minecraft:walls",
-    "#minecraft:leaves"
+    {
+      "id": "#minecraft:fences",
+      "required": false
+    },
+    {
+      "id": "#minecraft:walls",
+      "required": false
+    },
+    {
+      "id": "#minecraft:leaves",
+      "required": false
+    }
   ]
 }

@@ -2,6 +2,8 @@ package powercyphe.festive_frenzy.common.cca;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import powercyphe.festive_frenzy.common.entity.ThrownBaubleProjectileEntity;
 import powercyphe.festive_frenzy.common.registry.FFComponents;
@@ -24,14 +26,15 @@ public class ThrownBaubleDataComponent implements AutoSyncedComponent {
         FFComponents.THROWN_BAUBLE_DATA.sync(this.thrownBauble);
     }
 
+
     @Override
-    public void readFromNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
-        this.setGlowing(tag.getBooleanOr(IS_GLOWING_KEY, false));
+    public void readData(ValueInput valueInput) {
+        this.setGlowing(valueInput.getBooleanOr(IS_GLOWING_KEY, false));
     }
 
     @Override
-    public void writeToNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
-        tag.putBoolean(IS_GLOWING_KEY, this.isGlowing());
+    public void writeData(ValueOutput valueOutput) {
+        valueOutput.putBoolean(IS_GLOWING_KEY, this.isGlowing());
     }
 
     public void setGlowing(boolean isGlowing) {

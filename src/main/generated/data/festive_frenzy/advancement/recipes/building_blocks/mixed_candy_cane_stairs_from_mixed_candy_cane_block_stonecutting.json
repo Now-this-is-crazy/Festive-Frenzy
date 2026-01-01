@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:mixed_candy_cane_stairs_from_mixed_candy_cane_block_stonecutting"
+        "recipe": "festive_frenzy:mixed_candy_cane_stairs_from_mixed_candy_cane_block_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:mixed_candy_cane_stairs_from_mixed_candy_cane_block_stonecutting"
+      "festive_frenzy:mixed_candy_cane_stairs_from_mixed_candy_cane_block_stonecutting"
     ]
   }
 }

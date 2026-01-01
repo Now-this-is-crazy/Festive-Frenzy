@@ -17,17 +17,17 @@ public class FFDamageTypeTagProvider extends FabricTagProvider<DamageType> {
 
     @Override
     protected void addTags(HolderLookup.Provider wrapperLookup) {
-        getOrCreateTagBuilder(DamageTypeTags.IS_FREEZING)
+        builder(DamageTypeTags.IS_FREEZING)
                 .addOptional(FFDamageTypes.FROSTFLAKE);
-        getOrCreateTagBuilder(DamageTypeTags.IS_PROJECTILE)
+        builder(DamageTypeTags.IS_PROJECTILE)
                 .addOptional(FFDamageTypes.BAUBLE)
                 .addOptional(FFDamageTypes.FROSTFLAKE);
 
-        getOrCreateTagBuilder(DamageTypeTags.NO_KNOCKBACK)
+        builder(DamageTypeTags.NO_KNOCKBACK)
                 .addOptional(FFDamageTypes.FROSTFLAKE);
-        getOrCreateTagBuilder(DamageTypeTags.NO_IMPACT)
+        builder(DamageTypeTags.NO_IMPACT)
                 .addOptional(FFDamageTypes.FROSTFLAKE);
-        getOrCreateTagBuilder(DamageTypeTags.BYPASSES_COOLDOWN)
+        builder(DamageTypeTags.BYPASSES_COOLDOWN)
                 .addOptional(FFDamageTypes.FROSTFLAKE);
     }
 }

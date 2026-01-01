@@ -21,12 +21,12 @@ public class FFItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider wrapperLookup) {
-        getOrCreateTagBuilder(FFTags.Items.CANDY_CANES)
+        valueLookupBuilder(FFTags.Items.CANDY_CANES)
                 .add(FFItems.RED_CANDY_CANE, FFItems.GREEN_CANDY_CANE);
         fromItemLike(FFTags.Items.CANDY_CANE_BLOCKS,
                 FFBlocks.RED_CANDY_CANE_BLOCK, FFBlocks.GREEN_CANDY_CANE_BLOCK, FFBlocks.MIXED_CANDY_CANE_BLOCK);
 
-        getOrCreateTagBuilder(FFTags.Items.CANDY_POUCH_FOOD)
+        valueLookupBuilder(FFTags.Items.CANDY_POUCH_FOOD)
                 .add(FFItems.PEPPERMINT, FFItems.GINGERBREAD_MAN, FFItems.CANDIED_APPLE,
                         FFItems.SNOWFLAKE_COOKIE, FFItems.TREE_COOKIE, FFItems.STAR_COOKIE);
 
@@ -34,23 +34,23 @@ public class FFItemTagProvider extends FabricTagProvider.ItemTagProvider {
         fromItemLike(FFTags.Items.BAUBLES, FFBlocks.BAUBLES);
         fromItemLike(FFTags.Items.TINSEL, FFBlocks.TINSELS);
 
-        getOrCreateTagBuilder(FFTags.Items.ITEMS_WITH_EXPLOSION_POWER)
+        valueLookupBuilder(FFTags.Items.ITEMS_WITH_EXPLOSION_POWER)
                 .add(Items.GUNPOWDER);
 
 
-        getOrCreateTagBuilder(ItemTags.DYEABLE)
+        valueLookupBuilder(ItemTags.DYEABLE)
                 .add(FFItems.FESTIVE_HAT);
 
-        getOrCreateTagBuilder(ItemTags.FOX_FOOD)
+        valueLookupBuilder(ItemTags.FOX_FOOD)
                 .add(FFItems.HOLLY);
 
-        getOrCreateTagBuilder(ItemTags.SWORDS)
+        valueLookupBuilder(ItemTags.SWORDS)
                 .add(FFItems.SHARPENED_CANDY_CANE);
 
-        getOrCreateTagBuilder(FFTags.Items.WREATH_CHAKRAM_ENCHANTABLE)
+        valueLookupBuilder(FFTags.Items.WREATH_CHAKRAM_ENCHANTABLE)
                 .add(FFItems.WREATH_CHAKRAM);
 
-        getOrCreateTagBuilder(ItemTags.DURABILITY_ENCHANTABLE)
+        valueLookupBuilder(ItemTags.DURABILITY_ENCHANTABLE)
                 .add(FFItems.WREATH_CHAKRAM);
 
         fromItemLike(ItemTags.STAIRS,
@@ -83,7 +83,7 @@ public class FFItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
     public void fromItemLike(TagKey<Item> itemTag, ItemLike... itemLikes) {
         for (ItemLike itemLike : itemLikes) {
-            getOrCreateTagBuilder(itemTag)
+            valueLookupBuilder(itemTag)
                     .add(itemLike.asItem());
         }
     }
