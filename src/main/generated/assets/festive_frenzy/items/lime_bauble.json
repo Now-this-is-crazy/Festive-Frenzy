@@ -1,0 +1,46 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "entries": [
+      {
+        "model": {
+          "type": "minecraft:select",
+          "cases": [
+            {
+              "model": {
+                "type": "minecraft:model",
+                "model": "festive_frenzy:item/bauble/lime_bauble_modification_none"
+              },
+              "when": "none"
+            },
+            {
+              "model": {
+                "type": "minecraft:model",
+                "model": "festive_frenzy:item/bauble/lime_bauble_modification_fire"
+              },
+              "when": "fire"
+            },
+            {
+              "model": {
+                "type": "minecraft:model",
+                "model": "festive_frenzy:item/bauble/lime_bauble_modification_ice"
+              },
+              "when": "ice"
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:model",
+            "model": "festive_frenzy:item/bauble/lime_bauble"
+          },
+          "property": "festive_frenzy:bauble_explosion_modification"
+        },
+        "threshold": 1.0
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "festive_frenzy:item/bauble/lime_bauble"
+    },
+    "property": "festive_frenzy:bauble_explosion_power"
+  }
+}

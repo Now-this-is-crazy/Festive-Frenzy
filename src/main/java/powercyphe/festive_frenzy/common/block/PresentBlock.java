@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
@@ -123,11 +124,8 @@ public class PresentBlock extends BaseEntityBlock implements SimpleWaterloggedBl
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos blockPos, BlockState newState, boolean bl) {
-        if (!level.isClientSide() && level.getBlockEntity(blockPos) instanceof PresentBlockEntity present) {
-            Containers.dropContents(level, blockPos, present);
-        }
-        super.onRemove(state, level, blockPos, newState, bl);
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos blockPos, boolean bl) {
+        Containers.updateNeighboursAfterDestroy(state, level, blockPos);
     }
 
     @Override

@@ -69,7 +69,7 @@ public class ThrownBaubleProjectileEntity extends ThrowableItemProjectile implem
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
-        this.shouldDropItem = compoundTag.getBoolean(SHOULD_DROP_ITEM_KEY);
+        this.shouldDropItem = compoundTag.getBooleanOr(SHOULD_DROP_ITEM_KEY, true);
     }
 
     @Override

@@ -2,15 +2,19 @@ package powercyphe.festive_frenzy.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -20,12 +24,10 @@ import powercyphe.festive_frenzy.common.entity.ThrownBaubleProjectileEntity;
 import powercyphe.festive_frenzy.common.registry.FFBlocks;
 
 public class ThrownBaubleProjectileEntityRenderer<T extends ThrownBaubleProjectileEntity, S extends ThrownBaubleProjectileEntityRenderState> extends EntityRenderer<T, ThrownBaubleProjectileEntityRenderState> {
-    private final ItemRenderer itemRenderer;
     private final BlockRenderDispatcher blockRenderDispatcher;
 
     public ThrownBaubleProjectileEntityRenderer(EntityRendererProvider.Context context) {
         super(context);
-        this.itemRenderer = context.getItemRenderer();
         this.blockRenderDispatcher = context.getBlockRenderDispatcher();
     }
 
@@ -35,9 +37,9 @@ public class ThrownBaubleProjectileEntityRenderer<T extends ThrownBaubleProjecti
 
         state.baubleStack = entity.getItem().isEmpty() ? FFBlocks.WHITE_BAUBLE.asItem().getDefaultInstance() : entity.getItem();
         if (state.baubleStack.getItem() instanceof BlockItem blockItem) {
-            state.bakedModel = this.blockRenderDispatcher.getBlockModel(blockItem.getBlock().defaultBlockState());
+            state.baubleModel = this.blockRenderDispatcher.getBlockModel(blockItem.getBlock().defaultBlockState());
         } else {
-            state.bakedModel = this.blockRenderDispatcher.getBlockModel(FFBlocks.WHITE_BAUBLE.defaultBlockState());
+            state.baubleModel = this.blockRenderDispatcher.getBlockModel(FFBlocks.WHITE_BAUBLE.defaultBlockState());
         }
 
         state.isGlowing = entity.getData().isGlowing();
@@ -57,16 +59,18 @@ public class ThrownBaubleProjectileEntityRenderer<T extends ThrownBaubleProjecti
 
     @Override
     public void render(ThrownBaubleProjectileEntityRenderState state, PoseStack poseStack, MultiBufferSource multiBufferSource, int light) {
-        if (state.baubleStack.getItem() instanceof BlockItem blockItem) {
+        if (!state.baubleStack.isEmpty()) {
             poseStack.pushPose();
-            poseStack.translate(0, 0.1375, 0);
+            poseStack.translate(0,  0.1375, 0);
 
             poseStack.mulPose(Axis.XP.rotation((float) state.rotationX));
             poseStack.mulPose(Axis.YP.rotation((float) state.rotationY));
             poseStack.mulPose(Axis.ZP.rotation((float) state.rotationZ));
 
-            this.itemRenderer.render(state.baubleStack, ItemDisplayContext.NONE, false, poseStack, multiBufferSource,
-                    state.isGlowing ? Math.max(light, LightTexture.FULL_BRIGHT) : light, OverlayTexture.NO_OVERLAY, state.bakedModel);
+            poseStack.translate(-0.5, -0.5, -0.5);
+
+            ModelBlockRenderer.renderModel(poseStack.last(), multiBufferSource.getBuffer(ItemBlockRenderTypes.getRenderType(state.baubleStack)),
+                    state.baubleModel, 255, 255, 255, state.isGlowing ? Math.max(light, LightTexture.FULL_BRIGHT) : light, OverlayTexture.NO_OVERLAY);
             poseStack.popPose();
         }
 

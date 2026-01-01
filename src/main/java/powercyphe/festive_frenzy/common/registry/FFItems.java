@@ -215,9 +215,9 @@ public class FFItems {
     public static final Item SNOWFLAKE_COOKIE = register("snowflake_cookie", Item::new, food(new Item.Properties(), 4, 0.7F,
             new MobEffectInstance(MobEffects.SLOW_FALLING, 100)));
     public static final Item TREE_COOKIE = register("tree_cookie", Item::new, food(new Item.Properties(), 4, 0.7F,
-            new MobEffectInstance(MobEffects.JUMP, 100)));
+            new MobEffectInstance(MobEffects.JUMP_BOOST, 100)));
     public static final Item STAR_COOKIE = register("star_cookie", Item::new, food(new Item.Properties(), 4, 0.7F,
-            new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100)));
+            new MobEffectInstance(MobEffects.SPEED, 100)));
 
     public static final Item CANDY_POUCH = register("candy_pouch", CandyPouchItem::new, new Item.Properties());
     public static final Item FROSTFLAKE_CANNON = register("frostflake_cannon", FrostflakeCannonItem::new, new Item.Properties());

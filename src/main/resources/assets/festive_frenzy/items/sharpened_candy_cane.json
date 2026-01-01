@@ -1,0 +1,23 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "festive_frenzy:item/sharpened_candy_cane_gui"
+        },
+        "when": [
+          "gui",
+          "ground",
+          "fixed"
+        ]
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "festive_frenzy:item/sharpened_candy_cane"
+    },
+    "property": "minecraft:display_context"
+  }
+}

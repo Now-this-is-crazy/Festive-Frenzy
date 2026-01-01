@@ -1,28 +1,39 @@
 package powercyphe.festive_frenzy.common.datagen;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.mojang.math.Quadrant;
+import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.*;
+import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.renderer.block.model.Variant;
+import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.model.multipart.Condition;
+import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.renderer.item.RangeSelectItemModel;
+import net.minecraft.client.renderer.item.SelectItemModel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.data.models.BlockModelGenerators;
-import net.minecraft.data.models.ItemModelGenerators;
-import net.minecraft.data.models.blockstates.*;
-import net.minecraft.data.models.model.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import powercyphe.festive_frenzy.client.render.item.BaubleExplosionModificationProperty;
-import powercyphe.festive_frenzy.client.render.item.BaubleExplosionProperty;
+import powercyphe.festive_frenzy.client.render.item.BaubleExplosionPowerProperty;
 import powercyphe.festive_frenzy.common.FestiveFrenzy;
 import powercyphe.festive_frenzy.common.block.FairyLightsBlock;
 import powercyphe.festive_frenzy.common.block.MultiWallDecorationBlock;
 import powercyphe.festive_frenzy.common.registry.FFBlocks;
 import powercyphe.festive_frenzy.common.registry.FFItems;
 import powercyphe.festive_frenzy.common.world.BaubleExplosion;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FFModelProvider extends FabricModelProvider {
     public FFModelProvider(FabricDataOutput output) {
@@ -31,10 +42,10 @@ public class FFModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockModelGenerators generator) {
-        generator.createCrossBlockWithDefaultItem(FFBlocks.SHORT_FROZEN_GRASS, BlockModelGenerators.TintState.NOT_TINTED);
-        createDoublePlantBlock(generator, FFBlocks.TALL_FROZEN_GRASS, BlockModelGenerators.TintState.NOT_TINTED);
+        generator.createCrossBlockWithDefaultItem(FFBlocks.SHORT_FROZEN_GRASS, BlockModelGenerators.PlantType.NOT_TINTED);
+        createDoublePlantBlock(generator, FFBlocks.TALL_FROZEN_GRASS, BlockModelGenerators.PlantType.NOT_TINTED);
 
-        createHollyBush(generator, FFBlocks.HOLLY_BUSH);
+        createHollyBush(generator, FFBlocks.HOLLY_BUSH, FFItems.HOLLY);
 
         generator.family(FFBlocks.RED_CANDY_CANE_BLOCK)
                 .stairs(FFBlocks.RED_CANDY_CANE_STAIRS).slab(FFBlocks.RED_CANDY_CANE_SLAB);
@@ -88,19 +99,22 @@ public class FFModelProvider extends FabricModelProvider {
         createFairyLights(generator, FFBlocks.FAIRY_LIGHTS);
 
         generator.createNonTemplateHorizontalBlock(FFBlocks.WREATH);
-        generator.createSimpleFlatItemModel(FFBlocks.WREATH);
+        generator.registerSimpleFlatItemModel(FFBlocks.WREATH);
 
-        generator.createCrossBlock(FFBlocks.STAR_DECORATION, BlockModelGenerators.TintState.NOT_TINTED);
-        generator.skipAutoItemBlock(FFBlocks.STAR_DECORATION);
+        generator.createCrossBlock(FFBlocks.STAR_DECORATION, BlockModelGenerators.PlantType.NOT_TINTED);
+        generator.registerSimpleItemModel(FFBlocks.STAR_DECORATION.asItem(), ModelLocationUtils.getModelLocation(FFBlocks.STAR_DECORATION.asItem()));
 
     }
 
-    private void createHollyBush(BlockModelGenerators generator, Block block) {
-        generator.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
-                .with(PropertyDispatch.property(BlockStateProperties.AGE_2)
-                        .generate((integer) -> Variant.variant().with(VariantProperties.MODEL,
-                                        generator.createSuffixedVariant(block, "_stage" + integer, ModelTemplates.CROSS, TextureMapping::cross)))));
-        generator.skipAutoItemBlock(block);
+    private void createHollyBush(BlockModelGenerators generator, Block block, Item item) {
+        generator.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(PropertyDispatch.initial(BlockStateProperties.AGE_2)
+                        .generate((integer) -> BlockModelGenerators.plainVariant(
+                                generator.createSuffixedVariant(block, "_stage" + integer, ModelTemplates.CROSS, TextureMapping::cross))
+                        )
+                )
+        );
+        generator.registerSimpleItemModel(item, ModelLocationUtils.getModelLocation(item));
     }
 
     private void createFairyLights(BlockModelGenerators generator, Block block) {
@@ -111,14 +125,14 @@ public class FFModelProvider extends FabricModelProvider {
             BooleanProperty property = MultiWallDecorationBlock.DIRECTION_TO_PROPERTY.get(direction);
 
             for (int variant : FairyLightsBlock.VARIANT.getPossibleValues()) {
-                multiPart.with(Condition.condition().term(property, true).term(FairyLightsBlock.VARIANT, variant), Variant.variant().with(VariantProperties.MODEL,
-                                id.withPrefix("block/").withSuffix("_" + variant))
-                        .with(VariantProperties.UV_LOCK, true).with(VariantProperties.Y_ROT, switch (direction) {
-                            case SOUTH -> VariantProperties.Rotation.R180;
-                            case EAST -> VariantProperties.Rotation.R90;
-                            case WEST -> VariantProperties.Rotation.R270;
-                            case null, default -> VariantProperties.Rotation.R0;
-                        }));
+                multiPart.with(BlockModelGenerators.condition().term(property, true).term(FairyLightsBlock.VARIANT, variant),
+                        BlockModelGenerators.plainVariant(id.withPrefix("block/").withSuffix("_" + variant))
+                        .with(VariantMutator.UV_LOCK.withValue(true)).with(VariantMutator.Y_ROT.withValue(switch (direction) {
+                            case SOUTH -> Quadrant.R180;
+                            case EAST -> Quadrant.R90;
+                            case WEST -> Quadrant.R270;
+                            case null, default -> Quadrant.R0;
+                        })));
             }
         }
 
@@ -144,13 +158,14 @@ public class FFModelProvider extends FabricModelProvider {
         for (Direction direction : MultiWallDecorationBlock.DIRECTION_TO_PROPERTY.keySet()) {
             BooleanProperty property = MultiWallDecorationBlock.DIRECTION_TO_PROPERTY.get(direction);
 
-            multiPart.with(Condition.condition().term(property, true), Variant.variant().with(VariantProperties.MODEL, id.withPrefix("block/"))
-                    .with(VariantProperties.UV_LOCK, true).with(VariantProperties.Y_ROT, switch (direction) {
-                        case SOUTH -> VariantProperties.Rotation.R180;
-                        case EAST -> VariantProperties.Rotation.R90;
-                        case WEST -> VariantProperties.Rotation.R270;
-                        case null, default -> VariantProperties.Rotation.R0;
-                    }));
+            multiPart.with(BlockModelGenerators.condition().term(property, true),
+                    BlockModelGenerators.plainVariant(id.withPrefix("block/"))
+                            .with(VariantMutator.UV_LOCK.withValue(true)).with(VariantMutator.Y_ROT.withValue(switch (direction) {
+                                case SOUTH -> Quadrant.R180;
+                                case EAST -> Quadrant.R90;
+                                case WEST -> Quadrant.R270;
+                                case null, default -> Quadrant.R0;
+                            })));
         }
 
         generator.blockStateOutput.accept(multiPart);
@@ -169,7 +184,7 @@ public class FFModelProvider extends FabricModelProvider {
     private void createCategorized(BlockModelGenerators generator, Block block, String type) {
         ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
 
-        generator.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, id.withPrefix("block/")));
+        generator.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(id.withPrefix("block/"))));
         generator.modelOutput.accept(id.withPrefix("block/"), () -> {
             JsonObject base = new JsonObject();
             base.addProperty("parent", FestiveFrenzy.id("block/" + type).toString());
@@ -183,11 +198,9 @@ public class FFModelProvider extends FabricModelProvider {
         });
     }
 
-    private void createDoublePlantBlock(BlockModelGenerators generator, Block block, BlockModelGenerators.TintState tintState) {
-            generator.createSimpleFlatItemModel(block, "_bottom");
-            ResourceLocation resourceLocation = generator.createSuffixedVariant(block, "_top", tintState.getCross(), TextureMapping::cross);
-            ResourceLocation resourceLocation2 = generator.createSuffixedVariant(block, "_bottom", tintState.getCross(), TextureMapping::cross);
-            generator.createDoubleBlock(block, resourceLocation, resourceLocation2);
+    private void createDoublePlantBlock(BlockModelGenerators generator, Block block, BlockModelGenerators.PlantType plantType) {
+        generator.registerSimpleFlatItemModel(block, "_bottom");
+        generator.createDoublePlant(block, plantType);
     }
 
     @Override
@@ -224,42 +237,48 @@ public class FFModelProvider extends FabricModelProvider {
 
     private void createCategorized(ItemModelGenerators generator, ItemLike item, String type) {
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(item.asItem());
-
-        ModelTemplates.FLAT_ITEM.create(id.withPrefix("item/"), new TextureMapping()
-                .put(TextureSlot.LAYER0, id.withPrefix("item/" + type + "/")).put(TextureSlot.PARTICLE, id.withPrefix("item/" + type + "/")), generator.output);
+        ResourceLocation modelLocation = ModelTemplates.FLAT_ITEM.create(
+                id.withPrefix("item/" + type + "/"),
+                new TextureMapping()
+                        .put(TextureSlot.LAYER0, id.withPrefix("item/" + type + "/"))
+                        .put(TextureSlot.PARTICLE, id.withPrefix("item/" + type + "/")),
+                generator.modelOutput
+        );
+        generator.itemModelOutput.accept(item.asItem(), ItemModelUtils.plainModel(id.withPrefix("item/" + type + "/")));
     }
 
     public void generateBauble(ItemModelGenerators generator, ItemLike bauble) {
-        ResourceLocation id = ModelLocationUtils.getModelLocation(bauble.asItem());
+        ResourceLocation id = BuiltInRegistries.ITEM.getKey(bauble.asItem());
 
-        ModelTemplates.TWO_LAYERED_ITEM.create(id, new TextureMapping()
-                        .put(TextureSlot.LAYER0, FestiveFrenzy.id("item/bauble/" + BuiltInRegistries.ITEM.getKey(bauble.asItem()).getPath()))
-                        .put(TextureSlot.LAYER1, FestiveFrenzy.id("item/bauble/ring_default")), generator.output,
-                (resourceLocation, map) -> {
-                    JsonObject base = ModelTemplates.TWO_LAYERED_ITEM.createBaseTemplate(resourceLocation, map);
-                    JsonArray overrides = new JsonArray();
+        // Base Bauble Model
+        ResourceLocation baseModelLocation = ModelTemplates.TWO_LAYERED_ITEM.create(
+                id.withPrefix("item/bauble/"),
+                new TextureMapping()
+                        .put(TextureSlot.LAYER0, id.withPrefix("item/bauble/"))
+                        .put(TextureSlot.LAYER1, FestiveFrenzy.id("item/bauble/ring_default")),
+                generator.modelOutput
+        );
+        ItemModel.Unbaked baseModel = ItemModelUtils.plainModel(baseModelLocation);
 
-
-                    for (BaubleExplosion.ExplosionModification modification : BaubleExplosion.ExplosionModification.values()) {
-                        JsonObject override = new JsonObject();
-
-                        JsonObject predicate = new JsonObject();
-                        predicate.addProperty(BaubleExplosionProperty.ID.toString(), 1);
-                        predicate.addProperty(BaubleExplosionModificationProperty.ID.toString(), modification.getId());
-
-                        override.add("predicate", predicate);
-                        override.addProperty("model", id.withSuffix("_" + modification.getName()).toString());
-                        overrides.add(override);
-                    }
-
-                    base.add("overrides", overrides);
-                    return base;
-                });
-
+        // Bauble Models with Explosion Modification
+        List<SelectItemModel.SwitchCase<BaubleExplosion.ExplosionModification>> selectProperties = new ArrayList<>();
         for (BaubleExplosion.ExplosionModification modification : BaubleExplosion.ExplosionModification.values()) {
-            ModelTemplates.TWO_LAYERED_ITEM.create(id.withSuffix("_" + modification.getName()), new TextureMapping()
-                    .put(TextureSlot.LAYER0, FestiveFrenzy.id("item/bauble/" + BuiltInRegistries.ITEM.getKey(bauble.asItem()).getPath()))
-                    .put(TextureSlot.LAYER1, FestiveFrenzy.id("item/bauble/ring_trigger_" + modification.getName())), generator.output);
+            ResourceLocation modelLocation = ModelTemplates.TWO_LAYERED_ITEM.create(
+                    id.withPrefix("item/bauble/").withSuffix("_modification_" + modification.getName()),
+                    new TextureMapping()
+                            .put(TextureSlot.LAYER0, id.withPrefix("item/bauble/"))
+                            .put(TextureSlot.LAYER1, FestiveFrenzy.id("item/bauble/ring_trigger_" + modification.getName())),
+                    generator.modelOutput
+            );
+
+            selectProperties.add(ItemModelUtils.when(modification, ItemModelUtils.plainModel(modelLocation)));
         }
+
+        // Items Json File
+        generator.itemModelOutput.accept(
+                bauble.asItem(),
+                ItemModelUtils.rangeSelect(new BaubleExplosionPowerProperty(), 1F, baseModel,
+                        new RangeSelectItemModel.Entry(1F, ItemModelUtils.select(new BaubleExplosionModificationProperty(), baseModel, selectProperties)))
+        );
     }
 }
