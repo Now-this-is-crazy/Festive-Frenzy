@@ -46,11 +46,6 @@ public class HollyBushBlock extends BushBlock implements BonemealableBlock, Snow
     }
 
     @Override
-    protected MapCodec<? extends BushBlock> codec() {
-        return CODEC;
-    }
-
-    @Override
     protected VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
         return Block.box(2F, 0F, 2F, 14F, 13F, 14F);
     }

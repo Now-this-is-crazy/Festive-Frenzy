@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexSorting;
 import net.minecraft.client.renderer.SectionBufferBuilderPack;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.block.model.BlockModelPart;
 import net.minecraft.client.renderer.chunk.RenderChunkRegion;
 import net.minecraft.client.renderer.chunk.SectionCompiler;
 import net.minecraft.core.BlockPos;
@@ -23,6 +24,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import powercyphe.festive_frenzy.common.util.SnowLoggable;
 
+import java.util.List;
+
 @Mixin(SectionCompiler.class)
 public abstract class SectionCompilerMixin {
 
@@ -30,9 +33,8 @@ public abstract class SectionCompilerMixin {
     @Final
     private BlockRenderDispatcher blockRenderer;
 
-    @WrapOperation(method = "compile", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/BlockRenderDispatcher;renderBatched(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/BlockAndTintGetter;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZLnet/minecraft/util/RandomSource;)V"))
-    private void festive_frenzy$renderSnowlogged(BlockRenderDispatcher instance, BlockState state, BlockPos blockPos, BlockAndTintGetter blockAndTintGetter, PoseStack poseStack, VertexConsumer vertexConsumer, boolean bl, RandomSource randomSource, Operation<Void> original,
-                                                 SectionPos sectionPos, RenderChunkRegion renderChunkRegion, VertexSorting vertexSorting, SectionBufferBuilderPack sectionBufferBuilderPack) {
+    @WrapOperation(method = "compile", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/BlockRenderDispatcher;renderBatched(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/BlockAndTintGetter;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZLjava/util/List;)V"))
+    private void festive_frenzy$renderSnowlogged(BlockRenderDispatcher instance, BlockState state, BlockPos blockPos, BlockAndTintGetter blockAndTintGetter, PoseStack poseStack, VertexConsumer vertexConsumer, boolean bl, List<BlockModelPart> list, Operation<Void> original, SectionPos sectionPos, RenderChunkRegion renderChunkRegion, VertexSorting vertexSorting, SectionBufferBuilderPack sectionBufferBuilderPack) {
         Block block = state.getBlock();
         if (block instanceof SnowLoggable snowLoggable) {
             int layers = snowLoggable.getSnowLayers(state);
@@ -40,10 +42,10 @@ public abstract class SectionCompilerMixin {
             if (layers > 0) {
                 BlockState snowState = Blocks.SNOW.defaultBlockState()
                         .setValue(SnowLayerBlock.LAYERS, layers);
-                this.blockRenderer.renderBatched(snowState, blockPos, renderChunkRegion, poseStack, vertexConsumer, true, randomSource);
+                this.blockRenderer.renderBatched(snowState, blockPos, renderChunkRegion, poseStack, vertexConsumer, true, List.of());
             }
         }
 
-        original.call(instance, state, blockPos, renderChunkRegion, poseStack, vertexConsumer, bl, randomSource);
+        original.call(instance, state, blockPos, renderChunkRegion, poseStack, vertexConsumer, bl, list);
     }
 }

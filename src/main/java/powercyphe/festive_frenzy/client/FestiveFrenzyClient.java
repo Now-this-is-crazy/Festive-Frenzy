@@ -4,20 +4,14 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.util.ARGB;
-import net.minecraft.util.Tuple;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperties;
+import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperties;
 import powercyphe.festive_frenzy.client.event.ExplosiveBaubleTooltipEvent;
 import powercyphe.festive_frenzy.client.particle.*;
 import powercyphe.festive_frenzy.client.render.entity.FrostflakeProjectileRenderer;
@@ -25,20 +19,14 @@ import powercyphe.festive_frenzy.client.render.entity.ThrownBaubleProjectileEnti
 import powercyphe.festive_frenzy.client.render.entity.WreathChakramProjectileRenderer;
 import powercyphe.festive_frenzy.client.render.entity.model.FrostflakeProjectileEntityModel;
 import powercyphe.festive_frenzy.client.render.item.BaubleExplosionModificationProperty;
-import powercyphe.festive_frenzy.client.render.item.BaubleExplosionProperty;
+import powercyphe.festive_frenzy.client.render.item.BaubleExplosionPowerProperty;
 import powercyphe.festive_frenzy.client.screen.PresentScreen;
 import powercyphe.festive_frenzy.common.FestiveFrenzy;
 import powercyphe.festive_frenzy.common.payload.EmitterParticlePayload;
 import powercyphe.festive_frenzy.common.registry.*;
-import powercyphe.festive_frenzy.mixin.accessor.ItemPropertiesAccessor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FestiveFrenzyClient implements ClientModInitializer {
-
     public static final ModelLayerLocation FROSTFLAKE = new ModelLayerLocation(FestiveFrenzy.id("entity/frostflake"), "main");
-    public static List<Tuple<Item, ModelResourceLocation>> GUI_MODELS = new ArrayList<>();
 
     @Override
     public void onInitializeClient() {
@@ -50,8 +38,8 @@ public class FestiveFrenzyClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.BAUBLES);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), FFBlocks.FAIRY_LIGHTS, FFBlocks.WREATH, FFBlocks.STAR_DECORATION);
 
-        ItemPropertiesAccessor.festive_frenzy$getGenericProperties().put(BaubleExplosionModificationProperty.ID, new BaubleExplosionModificationProperty());
-        ItemProperties.registerGeneric(BaubleExplosionProperty.ID, new BaubleExplosionProperty());
+        RangeSelectItemModelProperties.ID_MAPPER.put(BaubleExplosionPowerProperty.ID, BaubleExplosionPowerProperty.CODEC);
+        SelectItemModelProperties.ID_MAPPER.put(BaubleExplosionModificationProperty.ID, BaubleExplosionModificationProperty.TYPE);
 
         EntityModelLayerRegistry.registerModelLayer(FROSTFLAKE, FrostflakeProjectileEntityModel::createBodyLayer);
 
@@ -72,26 +60,12 @@ public class FestiveFrenzyClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(FFParticles.BAUBLE_EXPLOSION, BaubleExplosionParticle.Provider::new);
 
         MenuScreens.register(FFMenus.PRESENT_MENU, PresentScreen::new);
-
         TooltipComponentCallback.EVENT.register(new ExplosiveBaubleTooltipEvent());
-
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) ->
-                tintIndex > 0 ? -1 : DyedItemColor.getOrDefault(stack, ARGB.opaque(0xf6553c)),
-                FFItems.FESTIVE_HAT
-        );
-
-        addGuiModel(FFItems.FESTIVE_HAT);
-        addGuiModel(FFItems.SHARPENED_CANDY_CANE);
 
         initNetworking();
     }
 
     public void initNetworking() {
         ClientPlayNetworking.registerGlobalReceiver(EmitterParticlePayload.TYPE, new EmitterParticlePayload.Receiver());
-    }
-
-    public void addGuiModel(Item item) {
-        GUI_MODELS.add(new Tuple<>(item, ModelResourceLocation.inventory(
-                BuiltInRegistries.ITEM.getKey(item).withSuffix("_gui"))));
     }
 }

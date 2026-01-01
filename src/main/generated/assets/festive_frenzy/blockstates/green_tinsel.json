@@ -4,20 +4,20 @@
       "apply": {
         "model": "festive_frenzy:block/green_tinsel",
         "uvlock": true,
-        "y": 0
+        "y": 90
       },
       "when": {
-        "north": "true"
+        "east": "true"
       }
     },
     {
       "apply": {
         "model": "festive_frenzy:block/green_tinsel",
         "uvlock": true,
-        "y": 90
+        "y": 270
       },
       "when": {
-        "east": "true"
+        "west": "true"
       }
     },
     {
@@ -34,10 +34,10 @@
       "apply": {
         "model": "festive_frenzy:block/green_tinsel",
         "uvlock": true,
-        "y": 270
+        "y": 0
       },
       "when": {
-        "west": "true"
+        "north": "true"
       }
     }
   ]

@@ -26,7 +26,7 @@ public class ThrownBaubleDataComponent implements AutoSyncedComponent {
 
     @Override
     public void readFromNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
-        this.setGlowing(tag.getBoolean(IS_GLOWING_KEY));
+        this.setGlowing(tag.getBooleanOr(IS_GLOWING_KEY, false));
     }
 
     @Override
@@ -36,6 +36,7 @@ public class ThrownBaubleDataComponent implements AutoSyncedComponent {
 
     public void setGlowing(boolean isGlowing) {
         this.isGlowing = isGlowing;
+        this.sync();
 
     }
 

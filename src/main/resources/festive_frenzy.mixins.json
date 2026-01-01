@@ -6,9 +6,8 @@
     "minVersion": "0.5.0"
   },
   "mixins": [
-    "accessor.InventoryAccessor",
     "bauble_explosion.ServerExplosionMixin",
-    "client.compat.sodium.BlockRendererMixin",
+    "chakram.AbstractArrowMixin",
     "frostburn.EntityMixin",
     "gamerules.SnowLayerBlockMixin",
     "sharpened_candy_cane.PlayerMixin",
@@ -23,9 +22,7 @@
     "snowloggable.snowy.SpreadingSnowyDirtBlockMixin"
   ],
   "client": [
-    "accessor.ItemPropertiesAccessor",
-    "accessor.ModelLayersAccessor",
-    "client.ItemRendererMixin",
+    "client.compat.sodium.BlockRendererMixin",
     "snowloggable.client.SectionCompilerMixin"
   ],
   "injectors": {

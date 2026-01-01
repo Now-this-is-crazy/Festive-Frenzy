@@ -15,6 +15,8 @@ import powercyphe.festive_frenzy.common.entity.FrostflakeProjectileEntity;
 import powercyphe.festive_frenzy.common.registry.FFItems;
 import powercyphe.festive_frenzy.common.registry.FFSounds;
 
+import java.util.Optional;
+
 public class FFDispenserBehavior {
 
     public static void init() {
@@ -25,8 +27,9 @@ public class FFDispenserBehavior {
                 BlockState state = source.state();
                 BlockPos blockPos = source.pos();
 
-                Direction direction = state.getNullableValue(DispenserBlock.FACING);
-                if (direction != null) {
+                Optional<Direction> optional = state.getOptionalValue(DispenserBlock.FACING);
+                if (optional.isPresent()) {
+                    Direction direction = optional.get();
                     RandomSource random = RandomSource.create();
                     Vec3 projPos = blockPos.getCenter().relative(direction, 0.7);
 

@@ -26,16 +26,6 @@ public class SharpenedCandyCaneItem extends Item {
     }
 
     @Override
-    public boolean canAttackBlock(BlockState blockState, Level level, BlockPos blockPos, Player player) {
-        return !player.isCreative();
-    }
-
-    @Override
-    public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity2) {
-        return true;
-    }
-
-    @Override
     public void postHurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
         super.postHurtEnemy(stack, target, attacker);

@@ -22,7 +22,7 @@ import powercyphe.festive_frenzy.common.mob_effect.FrostburnEffect;
 import powercyphe.festive_frenzy.common.registry.*;
 
 public class FrostflakeProjectileEntity extends Projectile {
-    private int nextParticleTick = 0;
+    private int nextParticleTick = RandomSource.create().nextInt(3);
 
     public FrostflakeProjectileEntity(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);

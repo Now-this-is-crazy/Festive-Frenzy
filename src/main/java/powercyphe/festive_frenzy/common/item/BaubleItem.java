@@ -11,11 +11,13 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import powercyphe.festive_frenzy.client.gui.tooltip.ExplosiveBaubleTooltipData;
 import powercyphe.festive_frenzy.common.entity.ThrownBaubleProjectileEntity;
 import powercyphe.festive_frenzy.common.item.component.ExplosiveBaubleComponent;
+import powercyphe.festive_frenzy.common.registry.FFItems;
 import powercyphe.festive_frenzy.common.registry.FFSounds;
 
 import java.util.Optional;
@@ -48,7 +50,7 @@ public class BaubleItem extends BlockItem {
 
     @Override
     public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
-            return !stack.has(DataComponents.HIDE_TOOLTIP) && !stack.has(DataComponents.HIDE_ADDITIONAL_TOOLTIP) ?
+            return !stack.getOrDefault(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.DEFAULT).shows(FFItems.Components.EXPLOSIVE_BAUBLE_COMPONENT) ?
                     Optional.of(ExplosiveBaubleComponent.get(stack)).map(ExplosiveBaubleTooltipData::new) : Optional.empty();
         }
 }

@@ -3,7 +3,7 @@ package powercyphe.festive_frenzy.mixin.client.compat.sodium;
 import net.caffeinemc.mods.sodium.client.render.chunk.compile.pipeline.BlockRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -20,10 +20,10 @@ import powercyphe.festive_frenzy.common.util.SnowLoggable;
 public abstract class BlockRendererMixin {
 
     @Shadow
-    public abstract void renderModel(BakedModel model, BlockState state, BlockPos pos, BlockPos origin);
+    public abstract void renderModel(BlockStateModel model, BlockState state, BlockPos pos, BlockPos origin);
 
     @Inject(method = "renderModel", at = @At("TAIL"))
-    private void festive_frenzy$snowloggable(BakedModel model, BlockState state, BlockPos pos, BlockPos origin, CallbackInfo ci) {
+    private void festive_frenzy$snowloggable(BlockStateModel model, BlockState state, BlockPos pos, BlockPos origin, CallbackInfo ci) {
         Minecraft client = Minecraft.getInstance();
         BlockRenderDispatcher blockRenderer = client.getBlockRenderer();
 

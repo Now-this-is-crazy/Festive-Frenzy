@@ -33,8 +33,8 @@ public class WreathChakramDataComponent implements AutoSyncedComponent {
     @Override
     public void readFromNbt(CompoundTag compoundTag, HolderLookup.Provider provider) {
         this.setSavedSlot(compoundTag.contains(SAVED_SLOT_KEY) ? this.savedSlot : -1);
-        this.setRicochet(compoundTag.getBoolean(SHOULD_RICOCHET));
-        this.setEnchanted(compoundTag.getBoolean(IS_ENCHANTED_KEY));
+        this.setRicochet(compoundTag.getBooleanOr(SHOULD_RICOCHET, false));
+        this.setEnchanted(compoundTag.getBooleanOr(IS_ENCHANTED_KEY, false));
     }
 
     @Override

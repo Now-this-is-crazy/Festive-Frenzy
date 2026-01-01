@@ -2,6 +2,7 @@ package powercyphe.festive_frenzy.common.entity;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -151,17 +152,18 @@ public class WreathChakramProjectileEntity extends AbstractArrow {
     @Override
     protected void onHitBlock(BlockHitResult hitResult) {
         Vec3 vel = this.getDeltaMovement();
-        this.setDeltaMovement(FFUtil.reflectVector(vel, hitResult.getDirection()).multiply(0.8, 0.33, 0.8));
+        Vec3 reflection = FFUtil.reflectVector(vel, hitResult.getDirection());
+        this.setDeltaMovement(reflection.multiply(0.8, 0.33, 0.8));
 
-        if (this.hitsBeforeReturn++ > 5) {
-            this.setReturning(true);
-        }
-
-        this.playSound(FFSounds.WREATH_CHAKRAM_HIT, 0.5F, 0.8F + RandomSource.create().nextFloat() * 0.4F);
         if (this.level() instanceof ServerLevel serverLevel) {
+            if (this.hitsBeforeReturn++ > 5) {
+                this.setReturning(true);
+            }
+
+            this.playSound(FFSounds.WREATH_CHAKRAM_HIT, 0.5F, 0.8F + RandomSource.create().nextFloat() * 0.4F);
             Vec3 parLoc = hitResult.getLocation().relative(hitResult.getDirection(), 0.2);
             serverLevel.sendParticles((ParticleOptions) FFParticles.HOLLY_LEAF, parLoc.x(), parLoc.y(), parLoc.z(),
-                    7, 0.07, 0.025, 0.07, 0.5);
+                        7, 0.07, 0.025, 0.07, 0.5);
         }
     }
 
@@ -173,7 +175,7 @@ public class WreathChakramProjectileEntity extends AbstractArrow {
             // Durability Damage
             ItemStack stack = this.getPickupItem();
             if (stack.nextDamageWillBreak()) {
-                this.playSound(SoundEvents.ITEM_BREAK, 0.5F, 1F);
+                this.playSound(SoundEvents.ITEM_BREAK.value(), 0.5F, 1F);
                 this.discard();
             } else {
                 stack.hurtWithoutBreaking(1, this.getOwner() instanceof Player player ? player : null);
@@ -196,7 +198,7 @@ public class WreathChakramProjectileEntity extends AbstractArrow {
                         if (targetPos != null) {
                             Vec3 ricochetVel = targetPos.subtract(this.position());
                             this.setDeltaMovement(ricochetVel.normalize());
-                            this.playSound(FFSounds.WREATH_CHAKRAM_RICOCHET, 1F, 0.8F + (this.hitsBeforeReturn / 6F) * 0.4F);
+                            this.playSound(FFSounds.WREATH_CHAKRAM_RICOCHET, 1F, 0.8F + (this.hitsBeforeReturn / 7F) * 0.4F);
                         }
                     }
                 }
