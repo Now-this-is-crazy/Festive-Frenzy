@@ -19,6 +19,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -67,15 +69,16 @@ public class ThrownBaubleProjectileEntity extends ThrowableItemProjectile implem
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compoundTag) {
-        super.readAdditionalSaveData(compoundTag);
-        this.shouldDropItem = compoundTag.getBooleanOr(SHOULD_DROP_ITEM_KEY, true);
+    protected void readAdditionalSaveData(ValueInput valueInput) {
+        super.readAdditionalSaveData(valueInput);
+        this.shouldDropItem = valueInput.getBooleanOr(SHOULD_DROP_ITEM_KEY, true);
     }
 
+
     @Override
-    public void addAdditionalSaveData(CompoundTag compoundTag) {
-        super.addAdditionalSaveData(compoundTag);
-        compoundTag.putBoolean(SHOULD_DROP_ITEM_KEY, this.shouldDropItem);
+    protected void addAdditionalSaveData(ValueOutput valueOutput) {
+        super.addAdditionalSaveData(valueOutput);
+        valueOutput.putBoolean(SHOULD_DROP_ITEM_KEY, this.shouldDropItem);
     }
 
     @Override

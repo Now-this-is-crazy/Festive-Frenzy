@@ -4,5 +4,7 @@
   "group": "present_recolor",
   "input": "#festive_frenzy:presents",
   "material": "minecraft:dried_kelp_block",
-  "result": "festive_frenzy:kelp_present"
+  "result": {
+    "id": "festive_frenzy:kelp_present"
+  }
 }

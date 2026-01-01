@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:green_candy_cane_block_from_green_candy_cane_stonecutting"
+        "recipe": "festive_frenzy:green_candy_cane_block_from_green_candy_cane_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:green_candy_cane_block_from_green_candy_cane_stonecutting"
+      "festive_frenzy:green_candy_cane_block_from_green_candy_cane_stonecutting"
     ]
   }
 }

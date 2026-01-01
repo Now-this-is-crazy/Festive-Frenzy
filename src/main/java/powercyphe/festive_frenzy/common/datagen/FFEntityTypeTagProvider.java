@@ -10,14 +10,14 @@ import powercyphe.festive_frenzy.common.registry.FFTags;
 
 import java.util.concurrent.CompletableFuture;
 
-public class FFEntityTypeTagProvider extends FabricTagProvider<EntityType<?>> {
+public class FFEntityTypeTagProvider extends FabricTagProvider.FabricValueLookupTagProvider<EntityType<?>> {
     public FFEntityTypeTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-        super(output, Registries.ENTITY_TYPE, registriesFuture);
+        super(output, Registries.ENTITY_TYPE, registriesFuture, entityType -> entityType.builtInRegistryHolder().key());
     }
 
     @Override
     protected void addTags(HolderLookup.Provider wrapperLookup) {
-        getOrCreateTagBuilder(FFTags.Entities.DETACHES_BAUBLES)
+        valueLookupBuilder(FFTags.Entities.DETACHES_BAUBLES)
                 .add(
                         EntityType.ARROW,
                         EntityType.SPECTRAL_ARROW,

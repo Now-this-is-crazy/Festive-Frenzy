@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:chiseled_gingerbread_block_from_gingerbread_block_stonecutting"
+        "recipe": "festive_frenzy:chiseled_gingerbread_block_from_gingerbread_block_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:chiseled_gingerbread_block_from_gingerbread_block_stonecutting"
+      "festive_frenzy:chiseled_gingerbread_block_from_gingerbread_block_stonecutting"
     ]
   }
 }

@@ -4,5 +4,7 @@
   "group": "bauble_recolor",
   "input": "#festive_frenzy:baubles",
   "material": "minecraft:red_dye",
-  "result": "festive_frenzy:red_bauble"
+  "result": {
+    "id": "festive_frenzy:red_bauble"
+  }
 }

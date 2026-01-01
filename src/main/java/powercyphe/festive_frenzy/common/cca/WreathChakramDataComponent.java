@@ -2,6 +2,8 @@ package powercyphe.festive_frenzy.common.cca;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import powercyphe.festive_frenzy.common.entity.WreathChakramProjectileEntity;
 import powercyphe.festive_frenzy.common.registry.FFComponents;
@@ -31,17 +33,17 @@ public class WreathChakramDataComponent implements AutoSyncedComponent {
     }
 
     @Override
-    public void readFromNbt(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        this.setSavedSlot(compoundTag.contains(SAVED_SLOT_KEY) ? this.savedSlot : -1);
-        this.setRicochet(compoundTag.getBooleanOr(SHOULD_RICOCHET, false));
-        this.setEnchanted(compoundTag.getBooleanOr(IS_ENCHANTED_KEY, false));
+    public void readData(ValueInput valueInput) {
+        this.setSavedSlot(valueInput.getIntOr(SAVED_SLOT_KEY, -1));
+        this.setRicochet(valueInput.getBooleanOr(SHOULD_RICOCHET, false));
+        this.setEnchanted(valueInput.getBooleanOr(IS_ENCHANTED_KEY, false));
     }
 
     @Override
-    public void writeToNbt(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        compoundTag.putInt(SAVED_SLOT_KEY, this.getSavedSlot());
-        compoundTag.putBoolean(SHOULD_RICOCHET, this.shouldRicochet());
-        compoundTag.putBoolean(IS_ENCHANTED_KEY, this.isEnchanted());
+    public void writeData(ValueOutput valueOutput) {
+        valueOutput.putInt(SAVED_SLOT_KEY, this.getSavedSlot());
+        valueOutput.putBoolean(SHOULD_RICOCHET, this.shouldRicochet());
+        valueOutput.putBoolean(IS_ENCHANTED_KEY, this.isEnchanted());
     }
 
     public void setSavedSlot(int savedSlot) {

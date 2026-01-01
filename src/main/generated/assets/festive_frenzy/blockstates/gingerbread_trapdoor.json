@@ -45,8 +45,7 @@
     },
     "facing=south,half=top,open=true": {
       "model": "festive_frenzy:block/gingerbread_trapdoor_open",
-      "x": 180,
-      "y": 0
+      "x": 180
     },
     "facing=west,half=bottom,open=false": {
       "model": "festive_frenzy:block/gingerbread_trapdoor_bottom",

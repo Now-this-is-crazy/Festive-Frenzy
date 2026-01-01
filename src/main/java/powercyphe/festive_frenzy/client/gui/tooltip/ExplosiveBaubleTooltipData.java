@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -44,22 +45,20 @@ public class ExplosiveBaubleTooltipData implements TooltipComponent, ClientToolt
     }
 
     @Override
-    public void renderText(Font font, int x, int y, Matrix4f matrix4f, MultiBufferSource.BufferSource bufferSource) {
+    public void renderText(GuiGraphics guiGraphics, Font font, int x, int y) {
         if (this.shouldShowTooltip()) {
-            font.drawInBatch(this.getExplosionPowerText(), x + 20, y, -1, false,
-                    matrix4f, bufferSource, Font.DisplayMode.NORMAL, 0, LightTexture.FULL_BRIGHT);
-            font.drawInBatch(this.getExplosionModificationText(), x + 20, y + 16, -1, false,
-                    matrix4f, bufferSource, Font.DisplayMode.NORMAL, -1, LightTexture.FULL_BRIGHT);
+            guiGraphics.drawString(font, this.getExplosionPowerText(), x + 20, y, -1, false);
+            guiGraphics.drawString(font, this.getExplosionModificationText(), x + 20, y + 16, -1, false);
         }
     }
 
     @Override
     public void renderImage(Font font, int x, int y, int width, int height, GuiGraphics guiGraphics) {
         if (this.shouldShowTooltip()) {
-            guiGraphics.blit(RenderType::guiTextured, DETAILS_TEXTURE, x, y - 1, 0, 0, 16, 24, 16, 24);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, DETAILS_TEXTURE, x, y - 1, 0, 0, 16, 24, 16, 24);
 
             if (this.explosionModification != BaubleExplosion.ExplosionModification.NONE) {
-                guiGraphics.blit(RenderType::guiTextured, FestiveFrenzy.id(TEXTURE_PATH + "explosion_modification_" + this.explosionModification.getName() + ".png"),
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, FestiveFrenzy.id(TEXTURE_PATH + "explosion_modification_" + this.explosionModification.getName() + ".png"),
                         x + 2, y + BASE_HEIGHT / 2 - 6, 0, 0, 8, 8, 8, 8);
             }
         }

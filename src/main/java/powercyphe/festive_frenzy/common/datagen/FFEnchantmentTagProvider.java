@@ -18,7 +18,7 @@ public class FFEnchantmentTagProvider extends FabricTagProvider<Enchantment> {
 
     @Override
     protected void addTags(HolderLookup.Provider wrapperLookup) {
-        getOrCreateTagBuilder(EnchantmentTags.NON_TREASURE)
+        builder(EnchantmentTags.NON_TREASURE)
                 .addOptional(FFEnchantments.PRICKLED_ENCHANTMENT)
                 .addOptional(FFEnchantments.PHYTOTOXICITY_ENCHANTMENT);
     }

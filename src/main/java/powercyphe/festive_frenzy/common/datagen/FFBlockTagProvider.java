@@ -17,7 +17,7 @@ public class FFBlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        getOrCreateTagBuilder(FFTags.Blocks.SUPPORTS_BAUBLES)
+        valueLookupBuilder(FFTags.Blocks.SUPPORTS_BAUBLES)
                 .add(Blocks.CHAIN, Blocks.IRON_BARS)
                 .add(Blocks.GLASS_PANE,
                         Blocks.WHITE_STAINED_GLASS_PANE, Blocks.LIGHT_GRAY_STAINED_GLASS_PANE, Blocks.GRAY_STAINED_GLASS_PANE,
@@ -26,22 +26,22 @@ public class FFBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                         Blocks.GREEN_STAINED_GLASS_PANE, Blocks.CYAN_STAINED_GLASS_PANE, Blocks.LIGHT_BLUE_STAINED_GLASS_PANE,
                         Blocks.BLUE_STAINED_GLASS_PANE, Blocks.PURPLE_STAINED_GLASS_PANE, Blocks.MAGENTA_STAINED_GLASS_PANE,
                         Blocks.PINK_STAINED_GLASS_PANE)
-                .forceAddTag(BlockTags.FENCES)
-                .forceAddTag(BlockTags.WALLS)
-                .forceAddTag(BlockTags.LEAVES);
+                .addOptionalTag(BlockTags.FENCES)
+                .addOptionalTag(BlockTags.WALLS)
+                .addOptionalTag(BlockTags.LEAVES);
 
-        getOrCreateTagBuilder(FFTags.Blocks.SUPPORTS_MULTIFACE_DECORATION)
-                .forceAddTag(BlockTags.LEAVES);
+        valueLookupBuilder(FFTags.Blocks.SUPPORTS_MULTIFACE_DECORATION)
+                .addOptionalTag(BlockTags.LEAVES);
 
-        getOrCreateTagBuilder(FFTags.Blocks.SUPPORTS_WREATH)
-                .forceAddTag(BlockTags.LEAVES);
+        valueLookupBuilder(FFTags.Blocks.SUPPORTS_WREATH)
+                .addOptionalTag(BlockTags.LEAVES);
 
-        getOrCreateTagBuilder(FFTags.Blocks.SUPPORTS_STAR_DECORATION)
-                .forceAddTag(BlockTags.LEAVES);
+        valueLookupBuilder(FFTags.Blocks.SUPPORTS_STAR_DECORATION)
+                .addOptionalTag(BlockTags.LEAVES);
 
 
 
-        getOrCreateTagBuilder(BlockTags.STAIRS)
+        valueLookupBuilder(BlockTags.STAIRS)
                 .add(FFBlocks.RED_CANDY_CANE_STAIRS, FFBlocks.GREEN_CANDY_CANE_STAIRS,
                         FFBlocks.MIXED_CANDY_CANE_STAIRS,
                         FFBlocks.GINGERBREAD_STAIRS, FFBlocks.GINGERBREAD_BRICK_STAIRS,
@@ -49,7 +49,7 @@ public class FFBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                         FFBlocks.PACKED_SNOW_BRICK_STAIRS, FFBlocks.CUT_BLUE_ICE_STAIRS,
                         FFBlocks.POLISHED_BLUE_ICE_STAIRS, FFBlocks.BLUE_ICE_BRICK_STAIRS
                 );
-        getOrCreateTagBuilder(BlockTags.SLABS)
+        valueLookupBuilder(BlockTags.SLABS)
                 .add(FFBlocks.RED_CANDY_CANE_SLAB, FFBlocks.GREEN_CANDY_CANE_SLAB,
                         FFBlocks.MIXED_CANDY_CANE_SLAB,
                         FFBlocks.GINGERBREAD_SLAB, FFBlocks.GINGERBREAD_BRICK_SLAB,
@@ -57,24 +57,24 @@ public class FFBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                         FFBlocks.PACKED_SNOW_BRICK_SLAB, FFBlocks.CUT_BLUE_ICE_SLAB,
                         FFBlocks.POLISHED_BLUE_ICE_SLAB, FFBlocks.BLUE_ICE_BRICK_SLAB
                 );
-        getOrCreateTagBuilder(BlockTags.WALLS)
+        valueLookupBuilder(BlockTags.WALLS)
                 .add(FFBlocks.GINGERBREAD_WALL, FFBlocks.GINGERBREAD_BRICK_WALL,
                         FFBlocks.PACKED_SNOW_WALL, FFBlocks.POLISHED_PACKED_SNOW_WALL,
                         FFBlocks.PACKED_SNOW_BRICK_WALL, FFBlocks.CUT_BLUE_ICE_WALL,
                         FFBlocks.POLISHED_BLUE_ICE_WALL, FFBlocks.BLUE_ICE_BRICK_WALL
                 );
 
-        getOrCreateTagBuilder(BlockTags.DOORS)
+        valueLookupBuilder(BlockTags.DOORS)
                 .add(FFBlocks.GINGERBREAD_DOOR);
-        getOrCreateTagBuilder(BlockTags.TRAPDOORS)
+        valueLookupBuilder(BlockTags.TRAPDOORS)
                 .add(FFBlocks.GINGERBREAD_TRAPDOOR);
-        getOrCreateTagBuilder(BlockTags.BUTTONS)
+        valueLookupBuilder(BlockTags.BUTTONS)
                 .add(FFBlocks.GINGERBREAD_BUTTON);
-        getOrCreateTagBuilder(BlockTags.PRESSURE_PLATES)
+        valueLookupBuilder(BlockTags.PRESSURE_PLATES)
                 .add(FFBlocks.GINGERBREAD_PRESSURE_PLATE);
 
 
-        getOrCreateTagBuilder(BlockTags.SNOW)
+        valueLookupBuilder(BlockTags.SNOW)
                 .add(FFBlocks.CHISELED_PACKED_SNOW,
                         FFBlocks.PACKED_SNOW, FFBlocks.PACKED_SNOW_STAIRS,
                         FFBlocks.PACKED_SNOW_SLAB, FFBlocks.PACKED_SNOW_WALL,
@@ -83,11 +83,11 @@ public class FFBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                         FFBlocks.PACKED_SNOW_BRICKS, FFBlocks.PACKED_SNOW_BRICK_STAIRS,
                         FFBlocks.PACKED_SNOW_BRICK_SLAB, FFBlocks.PACKED_SNOW_BRICK_WALL
                 );
-        getOrCreateTagBuilder(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON)
+        valueLookupBuilder(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON)
                 .add(FFBlocks.CHISELED_PACKED_SNOW, FFBlocks.PACKED_SNOW,
                         FFBlocks.POLISHED_PACKED_SNOW, FFBlocks.PACKED_SNOW_BRICKS
                 );
-        getOrCreateTagBuilder(BlockTags.ICE)
+        valueLookupBuilder(BlockTags.ICE)
                 .add(FFBlocks.CHISELED_BLUE_ICE,
                         FFBlocks.CUT_BLUE_ICE, FFBlocks.CUT_BLUE_ICE_STAIRS,
                         FFBlocks.CUT_BLUE_ICE_SLAB, FFBlocks.CUT_BLUE_ICE_WALL,
@@ -98,7 +98,7 @@ public class FFBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 );
 
 
-        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
+        valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(
                         FFBlocks.RED_CANDY_CANE_BLOCK, FFBlocks.RED_CANDY_CANE_STAIRS, FFBlocks.RED_CANDY_CANE_SLAB,
                         FFBlocks.GREEN_CANDY_CANE_BLOCK, FFBlocks.GREEN_CANDY_CANE_STAIRS, FFBlocks.GREEN_CANDY_CANE_SLAB,
@@ -124,7 +124,7 @@ public class FFBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                         FFBlocks.BLUE_ICE_BRICK_SLAB, FFBlocks.BLUE_ICE_BRICK_WALL
                 );
 
-        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_SHOVEL)
+        valueLookupBuilder(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(FFBlocks.CHISELED_PACKED_SNOW,
                         FFBlocks.PACKED_SNOW, FFBlocks.PACKED_SNOW_STAIRS,
                         FFBlocks.PACKED_SNOW_SLAB, FFBlocks.PACKED_SNOW_WALL,

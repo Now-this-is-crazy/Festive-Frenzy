@@ -18,6 +18,8 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import powercyphe.festive_frenzy.common.block.PresentBlock;
 import powercyphe.festive_frenzy.common.menu.PresentMenu;
 import powercyphe.festive_frenzy.common.registry.FFBlocks;
@@ -62,15 +64,15 @@ public class PresentBlockEntity extends RandomizableContainerBlockEntity impleme
     }
 
     @Override
-    protected void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        ContainerHelper.loadAllItems(compoundTag, this.inventory, provider);
-        super.loadAdditional(compoundTag, provider);
+    protected void loadAdditional(ValueInput valueInput) {
+        ContainerHelper.loadAllItems(valueInput, this.inventory);
+        super.loadAdditional(valueInput);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        ContainerHelper.saveAllItems(compoundTag, this.inventory, provider);
-        super.saveAdditional(compoundTag, provider);
+    protected void saveAdditional(ValueOutput valueOutput) {
+        ContainerHelper.saveAllItems(valueOutput, this.inventory);
+        super.saveAdditional(valueOutput);
     }
 
     @Override

@@ -6,6 +6,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -43,7 +44,7 @@ public class PresentScreen extends AbstractContainerScreen<PresentMenu> {
         int k = (this.width - this.imageWidth) / 2;
         int l = (this.height - this.imageHeight) / 2;
         try {
-            guiGraphics.blit(RenderType::guiTextured, this.texture, k, l, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, this.texture, k, l, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
         } catch (Exception ignored) {
         }
     }
@@ -77,7 +78,7 @@ public class PresentScreen extends AbstractContainerScreen<PresentMenu> {
         @Override
         public void renderWidget(GuiGraphics guiGraphics, int i, int j, float f) {
             int color = this.isHoveredOrFocused() ? 0xDDDDDDFF : -1;
-            guiGraphics.blit(RenderType::guiTextured, PresentScreen.this.texture, this.getX(), this.getY(), this.u, this.v,
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, PresentScreen.this.texture, this.getX(), this.getY(), this.u, this.v,
                     this.width, this.height, 256, 256, color);
         }
 

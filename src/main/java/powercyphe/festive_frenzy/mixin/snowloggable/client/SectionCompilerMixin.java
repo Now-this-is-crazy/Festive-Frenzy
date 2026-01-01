@@ -8,11 +8,10 @@ import com.mojang.blaze3d.vertex.VertexSorting;
 import net.minecraft.client.renderer.SectionBufferBuilderPack;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BlockModelPart;
-import net.minecraft.client.renderer.chunk.RenderChunkRegion;
+import net.minecraft.client.renderer.chunk.RenderSectionRegion;
 import net.minecraft.client.renderer.chunk.SectionCompiler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -34,7 +33,7 @@ public abstract class SectionCompilerMixin {
     private BlockRenderDispatcher blockRenderer;
 
     @WrapOperation(method = "compile", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/BlockRenderDispatcher;renderBatched(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/BlockAndTintGetter;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZLjava/util/List;)V"))
-    private void festive_frenzy$renderSnowlogged(BlockRenderDispatcher instance, BlockState state, BlockPos blockPos, BlockAndTintGetter blockAndTintGetter, PoseStack poseStack, VertexConsumer vertexConsumer, boolean bl, List<BlockModelPart> list, Operation<Void> original, SectionPos sectionPos, RenderChunkRegion renderChunkRegion, VertexSorting vertexSorting, SectionBufferBuilderPack sectionBufferBuilderPack) {
+    private void festive_frenzy$renderSnowlogged(BlockRenderDispatcher instance, BlockState state, BlockPos blockPos, BlockAndTintGetter blockAndTintGetter, PoseStack poseStack, VertexConsumer vertexConsumer, boolean bl, List<BlockModelPart> list, Operation<Void> original, SectionPos sectionPos, RenderSectionRegion renderSectionRegion, VertexSorting vertexSorting, SectionBufferBuilderPack sectionBufferBuilderPack) {
         Block block = state.getBlock();
         if (block instanceof SnowLoggable snowLoggable) {
             int layers = snowLoggable.getSnowLayers(state);
@@ -42,10 +41,10 @@ public abstract class SectionCompilerMixin {
             if (layers > 0) {
                 BlockState snowState = Blocks.SNOW.defaultBlockState()
                         .setValue(SnowLayerBlock.LAYERS, layers);
-                this.blockRenderer.renderBatched(snowState, blockPos, renderChunkRegion, poseStack, vertexConsumer, true, List.of());
+                this.blockRenderer.renderBatched(snowState, blockPos, blockAndTintGetter, poseStack, vertexConsumer, true, List.of());
             }
         }
 
-        original.call(instance, state, blockPos, renderChunkRegion, poseStack, vertexConsumer, bl, list);
+        original.call(instance, state, blockPos, blockAndTintGetter, poseStack, vertexConsumer, bl, list);
     }
 }
