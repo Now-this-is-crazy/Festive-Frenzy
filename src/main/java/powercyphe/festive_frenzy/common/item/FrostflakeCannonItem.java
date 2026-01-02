@@ -1,9 +1,7 @@
 package powercyphe.festive_frenzy.common.item;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -12,9 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import powercyphe.festive_frenzy.common.FestiveFrenzy;
 import powercyphe.festive_frenzy.common.entity.FrostflakeProjectileEntity;
-import powercyphe.festive_frenzy.common.entity.ThrownBaubleProjectileEntity;
 import powercyphe.festive_frenzy.common.registry.FFSounds;
 
 public class FrostflakeCannonItem extends Item {

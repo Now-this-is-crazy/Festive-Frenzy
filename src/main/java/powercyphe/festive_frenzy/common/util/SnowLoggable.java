@@ -53,7 +53,7 @@ public interface SnowLoggable {
         int layers = this.getSnowLayers(state);
 
         if (this.canMelt(level, state, blockPos) && level.getBrightness(LightLayer.BLOCK, blockPos) > 11) {
-            if (level.getGameRules().getBoolean(FFGamerules.LAYERED_MELTING_SNOW_GAMERULE) && layers > 1) {
+            if (level.getGameRules().get(FFGamerules.LAYERED_MELTING_SNOW_GAMERULE) && layers > 1) {
                 level.setBlock(blockPos, state.setValue(SNOW_LAYERS, layers - 1), 2);
                 return;
             }

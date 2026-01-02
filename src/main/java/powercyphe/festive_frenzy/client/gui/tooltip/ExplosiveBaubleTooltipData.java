@@ -3,21 +3,17 @@ package powercyphe.festive_frenzy.client.gui.tooltip;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
-import org.joml.Matrix4f;
 import powercyphe.festive_frenzy.common.FestiveFrenzy;
 import powercyphe.festive_frenzy.common.item.component.ExplosiveBaubleComponent;
 import powercyphe.festive_frenzy.common.world.BaubleExplosion;
 
 public class ExplosiveBaubleTooltipData implements TooltipComponent, ClientTooltipComponent {
     private static final String TEXTURE_PATH = "textures/gui/sprites/";
-    private static final ResourceLocation DETAILS_TEXTURE = FestiveFrenzy.id(TEXTURE_PATH + "explosive_bauble_details.png");
+    private static final Identifier DETAILS_TEXTURE = FestiveFrenzy.id(TEXTURE_PATH + "explosive_bauble_details.png");
 
     private static final int BASE_HEIGHT = 26;
     private static final int BASE_WIDTH = 20;

@@ -9,7 +9,7 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import powercyphe.festive_frenzy.common.event.CandyPouchDropEvent;
 import powercyphe.festive_frenzy.common.event.SnowloggablePlaceEvent;
 import powercyphe.festive_frenzy.common.payload.EmitterParticlePayload;
@@ -61,7 +61,7 @@ public class FestiveFrenzy implements ModInitializer {
         ServerPlayNetworking.registerGlobalReceiver(PresentClosePayload.TYPE, new PresentClosePayload.Receiver());
     }
 
-    public static ResourceLocation id(String path) {
-        return ResourceLocation.tryBuild(MOD_ID, path);
+    public static Identifier id(String path) {
+        return Identifier.tryBuild(MOD_ID, path);
     }
 }

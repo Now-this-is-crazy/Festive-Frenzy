@@ -2,10 +2,9 @@ package powercyphe.festive_frenzy.client.render.item;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperty;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +15,7 @@ import powercyphe.festive_frenzy.common.registry.FFItems;
 import powercyphe.festive_frenzy.common.world.BaubleExplosion;
 
 public record BaubleExplosionModificationProperty() implements SelectItemModelProperty<BaubleExplosion.ExplosionModification> {
-    public static final ResourceLocation ID = FestiveFrenzy.id("bauble_explosion_modification");
+    public static final Identifier ID = FestiveFrenzy.id("bauble_explosion_modification");
     public static final SelectItemModelProperty.Type<BaubleExplosionModificationProperty, BaubleExplosion.ExplosionModification> TYPE = Type.create(
             MapCodec.unit(BaubleExplosionModificationProperty::new), BaubleExplosion.ExplosionModification.CODEC
     );
