@@ -18,14 +18,14 @@ public class FFBlockTagProvider extends FabricTagProvider.BlockTagProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         valueLookupBuilder(FFTags.Blocks.SUPPORTS_BAUBLES)
-                .add(Blocks.CHAIN, Blocks.IRON_BARS)
-                .add(Blocks.GLASS_PANE,
+                .add(Blocks.IRON_BARS, Blocks.GLASS_PANE,
                         Blocks.WHITE_STAINED_GLASS_PANE, Blocks.LIGHT_GRAY_STAINED_GLASS_PANE, Blocks.GRAY_STAINED_GLASS_PANE,
                         Blocks.BLACK_STAINED_GLASS_PANE, Blocks.BROWN_STAINED_GLASS_PANE, Blocks.RED_STAINED_GLASS_PANE,
                         Blocks.ORANGE_STAINED_GLASS_PANE, Blocks.YELLOW_STAINED_GLASS_PANE, Blocks.LIME_STAINED_GLASS_PANE,
                         Blocks.GREEN_STAINED_GLASS_PANE, Blocks.CYAN_STAINED_GLASS_PANE, Blocks.LIGHT_BLUE_STAINED_GLASS_PANE,
                         Blocks.BLUE_STAINED_GLASS_PANE, Blocks.PURPLE_STAINED_GLASS_PANE, Blocks.MAGENTA_STAINED_GLASS_PANE,
                         Blocks.PINK_STAINED_GLASS_PANE)
+                .addOptionalTag(BlockTags.CHAINS)
                 .addOptionalTag(BlockTags.FENCES)
                 .addOptionalTag(BlockTags.WALLS)
                 .addOptionalTag(BlockTags.LEAVES);

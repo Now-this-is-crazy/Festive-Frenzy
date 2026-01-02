@@ -1,16 +1,19 @@
 package powercyphe.festive_frenzy.client.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.RandomSource;
 
-public class FrostflakeTrailParticle extends TextureSheetParticle {
+public class FrostflakeTrailParticle extends SingleQuadParticle {
     private final SpriteSet sprites;
 
     public FrostflakeTrailParticle(ClientLevel clientLevel, double x, double y, double z, double velocityX, double velocityY, double velocityZ, SpriteSet sprites) {
-        super(clientLevel, x, y, z);
+        super(clientLevel, x, y, z, sprites.first());
         RandomSource random = RandomSource.create();
 
         this.xd = velocityX * 0.14F;
@@ -37,8 +40,8 @@ public class FrostflakeTrailParticle extends TextureSheetParticle {
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    protected Layer getLayer() {
+        return Layer.TRANSLUCENT;
     }
 
     @Override
@@ -46,28 +49,18 @@ public class FrostflakeTrailParticle extends TextureSheetParticle {
         return LightTexture.FULL_BRIGHT;
     }
 
-    public static class Provider implements ParticleProvider<SimpleParticleType> {
-        private final SpriteSet sprites;
-
-        public Provider(SpriteSet sprites) {
-            this.sprites = sprites;
-        }
-
+    public record Provider(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
+        @Override
         public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel clientLevel, double x, double y, double z,
-                                       double velocityX, double velocityY, double velocityZ) {
-                return new FrostflakeTrailParticle(clientLevel, x, y, z, velocityX, velocityY, velocityZ, this.sprites);
+                                       double velocityX, double velocityY, double velocityZ, RandomSource randomSource) {
+            return new FrostflakeTrailParticle(clientLevel, x, y, z, velocityX, velocityY, velocityZ, this.sprites);
         }
     }
 
-    public static class FrostburnProvider implements ParticleProvider<SimpleParticleType> {
-        private final SpriteSet sprites;
-
-        public FrostburnProvider(SpriteSet sprites) {
-            this.sprites = sprites;
-        }
-
+    public record FrostburnProvider(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
+        @Override
         public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel clientLevel, double x, double y, double z,
-                                       double velocityX, double velocityY, double velocityZ) {
+                                       double velocityX, double velocityY, double velocityZ, RandomSource randomSource) {
             FrostflakeTrailParticle particle = new FrostflakeTrailParticle(clientLevel, x, y, z, velocityX, velocityY, velocityZ, this.sprites);
             RandomSource random = RandomSource.create();
 

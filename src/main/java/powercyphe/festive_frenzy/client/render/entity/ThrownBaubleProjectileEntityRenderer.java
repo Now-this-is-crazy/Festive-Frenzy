@@ -3,10 +3,7 @@ package powercyphe.festive_frenzy.client.render.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -14,6 +11,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.BlockItem;
@@ -58,7 +56,7 @@ public class ThrownBaubleProjectileEntityRenderer<T extends ThrownBaubleProjecti
     }
 
     @Override
-    public void render(ThrownBaubleProjectileEntityRenderState state, PoseStack poseStack, MultiBufferSource multiBufferSource, int light) {
+    public void submit(ThrownBaubleProjectileEntityRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         if (!state.baubleStack.isEmpty()) {
             poseStack.pushPose();
             poseStack.translate(0,  0.1375, 0);
@@ -69,11 +67,10 @@ public class ThrownBaubleProjectileEntityRenderer<T extends ThrownBaubleProjecti
 
             poseStack.translate(-0.5, -0.5, -0.5);
 
-            ModelBlockRenderer.renderModel(poseStack.last(), multiBufferSource.getBuffer(ItemBlockRenderTypes.getRenderType(state.baubleStack)),
-                    state.baubleModel, 255, 255, 255, state.isGlowing ? Math.max(light, LightTexture.FULL_BRIGHT) : light, OverlayTexture.NO_OVERLAY);
+            submitNodeCollector.submitBlockModel(poseStack, ItemBlockRenderTypes.getRenderType(state.baubleStack),
+                    state.baubleModel, 255, 255, 255, state.isGlowing ? LightTexture.FULL_BRIGHT : state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
             poseStack.popPose();
         }
-
-        super.render(state, poseStack, multiBufferSource, state.isGlowing ? Math.max(light, LightTexture.FULL_BRIGHT) : light);
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
     }
 }

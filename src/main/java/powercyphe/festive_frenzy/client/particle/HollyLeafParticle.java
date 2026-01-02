@@ -1,25 +1,22 @@
 package powercyphe.festive_frenzy.client.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 
-import java.util.Random;
-
-public class HollyLeafParticle extends TextureSheetParticle {
+public class HollyLeafParticle extends SingleQuadParticle {
     private final float baseScale;
     private float lastQuadSize;
 
     private float rollSin;
 
-    private final SpriteSet sprites;
-
-    public HollyLeafParticle(ClientLevel clientLevel, double x, double y, double z, double velocityX, double velocityY, double velocityZ, SpriteSet sprites) {
-        super(clientLevel, x, y, z);
-        RandomSource random = RandomSource.create();
+    public HollyLeafParticle(ClientLevel clientLevel, double x, double y, double z, double velocityX, double velocityY, double velocityZ, RandomSource random, SpriteSet sprites) {
+        super(clientLevel, x, y, z, sprites.get(random));
 
         this.xd = velocityX * 0.07F;
         this.yd = velocityY * 0.03F;
@@ -35,8 +32,6 @@ public class HollyLeafParticle extends TextureSheetParticle {
         this.quadSize = this.baseScale;
         this.lastQuadSize = this.quadSize;
 
-        this.sprites = sprites;
-        this.setSprite(sprites.get(random));
         this.tick();
     }
 
@@ -62,8 +57,8 @@ public class HollyLeafParticle extends TextureSheetParticle {
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    protected Layer getLayer() {
+        return Layer.TRANSLUCENT;
     }
 
     @Override
@@ -71,16 +66,11 @@ public class HollyLeafParticle extends TextureSheetParticle {
         return Mth.lerp(f, this.lastQuadSize, this.quadSize);
     }
 
-    public static class Provider implements ParticleProvider<SimpleParticleType> {
-        private final SpriteSet sprites;
-
-        public Provider(SpriteSet sprites) {
-            this.sprites = sprites;
-        }
-
+    public record Provider(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
+        @Override
         public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel clientLevel, double x, double y, double z,
-                                       double velocityX, double velocityY, double velocityZ) {
-                return new HollyLeafParticle(clientLevel, x, y, z, velocityX, velocityY, velocityZ, this.sprites);
-            }
+                                       double velocityX, double velocityY, double velocityZ, RandomSource randomSource) {
+            return new HollyLeafParticle(clientLevel, x, y, z, velocityX, velocityY, velocityZ, randomSource, this.sprites);
         }
+    }
 }

@@ -6,6 +6,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.CommonComponents;
@@ -67,7 +68,7 @@ public class PresentScreen extends AbstractContainerScreen<PresentMenu> {
         }
 
         @Override
-        public void onPress() {
+        public void onPress(InputWithModifiers inputWithModifiers) {
             Minecraft client = Minecraft.getInstance();
             if (client.player != null) {
                 ClientPlayNetworking.send(new PresentClosePayload());

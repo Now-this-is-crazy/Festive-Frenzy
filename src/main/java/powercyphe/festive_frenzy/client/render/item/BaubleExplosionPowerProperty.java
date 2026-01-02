@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperty;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -16,7 +17,7 @@ public record BaubleExplosionPowerProperty() implements RangeSelectItemModelProp
     public static final MapCodec<? extends RangeSelectItemModelProperty> CODEC = MapCodec.unit(BaubleExplosionPowerProperty::new);
 
     @Override
-    public float get(ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int i) {
+    public float get(ItemStack stack, @Nullable ClientLevel level, @Nullable ItemOwner itemOwner, int i) {
         return stack.getOrDefault(FFItems.Components.EXPLOSIVE_BAUBLE_COMPONENT, ExplosiveBaubleComponent.DEFAULT).explosionPower();
     }
 

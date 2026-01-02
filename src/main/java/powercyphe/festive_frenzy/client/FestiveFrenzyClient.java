@@ -11,6 +11,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperties;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperties;
 import powercyphe.festive_frenzy.client.event.ExplosiveBaubleTooltipEvent;
@@ -44,9 +45,9 @@ public class FestiveFrenzyClient implements ClientModInitializer {
 
         EntityModelLayerRegistry.registerModelLayer(FROSTFLAKE, FrostflakeProjectileEntityModel::createBodyLayer);
 
-        EntityRendererRegistry.register(FFEntities.FROSTFLAKE_PROJECTILE, FrostflakeProjectileRenderer::new);
-        EntityRendererRegistry.register(FFEntities.THROWN_BAUBLE_PROJECTILE, ThrownBaubleProjectileEntityRenderer::new);
-        EntityRendererRegistry.register(FFEntities.WREATH_CHAKRAM_PROJECTILE, WreathChakramProjectileRenderer::new);
+        EntityRenderers.register(FFEntities.FROSTFLAKE_PROJECTILE, FrostflakeProjectileRenderer::new);
+        EntityRenderers.register(FFEntities.THROWN_BAUBLE_PROJECTILE, ThrownBaubleProjectileEntityRenderer::new);
+        EntityRenderers.register(FFEntities.WREATH_CHAKRAM_PROJECTILE, WreathChakramProjectileRenderer::new);
 
         ParticleFactoryRegistry.getInstance().register(FFParticles.CANDY_CRIT, CandyCritParticle.Provider::new);
         ParticleFactoryRegistry.getInstance().register(FFParticles.CANDY_SWEEP, CandySweepParticle.Provider::new);
