@@ -97,9 +97,9 @@ public class FFBlocks {
     public static final Block GINGERBREAD_TRAPDOOR = register("gingerbread_trapdoor", properties -> new TrapDoorBlock(GINGERBREAD_SET, properties),
             BlockBehaviour.Properties.ofFullCopy(GINGERBREAD_BLOCK).noOcclusion().isValidSpawn(Blocks::never));
     public static final Block GINGERBREAD_BUTTON = register("gingerbread_button", properties -> new ButtonBlock(GINGERBREAD_SET, 30, properties),
-            BlockBehaviour.Properties.ofFullCopy(GINGERBREAD_BLOCK).noCollission().pushReaction(PushReaction.DESTROY));
+            BlockBehaviour.Properties.ofFullCopy(GINGERBREAD_BLOCK).noCollision().pushReaction(PushReaction.DESTROY));
     public static final Block GINGERBREAD_PRESSURE_PLATE = register("gingerbread_pressure_plate", properties -> new PressurePlateBlock(GINGERBREAD_SET, properties),
-            BlockBehaviour.Properties.ofFullCopy(GINGERBREAD_BLOCK).forceSolidOn().noCollission().pushReaction(PushReaction.DESTROY));
+            BlockBehaviour.Properties.ofFullCopy(GINGERBREAD_BLOCK).forceSolidOn().noCollision().pushReaction(PushReaction.DESTROY));
 
 
     // Packed Snow
@@ -209,9 +209,9 @@ public class FFBlocks {
     public static final Block FAIRY_LIGHTS = register("fairy_lights", FairyLightsBlock::new, BlockBehaviour.Properties.ofFullCopy(WHITE_TINSEL)
             .mapColor(MapColor.COLOR_GRAY).sound(SoundType.METAL).lightLevel(state -> 11));
     public static final Block WREATH = register("wreath", WreathBlock::new, BlockBehaviour.Properties.of().strength(0.5F, 2F)
-            .sound(SoundType.GRASS).noCollission().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY));
+            .sound(SoundType.GRASS).noCollision().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY));
     public static final Block STAR_DECORATION = register("star_decoration", StarDecorationBlock::new, BlockBehaviour.Properties.of()
-            .noOcclusion().noCollission().strength(5F).instabreak().sound(SoundType.METAL).lightLevel(state -> 9)
+            .noOcclusion().noCollision().strength(5F).instabreak().sound(SoundType.METAL).lightLevel(state -> 9)
             .emissiveRendering((state, blockGetter, blockPos) -> !state.getValue(StarDecorationBlock.WATERLOGGED)).pushReaction(PushReaction.DESTROY));
 
     public static void init() {}
@@ -252,7 +252,7 @@ public class FFBlocks {
     }
 
     public static Block registerTinsel(String type) {
-        return register(type + "_tinsel", TinselBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL).strength(0.2F, 3F).noCollission().noOcclusion());
+        return register(type + "_tinsel", TinselBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL).strength(0.2F, 3F).noCollision().noOcclusion());
     }
     
     static {

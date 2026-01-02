@@ -1,11 +1,13 @@
 package powercyphe.festive_frenzy.client.particle;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
-import net.minecraft.util.ARGB;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.client.particle.HugeExplosionParticle;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.renderer.state.QuadParticleRenderState;
+import net.minecraft.util.RandomSource;
+import org.joml.Quaternionf;
 import powercyphe.festive_frenzy.common.particle.BaubleExplosionParticleOption;
 
 public class BaubleExplosionParticle extends HugeExplosionParticle {
@@ -34,7 +36,7 @@ public class BaubleExplosionParticle extends HugeExplosionParticle {
                 double x = this.x + (this.random.nextDouble() - this.random.nextDouble()) * 4.0;
                 double y = this.y + (this.random.nextDouble() - this.random.nextDouble()) * 4.0;
                 double z = this.z + (this.random.nextDouble() - this.random.nextDouble()) * 4.0;
-                this.level.addParticle(new BaubleExplosionParticleOption(this.color, false), x, y, z, (float)this.age / this.lifetime, 0.0, 0.0);
+                this.level.addParticle(new BaubleExplosionParticleOption(this.color, false), x, y, z, (float) this.age / this.lifetime, 0.0, 0.0);
             }
 
             this.age++;
@@ -45,21 +47,16 @@ public class BaubleExplosionParticle extends HugeExplosionParticle {
     }
 
     @Override
-    public void render(VertexConsumer vertexConsumer, Camera camera, float f) {
+    protected void extractRotatedQuad(QuadParticleRenderState quadParticleRenderState, Quaternionf quaternionf, float f, float g, float h, float i) {
         if (!this.isEmitter) {
-            super.render(vertexConsumer, camera, f);
+            super.extractRotatedQuad(quadParticleRenderState, quaternionf, f, g, h, i);
         }
     }
 
-    public static class Provider implements ParticleProvider<BaubleExplosionParticleOption> {
-        private final SpriteSet sprites;
-
-        public Provider(SpriteSet spriteSet) {
-            this.sprites = spriteSet;
-        }
-
+    public record Provider(SpriteSet sprites) implements ParticleProvider<BaubleExplosionParticleOption> {
         @Override
-        public @Nullable Particle createParticle(BaubleExplosionParticleOption options, ClientLevel clientLevel, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+        public Particle createParticle(BaubleExplosionParticleOption options, ClientLevel clientLevel, double x, double y, double z,
+                                       double velocityX, double velocityY, double velocityZ, RandomSource randomSource) {
             int color = options.color();
             boolean isEmitter = options.isEmitter();
 

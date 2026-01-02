@@ -16,7 +16,7 @@ import powercyphe.festive_frenzy.common.registry.FFParticles;
 @Mixin(ServerPlayer.class)
 public class ServerPlayerMixin {
 
-    @WrapOperation(method = "crit", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerChunkCache;broadcastAndSend(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/network/protocol/Packet;)V"))
+    @WrapOperation(method = "crit", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerChunkCache;sendToTrackingPlayersAndSelf(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/network/protocol/Packet;)V"))
     private void festive_frenzy$critEmitterPayload(ServerChunkCache instance, Entity receiver, Packet<?> packet, Operation<Void> original, Entity entity) {
         ServerPlayer serverPlayer = (ServerPlayer) (Object) this;
         if (serverPlayer.getMainHandItem().is(FFItems.SHARPENED_CANDY_CANE)) {
@@ -27,7 +27,7 @@ public class ServerPlayerMixin {
         original.call(instance, entity, packet);
     }
 
-    @WrapOperation(method = "magicCrit", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerChunkCache;broadcastAndSend(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/network/protocol/Packet;)V"))
+    @WrapOperation(method = "magicCrit", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerChunkCache;sendToTrackingPlayersAndSelf(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/network/protocol/Packet;)V"))
     private void festive_frenzy$magicCritEmitterPayload(ServerChunkCache instance, Entity receiver, Packet<?> packet, Operation<Void> original, Entity entity) {
         ServerPlayer serverPlayer = (ServerPlayer) (Object) this;
         if (serverPlayer.getMainHandItem().is(FFItems.SHARPENED_CANDY_CANE)) {

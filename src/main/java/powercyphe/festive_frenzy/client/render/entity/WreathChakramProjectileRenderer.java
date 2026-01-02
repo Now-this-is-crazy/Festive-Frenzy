@@ -3,9 +3,11 @@ package powercyphe.festive_frenzy.client.render.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.LivingEntity;
@@ -42,16 +44,16 @@ public class WreathChakramProjectileRenderer<T extends WreathChakramProjectileEn
     }
 
     @Override
-    public void render(WreathChakramProjectileEntityRenderState state, PoseStack poseStack, MultiBufferSource multiBufferSource, int light) {
+    public void submit(WreathChakramProjectileEntityRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         poseStack.pushPose();
         poseStack.translate(0, 0.1, 0);
 
         poseStack.mulPose(Axis.YP.rotationDegrees(-state.rotation.y + (float) Math.toDegrees(state.spinRotation)));
         poseStack.mulPose(Axis.XP.rotationDegrees(-state.rotation.x + 90F));
 
-        state.chakramState.render(poseStack, multiBufferSource, light, OverlayTexture.NO_OVERLAY);
+        state.chakramState.submit(poseStack, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
         poseStack.popPose();
 
-        super.render(state, poseStack, multiBufferSource, light);
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
     }
 }

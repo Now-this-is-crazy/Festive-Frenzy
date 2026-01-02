@@ -4,12 +4,14 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 
-public class CandyCritParticle extends TextureSheetParticle {
-    public CandyCritParticle(ClientLevel clientLevel, double d, double e, double f, double g, double h, double i) {
-        super(clientLevel, d, e, f, 0.0, 0.0, 0.0);
+public class CandyCritParticle extends SingleQuadParticle {
+    public CandyCritParticle(ClientLevel clientLevel, double d, double e, double f, double g, double h, double i, TextureAtlasSprite sprite) {
+        super(clientLevel, d, e, f, 0.0, 0.0, 0.0, sprite);
         this.friction = 0.7F;
         this.gravity = 0.5F;
         this.xd *= 0.1F;
@@ -30,22 +32,16 @@ public class CandyCritParticle extends TextureSheetParticle {
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    protected Layer getLayer() {
+        return Layer.OPAQUE;
     }
 
     @Environment(EnvType.CLIENT)
-    public static class Provider implements ParticleProvider<SimpleParticleType> {
-        private final SpriteSet sprite;
+        public record Provider(SpriteSet sprite) implements ParticleProvider<SimpleParticleType> {
 
-        public Provider(SpriteSet spriteSet) {
-            this.sprite = spriteSet;
+        public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel clientLevel, double x, double y, double z,
+                                       double velocityX, double velocityY, double velocityZ, RandomSource randomSource) {
+                return new CandyCritParticle(clientLevel, x, y, z, velocityX, velocityY, velocityZ, this.sprite.get(randomSource));
+            }
         }
-
-        public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel clientLevel, double d, double e, double f, double g, double h, double i) {
-            CandyCritParticle critParticle = new CandyCritParticle(clientLevel, d, e, f, g, h, i);
-            critParticle.pickSprite(this.sprite);
-            return critParticle;
-        }
-    }
 }

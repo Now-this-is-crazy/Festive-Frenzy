@@ -32,6 +32,7 @@ import powercyphe.festive_frenzy.common.entity.ThrownBaubleProjectileEntity;
 import powercyphe.festive_frenzy.common.mob_effect.FrostburnEffect;
 import powercyphe.festive_frenzy.common.particle.BaubleExplosionParticleOption;
 import powercyphe.festive_frenzy.common.registry.FFEffects;
+import powercyphe.festive_frenzy.mixin.accessor.LevelAccessor;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -64,14 +65,15 @@ public class BaubleExplosion extends ServerExplosion {
 
     public static void create(ServerLevel serverLevel, ThrownBaubleProjectileEntity baubleProjectile) {
         BaubleExplosion baubleExplosion = new BaubleExplosion(serverLevel, baubleProjectile);
-        baubleExplosion.explode();
+        int blockCount = baubleExplosion.explode();
         ParticleOptions explosionParticle = new BaubleExplosionParticleOption(baubleExplosion.getExplosionColor(), !baubleExplosion.isSmall());
 
         Vec3 pos = baubleExplosion.center();
         for (ServerPlayer serverPlayer : serverLevel.players()) {
             if (serverPlayer.distanceToSqr(pos) < 4096.0) {
                 Optional<Vec3> optional = Optional.ofNullable(baubleExplosion.getHitPlayers().get(serverPlayer));
-                serverPlayer.connection.send(new ClientboundExplodePacket(pos, optional, explosionParticle, SoundEvents.GENERIC_EXPLODE));
+                serverPlayer.connection.send(new ClientboundExplodePacket(pos, baubleExplosion.radius(), blockCount, optional, explosionParticle, SoundEvents.GENERIC_EXPLODE,
+                        LevelAccessor.festive_frenzy$getDefaultExplosionParticles()));
             }
         }
     }

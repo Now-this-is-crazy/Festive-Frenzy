@@ -21,7 +21,7 @@ public class CandyPouchDropEvent implements ServerLivingEntityEvents.AfterDeath 
                 GameRules.IntegerValue gamerule = gameRules.getRule(FFGamerules.CANDY_POUCH_DROP_CHANCE_GAMERULE);
 
                 if (RandomSource.create().nextFloat() * 100 < gamerule.get()) {
-                    entity.spawnAtLocation(serverLevel, FFItems.CANDY_POUCH, 1);
+                    entity.spawnAtLocation(serverLevel, FFItems.CANDY_POUCH);
                 }
             }
         }
