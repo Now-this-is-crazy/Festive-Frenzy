@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,7 +20,7 @@ public class ServerLevelMixin {
 
         if (state.getBlock() instanceof SnowLoggable snowLoggable) {
             int layers = snowLoggable.getSnowLayers(state);
-            int maxLayers = serverLevel.getGameRules().getInt(GameRules.RULE_SNOW_ACCUMULATION_HEIGHT);
+            int maxLayers = serverLevel.getGameRules().get(GameRules.MAX_SNOW_ACCUMULATION_HEIGHT);
 
             if (layers < Math.min(maxLayers, 8)) {
                 return serverLevel.setBlockAndUpdate(blockPos, state.setValue(SnowLoggable.SNOW_LAYERS, layers+1));

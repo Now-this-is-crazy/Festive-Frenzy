@@ -1,7 +1,7 @@
 package powercyphe.festive_frenzy.mixin.chakram;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import powercyphe.festive_frenzy.common.entity.WreathChakramProjectileEntity;

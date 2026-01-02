@@ -6,18 +6,15 @@ import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
-import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.*;
 import net.minecraft.client.data.models.model.*;
-import net.minecraft.client.renderer.block.model.Variant;
 import net.minecraft.client.renderer.block.model.VariantMutator;
-import net.minecraft.client.renderer.block.model.multipart.Condition;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.RangeSelectItemModel;
 import net.minecraft.client.renderer.item.SelectItemModel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -118,7 +115,7 @@ public class FFModelProvider extends FabricModelProvider {
     }
 
     private void createFairyLights(BlockModelGenerators generator, Block block) {
-        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+        Identifier id = BuiltInRegistries.BLOCK.getKey(block);
 
         MultiPartGenerator multiPart = MultiPartGenerator.multiPart(block);
         for (Direction direction : MultiWallDecorationBlock.DIRECTION_TO_PROPERTY.keySet()) {
@@ -152,7 +149,7 @@ public class FFModelProvider extends FabricModelProvider {
     }
 
     public void createTinsel(BlockModelGenerators generator, Block block) {
-        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+        Identifier id = BuiltInRegistries.BLOCK.getKey(block);
 
         MultiPartGenerator multiPart = MultiPartGenerator.multiPart(block);
         for (Direction direction : MultiWallDecorationBlock.DIRECTION_TO_PROPERTY.keySet()) {
@@ -182,7 +179,7 @@ public class FFModelProvider extends FabricModelProvider {
     }
 
     private void createCategorized(BlockModelGenerators generator, Block block, String type) {
-        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+        Identifier id = BuiltInRegistries.BLOCK.getKey(block);
 
         generator.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(id.withPrefix("block/"))));
         generator.modelOutput.accept(id.withPrefix("block/"), () -> {
@@ -236,8 +233,8 @@ public class FFModelProvider extends FabricModelProvider {
     }
 
     private void createCategorized(ItemModelGenerators generator, ItemLike item, String type) {
-        ResourceLocation id = BuiltInRegistries.ITEM.getKey(item.asItem());
-        ResourceLocation modelLocation = ModelTemplates.FLAT_ITEM.create(
+        Identifier id = BuiltInRegistries.ITEM.getKey(item.asItem());
+        Identifier modelLocation = ModelTemplates.FLAT_ITEM.create(
                 id.withPrefix("item/" + type + "/"),
                 new TextureMapping()
                         .put(TextureSlot.LAYER0, id.withPrefix("item/" + type + "/"))
@@ -248,10 +245,10 @@ public class FFModelProvider extends FabricModelProvider {
     }
 
     public void generateBauble(ItemModelGenerators generator, ItemLike bauble) {
-        ResourceLocation id = BuiltInRegistries.ITEM.getKey(bauble.asItem());
+        Identifier id = BuiltInRegistries.ITEM.getKey(bauble.asItem());
 
         // Base Bauble Model
-        ResourceLocation baseModelLocation = ModelTemplates.TWO_LAYERED_ITEM.create(
+        Identifier baseModelLocation = ModelTemplates.TWO_LAYERED_ITEM.create(
                 id.withPrefix("item/bauble/"),
                 new TextureMapping()
                         .put(TextureSlot.LAYER0, id.withPrefix("item/bauble/"))
@@ -263,7 +260,7 @@ public class FFModelProvider extends FabricModelProvider {
         // Bauble Models with Explosion Modification
         List<SelectItemModel.SwitchCase<BaubleExplosion.ExplosionModification>> selectProperties = new ArrayList<>();
         for (BaubleExplosion.ExplosionModification modification : BaubleExplosion.ExplosionModification.values()) {
-            ResourceLocation modelLocation = ModelTemplates.TWO_LAYERED_ITEM.create(
+            Identifier modelLocation = ModelTemplates.TWO_LAYERED_ITEM.create(
                     id.withPrefix("item/bauble/").withSuffix("_modification_" + modification.getName()),
                     new TextureMapping()
                             .put(TextureSlot.LAYER0, id.withPrefix("item/bauble/"))

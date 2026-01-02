@@ -15,7 +15,7 @@ public class SnowLayerBlockMixin {
 
     @WrapOperation(method = "randomTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;removeBlock(Lnet/minecraft/core/BlockPos;Z)Z"))
     private boolean festive_frenzy$layeredMeltingSnow(ServerLevel serverLevel, BlockPos blockPos, boolean updateNearby, Operation<Boolean> original, BlockState state) {
-        boolean layeredMeltingSnow = serverLevel.getGameRules().getBoolean(FFGamerules.LAYERED_MELTING_SNOW_GAMERULE);
+        boolean layeredMeltingSnow = serverLevel.getGameRules().get(FFGamerules.LAYERED_MELTING_SNOW_GAMERULE);
         int layers = state.getValue(SnowLayerBlock.LAYERS);
 
         if (layeredMeltingSnow && layers > 1) {

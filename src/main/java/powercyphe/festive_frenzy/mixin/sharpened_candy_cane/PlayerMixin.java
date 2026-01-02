@@ -11,7 +11,7 @@ import powercyphe.festive_frenzy.common.registry.FFParticles;
 @Mixin(Player.class)
 public class PlayerMixin {
 
-    @ModifyArg(method = "sweepAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;sendParticles(Lnet/minecraft/core/particles/ParticleOptions;DDDIDDDD)I", ordinal = 0), index = 0)
+    @ModifyArg(method = "doSweepAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;sendParticles(Lnet/minecraft/core/particles/ParticleOptions;DDDIDDDD)I", ordinal = 0), index = 0)
     private <T extends ParticleOptions> T festive_frenzy$candySweep(T particleOptions) {
         Player player = (Player) (Object) this;
         if (player.getMainHandItem().is(FFItems.SHARPENED_CANDY_CANE)) {

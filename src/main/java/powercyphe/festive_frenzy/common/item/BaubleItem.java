@@ -50,7 +50,7 @@ public class BaubleItem extends BlockItem {
 
     @Override
     public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
-            return !stack.getOrDefault(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.DEFAULT).shows(FFItems.Components.EXPLOSIVE_BAUBLE_COMPONENT) ?
+            return stack.getOrDefault(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.DEFAULT).shows(FFItems.Components.EXPLOSIVE_BAUBLE_COMPONENT) ?
                     Optional.of(ExplosiveBaubleComponent.get(stack)).map(ExplosiveBaubleTooltipData::new) : Optional.empty();
         }
 }

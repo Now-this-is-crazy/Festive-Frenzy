@@ -8,17 +8,16 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import powercyphe.festive_frenzy.common.FestiveFrenzy;
 import powercyphe.festive_frenzy.common.menu.PresentMenu;
 import powercyphe.festive_frenzy.common.payload.PresentClosePayload;
 
 public class PresentScreen extends AbstractContainerScreen<PresentMenu> {
-    private final ResourceLocation texture;
+    private final Identifier texture;
 
     public PresentScreen(PresentMenu menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
@@ -50,7 +49,7 @@ public class PresentScreen extends AbstractContainerScreen<PresentMenu> {
         }
     }
 
-    public ResourceLocation getTexture(String presentType) {
+    public Identifier getTexture(String presentType) {
         return FestiveFrenzy.id("textures/gui/container/" + presentType + ".png");
     }
 
@@ -77,7 +76,7 @@ public class PresentScreen extends AbstractContainerScreen<PresentMenu> {
         }
 
         @Override
-        public void renderWidget(GuiGraphics guiGraphics, int i, int j, float f) {
+        protected void renderContents(GuiGraphics guiGraphics, int x, int y, float f) {
             int color = this.isHoveredOrFocused() ? 0xDDDDDDFF : -1;
             guiGraphics.blit(RenderPipelines.GUI_TEXTURED, PresentScreen.this.texture, this.getX(), this.getY(), this.u, this.v,
                     this.width, this.height, 256, 256, color);

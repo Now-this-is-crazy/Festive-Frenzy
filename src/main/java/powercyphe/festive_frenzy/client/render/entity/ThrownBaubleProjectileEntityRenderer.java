@@ -2,20 +2,15 @@ package powercyphe.festive_frenzy.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.item.ItemModelResolver;
-import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import powercyphe.festive_frenzy.client.render.entity.state.ThrownBaubleProjectileEntityRenderState;
 import powercyphe.festive_frenzy.common.entity.ThrownBaubleProjectileEntity;
@@ -33,13 +28,14 @@ public class ThrownBaubleProjectileEntityRenderer<T extends ThrownBaubleProjecti
     public void extractRenderState(T entity, ThrownBaubleProjectileEntityRenderState state, float tickProgress) {
         super.extractRenderState(entity, state, tickProgress);
 
-        state.baubleStack = entity.getItem().isEmpty() ? FFBlocks.WHITE_BAUBLE.asItem().getDefaultInstance() : entity.getItem();
-        if (state.baubleStack.getItem() instanceof BlockItem blockItem) {
-            state.baubleModel = this.blockRenderDispatcher.getBlockModel(blockItem.getBlock().defaultBlockState());
+        ItemStack stack = entity.getItem().isEmpty() ? FFBlocks.WHITE_BAUBLE.asItem().getDefaultInstance() : entity.getItem();
+        if (stack.getItem() instanceof BlockItem blockItem) {
+            state.baubleState = blockItem.getBlock().defaultBlockState();
         } else {
-            state.baubleModel = this.blockRenderDispatcher.getBlockModel(FFBlocks.WHITE_BAUBLE.defaultBlockState());
+            state.baubleState = FFBlocks.WHITE_BAUBLE.defaultBlockState();
         }
 
+        state.baubleModel = this.blockRenderDispatcher.getBlockModel(state.baubleState);
         state.isGlowing = entity.getData().isGlowing();
 
         Vec3 rotation = entity.getRotation();
@@ -57,7 +53,7 @@ public class ThrownBaubleProjectileEntityRenderer<T extends ThrownBaubleProjecti
 
     @Override
     public void submit(ThrownBaubleProjectileEntityRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
-        if (!state.baubleStack.isEmpty()) {
+        if (state.baubleState != null) {
             poseStack.pushPose();
             poseStack.translate(0,  0.1375, 0);
 
@@ -67,7 +63,7 @@ public class ThrownBaubleProjectileEntityRenderer<T extends ThrownBaubleProjecti
 
             poseStack.translate(-0.5, -0.5, -0.5);
 
-            submitNodeCollector.submitBlockModel(poseStack, ItemBlockRenderTypes.getRenderType(state.baubleStack),
+            submitNodeCollector.submitBlockModel(poseStack, ItemBlockRenderTypes.getRenderType(state.baubleState),
                     state.baubleModel, 255, 255, 255, state.isGlowing ? LightTexture.FULL_BRIGHT : state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
             poseStack.popPose();
         }
