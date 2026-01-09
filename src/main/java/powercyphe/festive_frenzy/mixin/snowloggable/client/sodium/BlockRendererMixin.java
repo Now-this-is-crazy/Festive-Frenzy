@@ -1,4 +1,4 @@
-package powercyphe.festive_frenzy.mixin.client.compat.sodium;
+package powercyphe.festive_frenzy.mixin.snowloggable.client.sodium;
 
 import net.caffeinemc.mods.sodium.client.render.chunk.compile.pipeline.BlockRenderer;
 import net.minecraft.client.Minecraft;

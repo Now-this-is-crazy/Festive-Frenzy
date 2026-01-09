@@ -1,39 +1,28 @@
 package powercyphe.festive_frenzy.mixin.snowloggable.client;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexSorting;
-import net.minecraft.client.renderer.SectionBufferBuilderPack;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.block.model.BlockModelPart;
-import net.minecraft.client.renderer.chunk.RenderSectionRegion;
-import net.minecraft.client.renderer.chunk.SectionCompiler;
+import net.fabricmc.fabric.impl.client.indigo.renderer.render.TerrainRenderContext;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.SectionPos;
-import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import powercyphe.festive_frenzy.common.util.SnowLoggable;
 
-import java.util.List;
-
-@Mixin(SectionCompiler.class)
+@Mixin(TerrainRenderContext.class)
 public abstract class SectionCompilerMixin {
 
     @Shadow
-    @Final
-    private BlockRenderDispatcher blockRenderer;
+    public abstract void bufferModel(BlockStateModel model, BlockState blockState, BlockPos blockPos);
 
-    @WrapOperation(method = "compile", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/BlockRenderDispatcher;renderBatched(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/BlockAndTintGetter;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZLjava/util/List;)V"))
-    private void festive_frenzy$renderSnowlogged(BlockRenderDispatcher instance, BlockState state, BlockPos blockPos, BlockAndTintGetter blockAndTintGetter, PoseStack poseStack, VertexConsumer vertexConsumer, boolean bl, List<BlockModelPart> list, Operation<Void> original, SectionPos sectionPos, RenderSectionRegion renderSectionRegion, VertexSorting vertexSorting, SectionBufferBuilderPack sectionBufferBuilderPack) {
+    @Inject(method = "bufferModel", at = @At("HEAD"))
+    private void festive_frenzy$renderSnowlogged(BlockStateModel model, BlockState state, BlockPos blockPos, CallbackInfo ci) {
         Block block = state.getBlock();
         if (block instanceof SnowLoggable snowLoggable) {
             int layers = snowLoggable.getSnowLayers(state);
@@ -41,10 +30,10 @@ public abstract class SectionCompilerMixin {
             if (layers > 0) {
                 BlockState snowState = Blocks.SNOW.defaultBlockState()
                         .setValue(SnowLayerBlock.LAYERS, layers);
-                this.blockRenderer.renderBatched(snowState, blockPos, blockAndTintGetter, poseStack, vertexConsumer, true, List.of());
+                BlockStateModel snowModel = Minecraft.getInstance().getBlockRenderer().getBlockModel(snowState);
+                this.bufferModel(snowModel, snowState, blockPos);
             }
         }
 
-        original.call(instance, state, blockPos, blockAndTintGetter, poseStack, vertexConsumer, bl, list);
     }
 }
