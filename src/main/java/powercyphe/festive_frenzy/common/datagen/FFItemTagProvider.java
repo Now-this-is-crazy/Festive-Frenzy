@@ -47,6 +47,9 @@ public class FFItemTagProvider extends FabricTagProvider.ItemTagProvider {
         valueLookupBuilder(ItemTags.SWORDS)
                 .add(FFItems.SHARPENED_CANDY_CANE);
 
+        valueLookupBuilder(FFTags.Items.WREATH_CHAKRAM_MATERIALS)
+                .add(FFItems.HOLLY);
+
         valueLookupBuilder(FFTags.Items.WREATH_CHAKRAM_ENCHANTABLE)
                 .add(FFItems.WREATH_CHAKRAM);
 

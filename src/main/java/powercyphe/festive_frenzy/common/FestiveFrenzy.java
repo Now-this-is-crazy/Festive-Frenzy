@@ -7,6 +7,8 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
+import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
+import net.fabricmc.fabric.api.resource.v1.pack.PackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -47,8 +49,8 @@ public class FestiveFrenzy implements ModInitializer {
         ServerLivingEntityEvents.AFTER_DEATH.register(new CandyPouchDropEvent());
 
         FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
-            ResourceManagerHelper.registerBuiltinResourcePack(id("snowy_grass_fix"), modContainer,
-                    Component.literal("Snowy Grass Fix"), ResourcePackActivationType.DEFAULT_ENABLED);
+            ResourceLoader.registerBuiltinPack(id("snowy_grass_fix"), modContainer,
+                    Component.literal("Snowy Grass Fix"), PackActivationType.DEFAULT_ENABLED);
         });
 
         initNetworking();

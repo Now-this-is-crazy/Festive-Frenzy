@@ -1,6 +1,7 @@
 {
   "pack": {
-    "pack_format": 42,
-    "description": "Replaces the Top Texture of the Snowy Grass"
+    "min_format": 69,
+    "max_format": 75,
+    "description": "Replaces the Top Texture of Snowy Grass"
   }
 }

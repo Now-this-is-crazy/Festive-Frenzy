@@ -23,7 +23,7 @@
     "snowloggable.snowy.SpreadingSnowyDirtBlockMixin"
   ],
   "client": [
-    "client.compat.sodium.BlockRendererMixin",
+    "snowloggable.client.sodium.BlockRendererMixin",
     "snowloggable.client.SectionCompilerMixin"
   ],
   "injectors": {
