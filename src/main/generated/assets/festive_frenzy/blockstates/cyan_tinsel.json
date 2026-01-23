@@ -3,16 +3,6 @@
     {
       "apply": {
         "model": "festive_frenzy:block/cyan_tinsel",
-        "uvlock": true,
-        "y": 180
-      },
-      "when": {
-        "south": "true"
-      }
-    },
-    {
-      "apply": {
-        "model": "festive_frenzy:block/cyan_tinsel",
         "uvlock": true
       },
       "when": {
@@ -23,10 +13,10 @@
       "apply": {
         "model": "festive_frenzy:block/cyan_tinsel",
         "uvlock": true,
-        "y": 270
+        "y": 180
       },
       "when": {
-        "west": "true"
+        "south": "true"
       }
     },
     {
@@ -37,6 +27,16 @@
       },
       "when": {
         "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "festive_frenzy:block/cyan_tinsel",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "true"
       }
     }
   ]

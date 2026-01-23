@@ -19,20 +19,6 @@
                   "block": "festive_frenzy:blue_tinsel",
                   "condition": "minecraft:block_state_property",
                   "properties": {
-                    "south": "true"
-                  }
-                }
-              ],
-              "count": 1.0,
-              "function": "minecraft:set_count"
-            },
-            {
-              "add": true,
-              "conditions": [
-                {
-                  "block": "festive_frenzy:blue_tinsel",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
                     "north": "true"
                   }
                 }
@@ -47,7 +33,7 @@
                   "block": "festive_frenzy:blue_tinsel",
                   "condition": "minecraft:block_state_property",
                   "properties": {
-                    "west": "true"
+                    "south": "true"
                   }
                 }
               ],
@@ -62,6 +48,20 @@
                   "condition": "minecraft:block_state_property",
                   "properties": {
                     "east": "true"
+                  }
+                }
+              ],
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": true,
+              "conditions": [
+                {
+                  "block": "festive_frenzy:blue_tinsel",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "west": "true"
                   }
                 }
               ],

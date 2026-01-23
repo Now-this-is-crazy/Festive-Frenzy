@@ -1,6 +1,8 @@
 package powercyphe.festive_frenzy.mixin.frostburn;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,6 +17,6 @@ public class EntityMixin {
         Entity entity = (Entity) (Object) this;
 
         return original || (entity instanceof LivingEntity livingEntity &&
-                livingEntity.hasEffect(FFEffects.FROSTBURN));
+                livingEntity.hasEffect(FFEffects.FROSTBURN) && livingEntity.getEffect(FFEffects.FROSTBURN).getDuration() > 0);
     }
 }

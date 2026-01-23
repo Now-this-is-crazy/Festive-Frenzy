@@ -281,8 +281,13 @@
   "block.festive_frenzy.star_decoration": "Sterndekoration",
 
   "enchantment.festive_frenzy.prickled": "Stacheligkeit",
+  "enchantment.festive_frenzy.prickled.desc": "Erhöht den Schaden des Chakrams.",
+
   "enchantment.festive_frenzy.phytotoxicity": "Phytotoxizität",
+  "enchantment.festive_frenzy.phytotoxicity.desc": "Vergiftet getroffene Gegner.",
+
   "enchantment.festive_frenzy.ricochet": "Abspringen",
+  "enchantment.festive_frenzy.ricochet.desc": "Leitet den Chakram beim Treffen eines Ziels zum nächsten um.",
 
   "effect.festive_frenzy.frostburn": "Frostbrand",
 

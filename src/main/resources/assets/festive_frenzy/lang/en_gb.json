@@ -281,8 +281,13 @@
   "block.festive_frenzy.star_decoration": "Star Decoration",
 
   "enchantment.festive_frenzy.prickled": "Prickled",
+  "enchantment.festive_frenzy.prickled.desc": "Increases damage dealt by the chakram.",
+
   "enchantment.festive_frenzy.phytotoxicity": "Phytotoxicity",
+  "enchantment.festive_frenzy.phytotoxicity.desc": "Applies poison to hit targets.",
+
   "enchantment.festive_frenzy.ricochet": "Ricochet",
+  "enchantment.festive_frenzy.ricochet.desc": "Upon hitting a target, redirects the chakram to the next target.",
 
 
   "effect.festive_frenzy.frostburn": "Frostburn",

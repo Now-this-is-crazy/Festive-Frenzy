@@ -49,6 +49,10 @@ public class FrostflakeProjectileEntity extends Projectile {
     @Override
     public void tick() {
         if (!tryFreezeWater()) {
+            if (this.isOnFire()) {
+                this.discard();
+            }
+
             this.applyGravity();
             this.applyInertia();
             HitResult hitResult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
@@ -67,7 +71,7 @@ public class FrostflakeProjectileEntity extends Projectile {
                 this.hitTargetOrDeflectSelf(hitResult);
             }
 
-            if (this.level().isClientSide()) {
+            if (!this.isRemoved() && this.level().isClientSide()) {
                 if (this.tickCount >= this.nextParticleTick) {
                     this.nextParticleTick += RandomSource.create().nextInt(3) + 2;
                     this.level().addParticle((ParticleOptions) FFParticles.FROSTFLAKE_TRAIL, this.getX(), this.getY() + this.getBbHeight() / 2, this.getZ(), 0, 0, 0);
