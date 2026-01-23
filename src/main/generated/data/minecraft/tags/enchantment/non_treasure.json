@@ -7,6 +7,10 @@
     {
       "id": "festive_frenzy:phytotoxicity",
       "required": false
+    },
+    {
+      "id": "festive_frenzy:ricochet",
+      "required": false
     }
   ]
 }

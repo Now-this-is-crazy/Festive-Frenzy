@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -150,6 +151,9 @@ public class WreathChakramProjectileEntity extends AbstractArrow {
         Vec3 vel = this.getDeltaMovement();
         Vec3 reflection = FFUtil.reflectVector(vel, hitResult.getDirection());
         this.setDeltaMovement(reflection.multiply(0.8, 0.33, 0.8));
+
+        BlockState state = this.level().getBlockState(hitResult.getBlockPos());
+        state.onProjectileHit(this.level(), state, hitResult, this);
 
         if (this.level() instanceof ServerLevel serverLevel) {
             if (this.hitsBeforeReturn++ > 5) {

@@ -20,6 +20,7 @@ public class FFEnchantmentTagProvider extends FabricTagProvider<Enchantment> {
     protected void addTags(HolderLookup.Provider wrapperLookup) {
         builder(EnchantmentTags.NON_TREASURE)
                 .addOptional(FFEnchantments.PRICKLED_ENCHANTMENT)
-                .addOptional(FFEnchantments.PHYTOTOXICITY_ENCHANTMENT);
+                .addOptional(FFEnchantments.PHYTOTOXICITY_ENCHANTMENT)
+                .addOptional(FFEnchantments.RICOCHET_ENCHANTMENT);
     }
 }
